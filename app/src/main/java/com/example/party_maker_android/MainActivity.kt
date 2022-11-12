@@ -1,19 +1,20 @@
 package com.example.party_maker_android
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.party_maker_android.ui.map.MapActivity
 import com.example.party_maker_android.ui.welcome.WelcomeActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     val isUserSignedIn: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(isUserSignedIn){
+        if(isUserSignedIn == true){
             var mapIntent = Intent(this, MapActivity().javaClass)
             this.startActivity(mapIntent)
         }
@@ -21,5 +22,7 @@ class MainActivity : AppCompatActivity() {
             var welcomeIntent = Intent(this, WelcomeActivity().javaClass)
             this.startActivity(welcomeIntent)
         }
+
+        finish()
     }
 }
