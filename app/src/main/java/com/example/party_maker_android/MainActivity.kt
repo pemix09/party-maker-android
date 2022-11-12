@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.party_maker_android.Services.ConfigService
 import com.example.party_maker_android.ui.map.MapActivity
 import com.example.party_maker_android.ui.welcome.WelcomeActivity
 
@@ -25,4 +26,5 @@ class MainActivity : Activity() {
 
         finish()
     }
+
 }

@@ -12,4 +12,5 @@
     <string name="party_maker_icon">Application icon</string>
     <string name="action_register">Register</string>
     <string name="welcome_activity_name" translatable="false">WelcomeActivity</string>
+
 </resources>
