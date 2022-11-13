@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Partymakerandroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style
+        name="Theme.Partymakerandroid"
+        parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryVariant">@color/primary_color</item>
@@ -15,5 +17,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="appIcon">@drawable/whiskey1</item>
     </style>
 </resources>

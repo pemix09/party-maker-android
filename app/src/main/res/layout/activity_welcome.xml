@@ -12,7 +12,7 @@
         android:layout_marginStart="164dp"
         android:layout_marginBottom="4dp"
         android:contentDescription="@string/party_maker_icon"
-        android:src="@drawable/whiskey1"
+        android:src="?attr/appIcon"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent" />
 
