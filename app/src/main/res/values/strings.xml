@@ -15,5 +15,13 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="login_forgot_password">Forgot your password?</string>
+    <string name="login_email_input_required_message">Email is required</string>
+    <string name="login_password_input_required_message">Password is required</string>
+    <string name="password_min_length_error_message">Password must have at least %1$d characters</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_email">Email</string>
+    <string name="action_sign_in">Login</string>
+    <string name="email_required_error_message">Email is required</string>
+    <string name="email_not_valid_error_message">Email is not valid</string>
 
 </resources>

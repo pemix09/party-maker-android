@@ -14,4 +14,9 @@
     <string name="login_email_text">Adres email</string>
     <string name="login_password_input">Hasło</string>
     <string name="login_forgot_password">Zapomniałeś hasła?</string>
+    <string name="login_email_input_required_message">Email jest wymagany</string>
+    <string name="login_password_input_required_message">Hasło jest wymagane</string>
+    <string name="password_min_length_error_message">Hasło musi mieć co najmniej %1$d znaków</string>
+    <string name="email_required_error_message">Email jest wymagany</string>
+    <string name="email_not_valid_error_message">Email jest nieprawidłowy</string>
 </resources>
