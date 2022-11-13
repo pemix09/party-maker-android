@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="backend_address" tools:ignore="MissingTranslation">www.kochamPB.pl</string>
+    <string name="backend_address" tools:ignore="MissingTranslation" translatable="false">www.kochamPB.pl</string>
 </resources>

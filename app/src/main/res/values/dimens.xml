@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="welcome_text">40sp</dimen>
+
+    <dimen name="login_input_margin">30dp</dimen>
 </resources>

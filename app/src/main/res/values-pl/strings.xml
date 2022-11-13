@@ -10,4 +10,8 @@
     <string name="login_failed">Logowanie nieudane</string>
     <string name="party_maker_icon">Ikona aplikacji</string>
     <string name="action_register">Zarejestruj się</string>
+    <string name="login_text">Zaczynamy imprezę!</string>
+    <string name="login_email_text">Adres email</string>
+    <string name="login_password_input">Hasło</string>
+    <string name="login_forgot_password">Zapomniałeś hasła?</string>
 </resources>
