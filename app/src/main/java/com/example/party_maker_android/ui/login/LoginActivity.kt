@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 
 import com.example.party_maker_android.R
+import com.example.party_maker_android.Services.HttpService
 import com.example.party_maker_android.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -65,6 +66,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun Login(){
-        //here we can
+        var loginEndpoint: String = getString(R.string.LoginEndpointAddress)
+        var email = loginBinding.loginEmailInput.text.toString()
+        var password = loginBinding.loginPasswordInput.text.toString()
+
+        var httpClient: HttpService = HttpService(loginEndpoint)
+        httpClient.LoginUser(email, password)
+
     }
 }
