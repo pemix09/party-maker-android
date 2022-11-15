@@ -1,12 +1,10 @@
 package com.example.party_maker_android.ui.login
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 
 import com.example.party_maker_android.R
-import com.example.party_maker_android.Services.HttpService
 import com.example.party_maker_android.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -65,13 +63,13 @@ class LoginActivity : AppCompatActivity() {
         return null
     }
 
+    //only available, when the input fields are valid
     private fun Login(){
-        var loginEndpoint: String = getString(R.string.LoginEndpointAddress)
         var email = loginBinding.loginEmailInput.text.toString()
         var password = loginBinding.loginPasswordInput.text.toString()
 
-        var httpClient: HttpService = HttpService(loginEndpoint)
-        httpClient.LoginUser(email, password)
+        var httpRequest = LoginHttpRequest(this)
+        httpRequest.invoke(email, password)
 
     }
 }

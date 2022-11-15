@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="LoginEndpointAddress" tools:ignore="MissingTranslation" translatable="false">www.kochamPB.pl</string>
+    <string name="LoginEndpointAddress" tools:ignore="MissingTranslation" translatable="false">https://party-maker-be.herokuapp.com/User/Login</string>
 </resources>
