@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 
 import com.example.party_maker_android.R
+import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -69,9 +70,12 @@ class LoginActivity : AppCompatActivity() {
         var password = loginBinding.loginPasswordInput.text.toString()
 
         var httpRequest = LoginHttpRequest(this, email, password)
-        var LoginHttpResponse = httpRequest.execute()
+        var loginHttpResponse = httpRequest.execute() as LoginHttpResponse
 
-
+        if(loginHttpResponse != null){
+            var userService = UserService(this)
+            userService.SaveUserTokens(loginHttpResponse.accessToken, loginHttpResponse.refreshToken)
+        }
 
     }
 }

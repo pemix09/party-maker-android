@@ -19,4 +19,7 @@
     <string name="password_min_length_error_message">Hasło musi mieć co najmniej %1$d znaków</string>
     <string name="email_required_error_message">Email jest wymagany</string>
     <string name="email_not_valid_error_message">Email jest nieprawidłowy</string>
+    <string name="register_activity_text">Zarejestruj się</string>
+    <string name="register_password_input_confirm">Potwierdź hasło</string>
+    <string name="register_userName_hint">Nazwa użytkownika</string>
 </resources>

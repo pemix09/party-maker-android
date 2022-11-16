@@ -30,10 +30,16 @@ class LoginHttpRequest(private val loginContext: Context,
             .response()
 
         if(result is Result.Success){
-            val accessToken = result.get().toString()
-            val refreshToken = response.headers["RefreshToken"].first()
 
-            return LoginHttpResponse(accessToken, refreshToken)
+            try{
+                val accessToken = result.get().toString()
+                val refreshToken = response.headers["RefreshToken"].first()
+
+                return LoginHttpResponse(accessToken, refreshToken)
+            } catch(e: Exception){
+                return null
+            }
+
         }
         else if(result is Result.Failure){
             val ex = result.getException()

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.party_maker_android.R
 import com.example.party_maker_android.ui.login.LoginActivity
+import com.example.party_maker_android.ui.register.RegisterActivity
 
 class WelcomeActivity : AppCompatActivity() {
 
@@ -23,7 +24,8 @@ class WelcomeActivity : AppCompatActivity() {
 
         //Register click actions:
         registerButton.setOnClickListener {
-
+            var registerIntent: Intent = Intent(this, RegisterActivity().javaClass)
+            this.startActivity(registerIntent)
         }
         loginButton.setOnClickListener {
             var loginIntent: Intent = Intent(this, LoginActivity().javaClass)
