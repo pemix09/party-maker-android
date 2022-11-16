@@ -44,6 +44,7 @@ class LoginHttpRequest(private val loginContext: Context,
         val jsonBody = Gson().toJson(body)
         val (request, response, result) = Fuel.post(url)
             .header("Content-Type" to "application/json")
+            .header("Accept" to "application/json")
             .body(jsonBody)
             .response()
 
