@@ -68,8 +68,10 @@ class LoginActivity : AppCompatActivity() {
         var email = loginBinding.loginEmailInput.text.toString()
         var password = loginBinding.loginPasswordInput.text.toString()
 
-        var httpRequest = LoginHttpRequest(this)
-        httpRequest.invoke(email, password)
+        var httpRequest = LoginHttpRequest(this, email, password)
+        var token = httpRequest.execute()
+
+
 
     }
 }
