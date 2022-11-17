@@ -11,28 +11,10 @@ class UserService(private val context: Context) {
     private val refreshTokenFile = "refreshToken.txt"
 
     fun SaveUserTokens(accessToken: String, refreshToken: String){
-
-        var CryptoManager = CryptoManager()
-        val accessTokenBytes = accessToken.encodeToByteArray()
-        val accTokenFile = File(context.filesDir, this.accessTokenFile)
-        if(accTokenFile.exists() == false){
-            accTokenFile.createNewFile()
-        }
-
-        val fos = FileOutputStream(accTokenFile)
-        CryptoManager.encrypt(bytes = accessTokenBytes, outputStream = fos)
-        fos.close()
-
-        val refreshTokenBytes= refreshToken.encodeToByteArray()
-        val refTokenFile = File(context.filesDir, this.refreshTokenFile)
-        if(refTokenFile.exists() == false){
-            refTokenFile.createNewFile()
-        }
-
-        val fos2 = FileOutputStream(refTokenFile)
-        CryptoManager.encrypt(bytes = refreshTokenBytes, outputStream = fos2)
-        fos2.close()
+        this.setAccessToken(accessToken)
+        this.setRefreshToken(refreshToken)
     }
+
 
     fun getAccessToken(): String?{
         var CryptoManager = CryptoManager()
@@ -50,4 +32,29 @@ class UserService(private val context: Context) {
         return refreshToken
     }
 
+    private fun setAccessToken(accessToken: String){
+        var cryptoManager = CryptoManager()
+        val accessTokenBytes = accessToken.encodeToByteArray()
+        val accTokenFile = File(context.filesDir, this.accessTokenFile)
+        if(accTokenFile.exists() == false){
+            accTokenFile.createNewFile()
+        }
+
+        val fos = FileOutputStream(accTokenFile)
+        cryptoManager.encrypt(bytes = accessTokenBytes, outputStream = fos)
+        fos.close()
+    }
+
+    private fun setRefreshToken(refreshToken: String){
+        var cryptoManager = CryptoManager()
+        val refreshTokenBytes= refreshToken.encodeToByteArray()
+        val refTokenFile = File(context.filesDir, this.refreshTokenFile)
+        if(refTokenFile.exists() == false){
+            refTokenFile.createNewFile()
+        }
+
+        val fos = FileOutputStream(refTokenFile)
+        cryptoManager.encrypt(bytes = refreshTokenBytes, outputStream = fos)
+        fos.close()
+    }
 }
