@@ -32,8 +32,10 @@ class LoginHttpRequest(private val loginContext: Context,
         if(result is Result.Success){
 
             try{
-                val accessToken = result.get().toString()
-                val refreshToken = response.headers["RefreshToken"].first()
+                var accessToken = String(response.data)
+                accessToken = accessToken.replace("\"", "")
+                var refreshToken = response.headers["Set-Cookie"].first()
+                refreshToken = refreshToken.replace("RefreshToken=", "")
 
                 return LoginHttpResponse(accessToken, refreshToken)
             } catch(e: Exception){
