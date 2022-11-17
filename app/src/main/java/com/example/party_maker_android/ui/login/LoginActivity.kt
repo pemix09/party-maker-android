@@ -1,5 +1,6 @@
 package com.example.party_maker_android.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -7,6 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import com.example.party_maker_android.R
 import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.databinding.ActivityLoginBinding
+import com.example.party_maker_android.ui.map.MapActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginBinding: ActivityLoginBinding
@@ -72,9 +74,13 @@ class LoginActivity : AppCompatActivity() {
         var httpRequest = LoginHttpRequest(this, email, password)
         var loginHttpResponse = httpRequest.execute().get()
 
+        //successful login
         if(loginHttpResponse != null){
             var userService = UserService(this)
             userService.SaveUserTokens(loginHttpResponse.accessToken, loginHttpResponse.refreshToken)
+
+            val mapIntent = Intent(this, MapActivity().javaClass)
+            this.startActivity(mapIntent)
         }
 
     }
