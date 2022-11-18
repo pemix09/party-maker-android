@@ -25,10 +25,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setViewChangeListeners(){
         viewBinding.registerEmailInput.addTextChangedListener{
-            viewModel.email.value = viewBinding.registerEmailInput.text.toString()
+            viewModel.validateEmail(it.toString())
         }
         viewBinding.registerUserNameInput.addTextChangedListener {
-            viewModel.userName.value = viewBinding.registerUserNameInput.text.toString()
+            viewModel.validateUserName(it.toString())
         }
     }
 

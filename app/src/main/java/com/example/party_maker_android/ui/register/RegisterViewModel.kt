@@ -15,28 +15,10 @@ class RegisterViewModel : ViewModel(){
         MutableLiveData<String>()
     }
 
-    val email: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-    val userName: MutableLiveData<String> by lazy{
-        MutableLiveData<String>()
-    }
-    private val dataChangeWatcher = MediatorLiveData<String>();
-
-    init{
-        dataChangeWatcher.addSource(email){
-            validateEmail()
-        }
-        dataChangeWatcher.addSource(userName, Observer {
-            validateUserName()
-        })
-    }
-
-    private fun validateEmail(){
+    fun validateEmail(email: String){
         this.emailValidationMessage.value = ";)"
     }
-
-    private fun validateUserName(){
+    fun validateUserName(userName: String){
         this.userNameValidationMessage.value = ":)"
     }
 }
