@@ -38,6 +38,12 @@ class RegisterActivity : AppCompatActivity() {
             var passwordConfirmation = it.toString()
             viewModel.validatePasswordConfirmation(password, passwordConfirmation)
         }
+        viewBinding.registerButton.setOnClickListener {
+            var email = viewBinding.registerEmailInput.text.toString()
+            var userName = viewBinding.registerUserNameInput.text.toString()
+            var password = viewBinding.registerPasswordInput.text.toString()
+            viewModel.Register(email, userName, password)
+        }
     }
 
     private fun setModelObservers(){
