@@ -37,5 +37,9 @@ class RegisterActivity : AppCompatActivity() {
             viewBinding.registerEmailInputContainer.helperText = it.toString()
         })
 
+        viewModel.userNameValidationMessage.observe(this, {
+            viewBinding.registerUserNameInputContainer.helperText = it.toString()
+        })
+
     }
 }

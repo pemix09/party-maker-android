@@ -14,6 +14,9 @@ class RegisterViewModel : ViewModel(){
     val userNameValidationMessage: MutableLiveData<String> by lazy{
         MutableLiveData<String>()
     }
+    val isformValid: MutableLiveData<Boolean> by lazy{
+        MutableLiveData<Boolean>()
+    }
 
     fun validateEmail(email: String){
         this.emailValidationMessage.value = ";)"
