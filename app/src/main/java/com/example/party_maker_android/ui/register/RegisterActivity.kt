@@ -27,19 +27,35 @@ class RegisterActivity : AppCompatActivity() {
         viewBinding.registerEmailInput.addTextChangedListener{
             viewModel.validateEmail(it.toString())
         }
-        viewBinding.registerUserNameInput.addTextChangedListener {
+        viewBinding.registerUserNameInput.addTextChangedListener{
             viewModel.validateUserName(it.toString())
+        }
+        viewBinding.registerPasswordInput.addTextChangedListener{
+            viewModel.validatePassword(it.toString())
+        }
+        viewBinding.registerPasswordInput2.addTextChangedListener {
+            var password = viewBinding.registerPasswordInput.text.toString()
+            var passwordConfirmation = it.toString()
+            viewModel.validatePasswordConfirmation(password, passwordConfirmation)
         }
     }
 
     private fun setModelObservers(){
-        viewModel.emailValidationMessage.observe(this, Observer {
+        viewModel.emailValidationMessage.observe(this){
             viewBinding.registerEmailInputContainer.helperText = it.toString()
-        })
+        }
 
-        viewModel.userNameValidationMessage.observe(this, {
+        viewModel.userNameValidationMessage.observe(this) {
             viewBinding.registerUserNameInputContainer.helperText = it.toString()
-        })
-
+        }
+        viewModel.passwordValidationMessage.observe(this){
+            viewBinding.registerPasswordInputContainer.helperText = it.toString()
+        }
+        viewModel.passwordConfirmationValidationMessage.observe(this){
+            viewBinding.registerPasswordInput2Container.helperText = it.toString()
+        }
+        viewModel.isFormValid.observe(this){
+            viewBinding.registerButton.isEnabled = it
+        }
     }
 }
