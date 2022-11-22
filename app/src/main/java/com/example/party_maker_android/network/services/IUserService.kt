@@ -12,6 +12,7 @@ import retrofit2.http.POST
 
 interface IUserService {
 
+    @Headers("Content-Type: application/json", "Accept: text/plain")
     @POST("/User/Login")
     suspend fun Login(
         @Body requestBody: LoginRequest,

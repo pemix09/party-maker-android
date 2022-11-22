@@ -7,4 +7,6 @@ class LoginResponse {
     @SerializedName("AccessToken")
     var accessToken: String? = null
 
+    @SerializedName("RefreshToken")
+    var refreshToken: String? = null
 }

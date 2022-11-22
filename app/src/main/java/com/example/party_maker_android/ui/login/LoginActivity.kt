@@ -1,19 +1,33 @@
 package com.example.party_maker_android.ui.login
 
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 
 import com.example.party_maker_android.R
 import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.databinding.ActivityLoginBinding
+import com.example.party_maker_android.network.HttpClientsFactory
+import com.example.party_maker_android.network.Requests.LoginRequest
+import com.example.party_maker_android.network.Requests.RegisterRequest
+import com.example.party_maker_android.network.responses.LoginResponse
 import com.example.party_maker_android.ui.map.MapActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginBinding: ActivityLoginBinding
     private var emailIputValid: Boolean = false
     private var passwordInputValid: Boolean = false
+    val loginFeedBackMessage = MutableLiveData<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,16 +85,24 @@ class LoginActivity : AppCompatActivity() {
         var email = loginBinding.loginEmailInput.text.toString()
         var password = loginBinding.loginPasswordInput.text.toString()
 
-        var httpRequest = LoginHttpRequest(this, email, password)
-        var loginHttpResponse = httpRequest.execute().get()
+        var userHttpService = HttpClientsFactory(this).getUserClient()
 
-        //successful login
-        if(loginHttpResponse != null){
-            var userService = UserService(this)
-            userService.SaveUserTokens(loginHttpResponse.accessToken, loginHttpResponse.refreshToken)
+        GlobalScope.launch(Dispatchers.IO) {
 
-            val mapIntent = Intent(this, MapActivity().javaClass)
-            this.startActivity(mapIntent)
+            var loginRequest = LoginRequest(email, password)
+
+            val result: Response<LoginResponse> = userHttpService.Login(loginRequest)
+            Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}")
+
+            if(result.code() == 200){
+                Log.i("SuccessfulLogin", "User registered successfully")
+                val mapIntent = Intent(this@LoginActivity, MapActivity::class.java)
+                this@LoginActivity.startActivity(mapIntent)
+            }
+            else{
+                //posting value to view Model, as it's invoked on coroutine
+                loginFeedBackMessage.value = result.errorBody().toString()
+            }
         }
 
     }
