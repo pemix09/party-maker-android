@@ -2,6 +2,7 @@ package com.example.party_maker_android.ui.register
 
 import android.app.Application
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.party_maker_android.R
@@ -32,7 +33,8 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     val userNameValidationMessage = MutableLiveData<String>()
     val passwordValidationMessage = MutableLiveData<String>()
     val passwordConfirmationValidationMessage = MutableLiveData<String>()
-    val isFormValid: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+    val isFormValid = MutableLiveData<Boolean>(false)
+    val registerActionFeedback = MutableLiveData<String>()
 
     fun validateForm(){
         var formValidation = (isEmailValid && isNickNameValid && isPasswordValid && isPasswordConfirmValid)
@@ -111,20 +113,25 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun register(email: String, userName: String, password: String){
-
         val context = getApplication<Application>().applicationContext
         var userHttpService = HttpClientsFactory(context).getUserClient()
-        var registerRequest = RegisterRequest(email, userName, password)
 
         viewModelScope.launch(Dispatchers.IO) {
+
+            var registerRequest = RegisterRequest(email, userName, password)
+
             val result: Response<Void> = userHttpService.Register(registerRequest)
-            if(result.isSuccessful){
+            Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}")
+
+            if(result.code() == 200){
+                Log.i("SuccessfulLogin", "User registered successfully")
                 val loginIntent = Intent(context, LoginActivity::class.java)
                 context.startActivity(loginIntent)
             }
             else{
-                val toast = Toast.makeText(context, result.errorBody()?.string(), Toast.LENGTH_SHORT)
-                toast.show()
+                //posting value to view Model, as it's invoked on coroutine
+                registerActionFeedback.postValue(result.errorBody().toString())
+                Log.e("RegisterError", result.errorBody().toString())
             }
         }
 
