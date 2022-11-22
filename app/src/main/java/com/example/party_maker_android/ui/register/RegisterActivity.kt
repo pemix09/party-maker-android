@@ -42,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
             var email = viewBinding.registerEmailInput.text.toString()
             var userName = viewBinding.registerUserNameInput.text.toString()
             var password = viewBinding.registerPasswordInput.text.toString()
-            viewModel.Register(email, userName, password)
+            viewModel.register(email, userName, password)
         }
     }
 

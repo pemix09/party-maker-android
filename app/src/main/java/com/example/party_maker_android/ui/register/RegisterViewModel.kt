@@ -1,18 +1,19 @@
 package com.example.party_maker_android.ui.register
 
 import android.app.Application
+import android.content.Intent
 import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.party_maker_android.R
+import com.example.party_maker_android.network.HttpClientsFactory
 import com.example.party_maker_android.network.Requests.RegisterRequest
 import com.example.party_maker_android.network.services.IUserService
+import com.example.party_maker_android.ui.login.LoginActivity
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -109,29 +110,23 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         validateForm()
     }
 
-    fun Register(email: String, userName: String, password: String){
+    fun register(email: String, userName: String, password: String){
 
-        var url = "https://party-maker-be.herokuapp.com/User/Register/"
-        var userService = Retrofit.Builder()
-            .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build()
-            .create(IUserService::class.java)
+        val context = getApplication<Application>().applicationContext
+        var userHttpService = HttpClientsFactory(context).getUserClient()
+        var registerRequest = RegisterRequest(email, userName, password)
 
-            var request = RegisterRequest(email, userName, password)
-            var call = userService.Register(request)
-
-            call.enqueue(
-                object : Callback<Unit> {
-                    override fun onResponse(
-                        call: Call<Unit>,
-                        response: Response<Unit>
-                    ) {}
-
-                    override fun onFailure(call: Call<Unit>, t: Throwable) {}
-
-                }
-            )
+        viewModelScope.launch(Dispatchers.IO) {
+            val result: Response<Void> = userHttpService.Register(registerRequest)
+            if(result.isSuccessful){
+                val loginIntent = Intent(context, LoginActivity::class.java)
+                context.startActivity(loginIntent)
+            }
+            else{
+                val toast = Toast.makeText(context, result.errorBody()?.string(), Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        }
 
     }
 }
