@@ -26,5 +26,8 @@
     <string name="register_activity_text">Register</string>
     <string name="register_password_input_confirm">Confirm password</string>
     <string name="register_userName_hint">User name</string>
+    <string name="username_required">User name is required</string>
+    <string name="password_confirmation_not_match">Password confirmation not equal to password</string>
+    <string name="password_confirmation_required">Password confirmation is required</string>
 
 </resources>

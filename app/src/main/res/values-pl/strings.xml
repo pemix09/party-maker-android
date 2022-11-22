@@ -22,4 +22,7 @@
     <string name="register_activity_text">Zarejestruj się</string>
     <string name="register_password_input_confirm">Potwierdź hasło</string>
     <string name="register_userName_hint">Nazwa użytkownika</string>
+    <string name="username_required">Nazwa użytkownika jest wymagana</string>
+    <string name="password_confirmation_not_match">Potwierdzenie hasła nie równa się hasłu</string>
+    <string name="password_confirmation_required">Potwierdzenie hasła jest wymagane</string>
 </resources>
