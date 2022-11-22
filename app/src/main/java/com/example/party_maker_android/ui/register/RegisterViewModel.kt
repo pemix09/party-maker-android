@@ -131,7 +131,6 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
             else{
                 //posting value to view Model, as it's invoked on coroutine
                 registerActionFeedback.postValue(result.errorBody().toString())
-                Log.e("RegisterError", result.errorBody().toString())
             }
         }
 
