@@ -7,16 +7,18 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface IUserService {
 
-    @POST("User/Login")
+    @POST("/User/Login")
     suspend fun Login(
         @Body requestBody: LoginRequest,
     ): Response<LoginResponse>
 
-    @POST("User/Register")
+    @Headers("Content-Type: application/json", "Accept: */*")
+    @POST("/User/Register")
     suspend fun Register(
         @Body requestBody: RegisterRequest
     ): Response<Void>
