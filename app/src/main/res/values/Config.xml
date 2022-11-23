@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="BackEndAddress" tools:ignore="MissingTranslation" translatable="false">https://party-maker-be.herokuapp.com</string>
-    <string name="LoginEndpointAddress" tools:ignore="MissingTranslation" translatable="false">https://party-maker-be.herokuapp.com/User/Login</string>
+    <string name="KeyAlias" tools:ignore="MissingTranslation" translatable="false">Party-maker-alias</string>
 </resources>

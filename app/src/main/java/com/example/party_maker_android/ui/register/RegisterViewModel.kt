@@ -124,7 +124,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
             Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}")
 
             if(result.code() == 200){
-                Log.i("SuccessfulLogin", "User registered successfully")
+                Log.i("SuccessfulRegister", "User registered successfully")
                 val loginIntent = Intent(context, LoginActivity::class.java)
                 context.startActivity(loginIntent)
             }

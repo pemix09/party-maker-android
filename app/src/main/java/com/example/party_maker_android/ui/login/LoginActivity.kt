@@ -84,6 +84,11 @@ class LoginActivity : AppCompatActivity() {
     private fun Login(){
         var email = loginBinding.loginEmailInput.text.toString()
         var password = loginBinding.loginPasswordInput.text.toString()
+        var userService = UserService(this)
+        userService.SaveUserTokens(email, password)
+
+        var xd = userService.GetRefreshToken()
+        var xdd = userService.getAccessToken()
 
         var userHttpService = HttpClientsFactory(this).getUserClient()
 

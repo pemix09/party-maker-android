@@ -16,23 +16,23 @@ class UserService(private val context: Context) {
 
 
     fun getAccessToken(): String?{
-        var CryptoManager = CryptoManager()
+        var CryptoManager = CryptoManager(context)
         val file = File(context.filesDir, this.accessTokenFile)
-        val accessToken = CryptoManager.decrypt(inputStream = FileInputStream(file)).toString()
+        val accessToken = CryptoManager.decrypt(inputStream = FileInputStream(file)).decodeToString()
 
         return accessToken
     }
 
     fun GetRefreshToken(): String?{
-        var CryptoManager = CryptoManager()
+        var CryptoManager = CryptoManager(context)
         val file = File(context.filesDir, this.refreshTokenFile)
-        val refreshToken = CryptoManager.decrypt(inputStream = FileInputStream(file)).toString()
+        val refreshToken = CryptoManager.decrypt(inputStream = FileInputStream(file)).decodeToString()
 
         return refreshToken
     }
 
     private fun setAccessToken(accessToken: String){
-        var cryptoManager = CryptoManager()
+        var cryptoManager = CryptoManager(context)
         val accessTokenBytes = accessToken.encodeToByteArray()
         val accTokenFile = File(context.filesDir, this.accessTokenFile)
         if(accTokenFile.exists() == false){
@@ -45,7 +45,7 @@ class UserService(private val context: Context) {
     }
 
     private fun setRefreshToken(refreshToken: String){
-        var cryptoManager = CryptoManager()
+        var cryptoManager = CryptoManager(context)
         val refreshTokenBytes= refreshToken.encodeToByteArray()
         val refTokenFile = File(context.filesDir, this.refreshTokenFile)
         if(refTokenFile.exists() == false){

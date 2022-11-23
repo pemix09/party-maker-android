@@ -1,7 +1,9 @@
 package com.example.party_maker_android.Services
 
+import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import com.example.party_maker_android.R
 import java.io.InputStream
 import java.io.OutputStream
 import java.security.KeyStore
@@ -11,9 +13,11 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
-class CryptoManager {
+class CryptoManager(context: Context) {
+    private val AndroidKeyStore = "AndroidKeyStore"
+    private val KEY_ALIAS = context.getString(R.string.KeyAlias)
 
-    private val keyStore = KeyStore.getInstance("AndroidKeyStore").apply {
+    private val keyStore = KeyStore.getInstance(AndroidKeyStore).apply {
         load(null)
     }
 
@@ -28,7 +32,7 @@ class CryptoManager {
     }
 
     private fun getKey(): SecretKey{
-        val existingKey = keyStore.getEntry("secret", null) as? SecretKeyEntry
+        val existingKey = keyStore.getEntry(KEY_ALIAS, null) as? SecretKeyEntry
         return existingKey?.secretKey ?: createKey()
     }
 
@@ -36,7 +40,7 @@ class CryptoManager {
         return KeyGenerator.getInstance(algorithm).apply {
             init(
                 KeyGenParameterSpec.Builder(
-                    "secret",
+                    KEY_ALIAS,
                     KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT )
                     .setBlockModes(blockMode)
                     .setEncryptionPaddings(padding)
