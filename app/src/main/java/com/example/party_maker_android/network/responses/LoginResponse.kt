@@ -1,12 +1,13 @@
 package com.example.party_maker_android.network.responses
 
+import com.example.party_maker_android.network.model.RefreshToken
 import com.google.gson.annotations.SerializedName
 
 class LoginResponse {
 
-    @SerializedName("AccessToken")
+    @SerializedName("accessToken")
     var accessToken: String? = null
 
-    @SerializedName("RefreshToken")
-    var refreshToken: String? = null
+    @SerializedName("refreshToken")
+    var refreshToken: RefreshToken? = null
 }
