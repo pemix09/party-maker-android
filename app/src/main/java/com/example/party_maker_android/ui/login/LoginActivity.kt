@@ -85,10 +85,6 @@ class LoginActivity : AppCompatActivity() {
         var email = loginBinding.loginEmailInput.text.toString()
         var password = loginBinding.loginPasswordInput.text.toString()
         var userService = UserService(this)
-        userService.SaveUserTokens(email, password)
-
-        var xd = userService.GetRefreshToken()
-        var xdd = userService.getAccessToken()
 
         var userHttpService = HttpClientsFactory(this).getUserClient()
 
@@ -100,7 +96,8 @@ class LoginActivity : AppCompatActivity() {
             Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}")
 
             if(result.code() == 200){
-                Log.i("SuccessfulLogin", "User registered successfully")
+                Log.i("SuccessfulLogin", "User logged successfully")
+                userService.SaveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
                 val mapIntent = Intent(this@LoginActivity, MapActivity::class.java)
                 this@LoginActivity.startActivity(mapIntent)
             }
