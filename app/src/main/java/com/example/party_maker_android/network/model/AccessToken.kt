@@ -17,7 +17,8 @@ class AccessToken {
         return gson.toJson(this)
     }
 
-//    fun isValid(): Boolean{
-//        return LocalDateTime.now().to >= expires
-//    }
+    fun isValid(): Boolean{
+        val currentTime = Calendar.getInstance().time
+        return expires?.after(currentTime)!!
+    }
 }
