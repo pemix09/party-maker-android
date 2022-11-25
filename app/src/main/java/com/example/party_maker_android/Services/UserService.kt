@@ -39,6 +39,7 @@ class UserService(private val context: Context) {
 
     private fun setAccessToken(accessToken: AccessToken){
         var cryptoManager = CryptoManager(context)
+
         val accessTokenJson: String = gson.toJson(accessToken)
         val accessTokenBytes = accessTokenJson.encodeToByteArray()
         val accTokenFile = File(context.filesDir, this.accessTokenFile)

@@ -56,7 +56,6 @@ class CryptoManager(context: Context) {
         outputStream.use {
             it.write(encryptCipher.iv.size)
             it.write(encryptCipher.iv)
-            it.write(encryptedBytes.size)
             it.write(encryptedBytes)
         }
 
@@ -69,7 +68,7 @@ class CryptoManager(context: Context) {
             val iv = ByteArray(ivSize)
             it.read(iv)
 
-            val encryptedBytesSize = it.read()
+            val encryptedBytesSize = it.available()
             val encryptedBytes = ByteArray(encryptedBytesSize)
             it.read(encryptedBytes)
 

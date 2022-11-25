@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.network.HttpClientsFactory
 import com.example.party_maker_android.network.Requests.LoginRequest
+import com.example.party_maker_android.network.model.AccessToken
 import com.example.party_maker_android.network.responses.LoginResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -20,7 +21,6 @@ class LoginModel(application: Application) : AndroidViewModel(application) {
 
     //only available, when the input fields are valid
     fun Login(email: String, password: String){
-        var userService = UserService(context)
         var userHttpService = HttpClientsFactory(context).getUserClient()
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -32,7 +32,9 @@ class LoginModel(application: Application) : AndroidViewModel(application) {
 
             if(result.code() == 200){
                 Log.i("SuccessfulLogin", "User logged successfully")
+                var userService = UserService(context)
                 userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
+                Log.i("Tokens saved:","accessToken: ${userService.getAccessToken().toString()}, refreshToken: ${userService.GetRefreshToken().toString()}")
             }
             else{
                 //posting value to view Model, as it's invoked on coroutine
