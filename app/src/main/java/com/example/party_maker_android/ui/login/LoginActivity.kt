@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 
 import com.example.party_maker_android.R
@@ -25,20 +26,25 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginBinding: ActivityLoginBinding
+    private lateinit var loginModel: LoginModel
     private var emailIputValid: Boolean = false
     private var passwordInputValid: Boolean = false
-    val loginFeedBackMessage = MutableLiveData<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
+
+        loginModel = ViewModelProvider(this).get(LoginModel::class.java)
+
         SetListeners()
     }
 
     private fun SetListeners(){
         loginBinding.loginButton.setOnClickListener {
-            Login()
+            var email = loginBinding.loginEmailInput.text.toString()
+            var password = loginBinding.loginPasswordInput.text.toString()
+            loginModel.Login(email, password)
         }
 
         loginBinding.loginEmailInput.addTextChangedListener {
@@ -80,30 +86,5 @@ class LoginActivity : AppCompatActivity() {
         return null
     }
 
-    //only available, when the input fields are valid
-    private fun Login(){
-        var email = loginBinding.loginEmailInput.text.toString()
-        var password = loginBinding.loginPasswordInput.text.toString()
-        var userService = UserService(this)
 
-        var userHttpService = HttpClientsFactory(this).getUserClient()
-
-        GlobalScope.launch(Dispatchers.IO) {
-
-            var loginRequest = LoginRequest(email, password)
-
-            val result: Response<LoginResponse> = userHttpService.Login(loginRequest)
-            Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}, body: ${result.body()?.accessToken}")
-
-            if(result.code() == 200){
-                Log.i("SuccessfulLogin", "User logged successfully")
-                userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
-            }
-            else{
-                //posting value to view Model, as it's invoked on coroutine
-                loginFeedBackMessage.value = result.errorBody().toString()
-            }
-        }
-
-    }
 }

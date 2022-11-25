@@ -6,13 +6,13 @@ import java.util.*
 
 class AccessToken {
 
-    @SerializedName("Token")
+    @SerializedName("token")
     var token: String? = null
 
-    @SerializedName("Created")
+    @SerializedName("created")
     var created: Date? = null
 
-    @SerializedName("Expires")
+    @SerializedName("expires")
     var expires: Date? = null
 
     override fun toString(): String {
