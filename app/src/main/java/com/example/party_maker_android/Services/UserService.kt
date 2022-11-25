@@ -1,6 +1,9 @@
 package com.example.party_maker_android.Services
 
 import android.content.Context
+import com.example.party_maker_android.network.model.AccessToken
+import com.example.party_maker_android.network.model.RefreshToken
+import com.google.gson.Gson
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -8,33 +11,38 @@ import java.io.FileOutputStream
 class UserService(private val context: Context) {
     private val accessTokenFile = "accessToken.txt"
     private val refreshTokenFile = "refreshToken.txt"
+    val gson = Gson()
 
-    fun SaveUserTokens(accessToken: String, refreshToken: String){
+    fun saveUserTokens(accessToken: AccessToken, refreshToken: RefreshToken){
         this.setAccessToken(accessToken)
         this.setRefreshToken(refreshToken)
     }
 
 
-    fun getAccessToken(): String?{
-        var CryptoManager = CryptoManager(context)
-        val file = File(context.filesDir, this.accessTokenFile)
-        val accessToken = CryptoManager.decrypt(inputStream = FileInputStream(file)).decodeToString()
-
-        return accessToken
-    }
-
-    fun GetRefreshToken(): String?{
-        var CryptoManager = CryptoManager(context)
-        val file = File(context.filesDir, this.refreshTokenFile)
-        val refreshToken = CryptoManager.decrypt(inputStream = FileInputStream(file)).decodeToString()
-
-        return refreshToken
-    }
-
-    private fun setAccessToken(accessToken: String){
+    fun getAccessToken(): AccessToken? {
         var cryptoManager = CryptoManager(context)
-        val accessTokenBytes = accessToken.encodeToByteArray()
+        val file = File(context.filesDir, this.accessTokenFile)
+        val accessTokenJson =
+            cryptoManager.decrypt(inputStream = FileInputStream(file)).decodeToString()
+
+        return gson.fromJson(accessTokenJson, AccessToken::class.java)
+    }
+
+    fun GetRefreshToken(): RefreshToken? {
+        var cryptoManager = CryptoManager(context)
+        val file = File(context.filesDir, this.refreshTokenFile)
+        val refreshTokenJson =
+            cryptoManager.decrypt(inputStream = FileInputStream(file)).decodeToString()
+
+        return gson.fromJson(refreshTokenJson, RefreshToken::class.java)
+    }
+
+    private fun setAccessToken(accessToken: AccessToken){
+        var cryptoManager = CryptoManager(context)
+        val accessTokenJson: String = gson.toJson(accessToken)
+        val accessTokenBytes = accessTokenJson.encodeToByteArray()
         val accTokenFile = File(context.filesDir, this.accessTokenFile)
+
         if(accTokenFile.exists() == false){
             accTokenFile.createNewFile()
         }
@@ -44,10 +52,12 @@ class UserService(private val context: Context) {
         fos.close()
     }
 
-    private fun setRefreshToken(refreshToken: String){
+    private fun setRefreshToken(refreshToken: RefreshToken){
         var cryptoManager = CryptoManager(context)
-        val refreshTokenBytes= refreshToken.encodeToByteArray()
+        var refreshTokenJson = gson.toJson(refreshToken)
+        val refreshTokenBytes= refreshTokenJson.encodeToByteArray()
         val refTokenFile = File(context.filesDir, this.refreshTokenFile)
+
         if(refTokenFile.exists() == false){
             refTokenFile.createNewFile()
         }

@@ -93,13 +93,11 @@ class LoginActivity : AppCompatActivity() {
             var loginRequest = LoginRequest(email, password)
 
             val result: Response<LoginResponse> = userHttpService.Login(loginRequest)
-            Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}")
+            Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}, body: ${result.body()?.accessToken}")
 
             if(result.code() == 200){
                 Log.i("SuccessfulLogin", "User logged successfully")
-                userService.SaveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
-                val mapIntent = Intent(this@LoginActivity, MapActivity::class.java)
-                this@LoginActivity.startActivity(mapIntent)
+                userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
             }
             else{
                 //posting value to view Model, as it's invoked on coroutine
