@@ -56,6 +56,16 @@ class LoginActivity : AppCompatActivity() {
             loginBinding.loginPasswordInputContainer.helperText = validatePassword()
             loginBinding.loginButton.isEnabled = emailIputValid && passwordInputValid
         }
+
+        loginModel.loginSuccess.observe(this){
+            if(it == true){
+                var mapIntent = Intent(this, MapActivity::class.java)
+                this.startActivity(mapIntent)
+            }
+            else{
+                //TODO - show here loginErrorMessage to the user
+            }
+        }
     }
 
     private fun validatePassword(): String?{
