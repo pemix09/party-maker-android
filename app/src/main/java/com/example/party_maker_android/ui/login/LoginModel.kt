@@ -26,15 +26,13 @@ class LoginModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
 
             var loginRequest = LoginRequest(email, password)
-
             val result: Response<LoginResponse> = userHttpService.Login(loginRequest)
-            Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}, body: ${result.body()?.accessToken}")
 
             if(result.code() == 200){
-                Log.i("SuccessfulLogin", "User logged successfully")
                 var userService = UserService(context)
                 userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
-                Log.i("Tokens saved:","accessToken: ${userService.getAccessToken().toString()}, refreshToken: ${userService.GetRefreshToken().toString()}")
+
+                //TODO - open map here or something
             }
             else{
                 //posting value to view Model, as it's invoked on coroutine
