@@ -17,11 +17,13 @@ import retrofit2.Response
 
 class LoginModel(application: Application) : AndroidViewModel(application) {
     val loginFeedBackMessage = MutableLiveData<String>()
-    val context = application.applicationContext
+    val loginSuccess = MutableLiveData<Boolean>()
+    private val context = application.applicationContext
 
     //only available, when the input fields are valid
     fun Login(email: String, password: String){
         var userHttpService = HttpClientsFactory(context).getUserClient()
+        var userService = UserService(context)
 
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -29,14 +31,12 @@ class LoginModel(application: Application) : AndroidViewModel(application) {
             val result: Response<LoginResponse> = userHttpService.Login(loginRequest)
 
             if(result.code() == 200){
-                var userService = UserService(context)
                 userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
-
-                //TODO - open map here or something
+                loginSuccess.value = true
             }
             else{
-                //posting value to view Model, as it's invoked on coroutine
                 loginFeedBackMessage.value = result.errorBody().toString()
+                loginSuccess.value = false
             }
         }
 
