@@ -46,6 +46,10 @@ class UserService(private val context: Context) {
         }
     }
 
+    fun SaveRefreshedAccessToken(accessToken: AccessToken){
+        setAccessToken(accessToken)
+    }
+
     private fun readAccessToken(): AccessToken? {
         var cryptoManager = CryptoManager(context)
         val file = File(context.filesDir, this.accessTokenFile)

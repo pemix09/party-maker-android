@@ -1,12 +1,12 @@
 package com.example.party_maker_android.network.services
 
-import com.example.party_maker_android.network.Requests.LoginRequest
-import com.example.party_maker_android.network.Requests.RegisterRequest
+import com.example.party_maker_android.network.requests.LoginRequest
+import com.example.party_maker_android.network.requests.RefreshTokenRequest
+import com.example.party_maker_android.network.requests.RegisterRequest
 import com.example.party_maker_android.network.responses.LoginResponse
-import retrofit2.Call
+import com.example.party_maker_android.network.responses.RefreshTokenResponse
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -23,4 +23,10 @@ interface IUserService {
     suspend fun Register(
         @Body requestBody: RegisterRequest
     ): Response<Void>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("/User/RefreshToken")
+    suspend fun RefreshToken(
+        @Body requestBody: RefreshTokenRequest
+    ): Response<RefreshTokenResponse>
 }

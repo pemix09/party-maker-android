@@ -1,28 +1,14 @@
 package com.example.party_maker_android.ui.login
 
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 
 import com.example.party_maker_android.R
-import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.databinding.ActivityLoginBinding
-import com.example.party_maker_android.network.HttpClientsFactory
-import com.example.party_maker_android.network.Requests.LoginRequest
-import com.example.party_maker_android.network.Requests.RegisterRequest
-import com.example.party_maker_android.network.responses.LoginResponse
 import com.example.party_maker_android.ui.map.MapActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginBinding: ActivityLoginBinding

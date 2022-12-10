@@ -1,17 +1,14 @@
 package com.example.party_maker_android.ui.login
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.network.HttpClientsFactory
-import com.example.party_maker_android.network.Requests.LoginRequest
-import com.example.party_maker_android.network.model.AccessToken
+import com.example.party_maker_android.network.requests.LoginRequest
 import com.example.party_maker_android.network.responses.LoginResponse
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
