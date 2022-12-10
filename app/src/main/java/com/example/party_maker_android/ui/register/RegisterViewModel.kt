@@ -3,25 +3,14 @@ package com.example.party_maker_android.ui.register
 import android.app.Application
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.party_maker_android.R
 import com.example.party_maker_android.network.HttpClientsFactory
-import com.example.party_maker_android.network.Requests.RegisterRequest
-import com.example.party_maker_android.network.services.IUserService
+import com.example.party_maker_android.network.requests.RegisterRequest
 import com.example.party_maker_android.ui.login.LoginActivity
-import com.google.gson.GsonBuilder
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.coroutines.coroutineContext
 
 class RegisterViewModel(application: Application) : AndroidViewModel(application){
     private var isEmailValid: Boolean = false
