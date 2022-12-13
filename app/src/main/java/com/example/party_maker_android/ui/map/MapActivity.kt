@@ -12,5 +12,7 @@ class MapActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mapBinding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(mapBinding.root)
+        mapBinding.bottomNavView.background = null
+        mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
     }
 }

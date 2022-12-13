@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeIcon"
+        android:title="Home"
+        android:icon="@drawable/whiskey"/>
+    <item
+        android:id="@+id/searchIcon"
+        android:title="Search"
+        android:icon="@drawable/appicon"/>
+    <item android:id="@+id/placeholder"
+        android:title=""/>
+    <item
+        android:id="@+id/messagesIcon"
+        android:title="Messages"
+        android:icon="@drawable/whiskey"/>
+    <item
+        android:id="@+id/settingsIcon"
+        android:title="Settings"
+        android:icon="@drawable/whiskey"/>
+</menu>
