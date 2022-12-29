@@ -1,4 +1,4 @@
-package com.example.party_maker_android.network.model
+package com.example.party_maker_android.models
 
 import com.google.gson.annotations.SerializedName
 import java.util.Date

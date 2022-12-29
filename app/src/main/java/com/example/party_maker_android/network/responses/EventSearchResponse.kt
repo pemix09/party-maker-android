@@ -1,6 +1,6 @@
 package com.example.party_maker_android.network.responses
 
-import com.example.party_maker_android.network.model.EventEntity
+import com.example.party_maker_android.models.EventEntity
 import com.google.gson.annotations.SerializedName
 
 class EventSearchResponse {

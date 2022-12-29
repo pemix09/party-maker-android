@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
 
-        loginModel = ViewModelProvider(this).get(LoginModel::class.java)
+        loginModel = ViewModelProvider(this)[LoginModel::class.java]
 
         SetListeners()
     }

@@ -2,11 +2,13 @@ package com.example.party_maker_android.network
 
 import android.content.Context
 import com.example.party_maker_android.R
+import com.example.party_maker_android.network.services.IEventService
 import com.example.party_maker_android.network.services.IUserService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 class HttpClientsFactory(val context: Context) {
     private val url: String = context.getString(R.string.BackEndAddress)
@@ -27,4 +29,15 @@ class HttpClientsFactory(val context: Context) {
             .build()
             .create(IUserService::class.java)
     }
+
+    fun getEventClient(): IEventService{
+
+        return Retrofit.Builder().baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient.build())
+            .build()
+            .create(IEventService::class.java)
+    }
+
+
 }
