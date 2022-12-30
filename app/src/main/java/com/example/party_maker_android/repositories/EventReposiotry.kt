@@ -32,7 +32,8 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
         }
     }
 
-    suspend fun getEventWithQuery(query: String): List<EventEntity>{
+    suspend fun getEventWithQuery(query: String): List<EventEntity>?{
+        var events: List<EventEntity>?
 
         withContext(dispatcher){
             var accessToken = userService.getAccessToken()
@@ -48,6 +49,8 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
                 }
             }
 
+            events = response.body()
         }
+        return events;
     }
 }
