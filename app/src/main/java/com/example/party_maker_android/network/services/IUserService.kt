@@ -7,6 +7,7 @@ import com.example.party_maker_android.network.responses.LoginResponse
 import com.example.party_maker_android.network.responses.RefreshTokenResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -29,4 +30,6 @@ interface IUserService {
     suspend fun RefreshToken(
         @Body requestBody: RefreshTokenRequest
     ): Response<RefreshTokenResponse>
+
+
 }

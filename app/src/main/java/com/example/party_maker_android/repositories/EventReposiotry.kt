@@ -5,8 +5,10 @@ import android.content.Context
 import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.models.EventEntity
 import com.example.party_maker_android.network.HttpClientsFactory
+import com.example.party_maker_android.network.model.MusicGenre
 import com.example.party_maker_android.network.services.IEventService
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
@@ -52,5 +54,28 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
             events = response.body()
         }
         return events;
+    }
+
+    suspend fun getMusicGenres(): List<MusicGenre>?{
+        var genres: List<MusicGenre>?
+
+        withContext(dispatcher) {
+            var accessToken = userService.getAccessToken()
+            var response: Response<List<MusicGenre>> =
+                eventHttpClient.getMusicGenres(accessToken?.token!!)
+
+            if (response.code() == 500) {
+                throw Exception("Server not available, check your internet connection and try later!")
+            } else {
+                throw Exception(
+                    "Getting events by query unsuccessful, cause: ${
+                        response.errorBody()?.toString()
+                    }"
+                )
+            }
+
+            genres = response.body()
+        }
+        return genres
     }
 }

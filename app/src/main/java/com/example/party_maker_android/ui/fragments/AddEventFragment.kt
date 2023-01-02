@@ -26,7 +26,7 @@ class AddEventFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AddEventViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.initialize()
     }
 
 }
