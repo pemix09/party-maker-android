@@ -21,6 +21,8 @@ class LoginModel(application: Application) : AndroidViewModel(application) {
     fun Login(email: String, password: String){
         var userHttpService = HttpClientsFactory(context).getUserClient()
         var userService = UserService(context)
+        var loginMessage: String = ""
+        var success: Boolean = false
 
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -29,13 +31,14 @@ class LoginModel(application: Application) : AndroidViewModel(application) {
 
             if(result.code() == 200){
                 userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
-                loginSuccess.value = true
+                success = true
             }
             else{
-                loginFeedBackMessage.value = result.errorBody().toString()
-                loginSuccess.value = false
+                loginMessage = result.errorBody().toString()
+                success = false
             }
         }
-
+        loginFeedBackMessage.value = loginMessage
+        loginSuccess.value = success
     }
 }

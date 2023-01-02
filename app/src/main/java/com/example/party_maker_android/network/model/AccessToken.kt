@@ -12,13 +12,10 @@ class AccessToken {
 
     var token: String? = null
 
-    var createdDate: Date? = null
-        get() = DateConverter.stringToDate(created)
-    var created: String? = null
 
-    var expiresDate: Date? = null
-        get() = DateConverter.stringToDate(expires)
-    var expires: String? = null
+    var created: Date? = null
+
+    var expires: Date? = null
 
 
     override fun toString(): String {
@@ -29,7 +26,6 @@ class AccessToken {
 
     fun isValid(): Boolean{
         val currentTime = Calendar.getInstance().time
-        val expiresTime = expiresDate
-        return expiresTime?.after(currentTime)!!
+        return expires?.after(currentTime)!!
     }
 }
