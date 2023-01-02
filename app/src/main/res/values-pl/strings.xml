@@ -25,4 +25,7 @@
     <string name="username_required">Nazwa użytkownika jest wymagana</string>
     <string name="password_confirmation_not_match">Potwierdzenie hasła nie równa się hasłu</string>
     <string name="password_confirmation_required">Potwierdzenie hasła jest wymagane</string>
+    <string name="event_name_input_hint">Nazwa wydarzenia</string>
+    <string name="event_description_hint">Opis wydarzenia</string>
+    <string name="create_event_text">Stwórz swoje wydarzenie!</string>
 </resources>
