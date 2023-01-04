@@ -14,13 +14,11 @@ import kotlin.coroutines.coroutineContext
 class AddEventViewModel(application: Application) : ViewModel() {
 
     private val eventRepo = EventRepository(Dispatchers.IO, application.applicationContext)
-
-    //TODO - validation logic for event!
-    private val eventToAdd: EventEntity = EventEntity()
     private var errorMessage = MutableLiveData<String>()
     private var musicGenres: List<MusicGenre>? = null
+    private var isFormValid: Boolean = false
 
-    fun initialize(){
+    init {
         viewModelScope.launch {
             try{
                 musicGenres = eventRepo.getMusicGenres()
@@ -31,7 +29,40 @@ class AddEventViewModel(application: Application) : ViewModel() {
         }
     }
 
+    private var isDescriptionValid: Boolean = false
+        set(value){
+            field = value
+            checkFormState()
+        }
+    private var descriptionValidationMessage: String? = null
+        set(value){
+            if(value != null){
+                isDescriptionValid = false
+                field = value
+            }
+        }
+    private var description: String? = null
+        set(value){
+            if(value == null || value?.isEmpty()!!){
+                descriptionValidationMessage = "Event description cannot be empty!"
+            }
+            else if(value.length <= 10){
+                descriptionValidationMessage = "Event description must be longer than 10 characters!"
+            }
+            else{
+                descriptionValidationMessage = null
+                isDescriptionValid = true
+                field = value
+            }
+        }
+
+    private fun checkFormState(){
+        isFormValid = isDescriptionValid
+    }
+
+    //TODO - to make valid event and add it
     private fun addEvent(){
+        var eventToAdd: EventEntity = EventEntity()
 
         viewModelScope.launch {
             try{
