@@ -34,4 +34,10 @@ class EventEntity {
 
     @SerializedName("type")
     var type: String? = null
+
+    @SerializedName("latitude")
+    var latitude: Double? = null
+
+    @SerializedName("longitude")
+    var longitude: Double? = null
 }

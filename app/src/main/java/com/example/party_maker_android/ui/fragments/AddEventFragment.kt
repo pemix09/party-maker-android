@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentAddEventBinding
 
@@ -47,6 +48,8 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 binding.spinner.adapter = it
                 binding.spinner.onItemSelectedListener = this
             }
+        setModelObservers()
+        setViewChangeListeners()
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
@@ -55,5 +58,29 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>){
 
+    }
+
+    private fun setModelObservers(){
+        viewModel.location.observe(viewLifecycleOwner){
+            binding.currentLocationText.text = "longitude: ${it.longitude}, latitude: ${it.longitude}"
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            binding.addEventMessage.text = it.toString()
+        }
+        viewModel.descriptionValidationMessage.observe(viewLifecycleOwner){
+            binding.descriptionInputContainer.helperText = it
+        }
+        viewModel.nameValidationMessage.observe(viewLifecycleOwner){
+            binding.nameInputContainer.helperText = it
+        }
+    }
+
+    private fun setViewChangeListeners(){
+        binding.descriptionInput.addTextChangedListener {
+            viewModel.description = it.toString()
+        }
+        binding.nameInput.addTextChangedListener {
+            viewModel.name = it.toString()
+        }
     }
 }
