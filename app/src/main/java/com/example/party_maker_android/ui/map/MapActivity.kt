@@ -1,9 +1,9 @@
 package com.example.party_maker_android.ui.map
 
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +11,7 @@ import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityMapBinding
 import com.example.party_maker_android.ui.fragments.AddEventFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class MapActivity : AppCompatActivity() {
     lateinit var mapBinding: ActivityMapBinding
@@ -31,10 +32,13 @@ class MapActivity : AppCompatActivity() {
         setContentView(mapBinding.root)
         mapModel = ViewModelProvider(this)[MapModel::class.java]
 
+        setInitialMenuState()
+        setMenuItemClickListener()
+    }
+
+    private fun setInitialMenuState(){
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
-
-        setMenuItemClickListener()
     }
 
     private fun setMenuItemClickListener() {
