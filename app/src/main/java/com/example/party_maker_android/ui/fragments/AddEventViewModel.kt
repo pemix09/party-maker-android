@@ -16,10 +16,10 @@ class AddEventViewModel : ViewModel() {
 
     private lateinit var eventRepo: EventRepository
     private var errorMessage = MutableLiveData<String>()
-    private var musicGenres: List<MusicGenre>? = null
+    private var musicGenres = arrayOf<String>("House", "Rap", "Trap", "Rock", "Techno")
     private var isFormValid: Boolean = false
 
-    init {
+    /*init {
         viewModelScope.launch {
             try{
                 musicGenres = eventRepo.getMusicGenres()
@@ -28,7 +28,7 @@ class AddEventViewModel : ViewModel() {
                 errorMessage.value = error.message
             }
         }
-    }
+    }*/
     fun setContext(context: Context){
         eventRepo = EventRepository(Dispatchers.IO, context)
     }
