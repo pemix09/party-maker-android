@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityMapBinding
 import com.example.party_maker_android.ui.fragments.AddEventFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MapActivity : AppCompatActivity() {
     lateinit var mapBinding: ActivityMapBinding
@@ -37,26 +38,20 @@ class MapActivity : AppCompatActivity() {
     }
 
     private fun setMenuItemClickListener() {
+        val myBottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         mapBinding.fab.setOnClickListener {
             var fragmentToAdd = AddEventFragment()
             setFragmentContainerContent(fragmentToAdd)
         }
-/*        mapBinding.bottomNavView.setOnClickListener {
-            Log.i(TAG, "Clicked, kurde faja")
-        }
 
-        mapBinding.bottomMapMenu.setOnMenuItemClickListener {
+        //Here we should add more fragments to launch
+        myBottomNavigationView.setOnItemSelectedListener {
             Log.i("MenuClicked", "Menu item clicked: ${it.itemId}")
             when(it.itemId){
                 R.id.homeIcon -> {
                 }
                 R.id.searchIcon -> {
-                    var fragmentToAdd = AddEventFragment()
-                    setFragmentContainerContent(fragmentToAdd)
-                }
-                R.id.placeholder -> {
-                    var fragmentToAdd = AddEventFragment()
-                    setFragmentContainerContent(fragmentToAdd)
+
                 }
                 R.id.messagesIcon -> {
 
@@ -67,8 +62,8 @@ class MapActivity : AppCompatActivity() {
                 else -> {
                 }
             }
-            return@setOnMenuItemClickListener true
-        }*/
+            true
+        }
     }
 
     private fun setFragmentContainerContent(fragmentToAdd: Fragment){
