@@ -3,7 +3,9 @@ package com.example.party_maker_android.ui.map
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityMapBinding
@@ -12,6 +14,7 @@ import com.example.party_maker_android.ui.fragments.AddEventFragment
 class MapActivity : AppCompatActivity() {
     lateinit var mapBinding: ActivityMapBinding
     lateinit var mapModel: MapModel
+    private val TAG = "mapActivity"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,16 +33,46 @@ class MapActivity : AppCompatActivity() {
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
 
-        setFragmentContainerContent()
+        setMenuItemClickListener()
     }
 
-    private fun navMenuItemSelected(){
-        return
+    private fun setMenuItemClickListener() {
+        mapBinding.fab.setOnClickListener {
+            var fragmentToAdd = AddEventFragment()
+            setFragmentContainerContent(fragmentToAdd)
+        }
+/*        mapBinding.bottomNavView.setOnClickListener {
+            Log.i(TAG, "Clicked, kurde faja")
+        }
+
+        mapBinding.bottomMapMenu.setOnMenuItemClickListener {
+            Log.i("MenuClicked", "Menu item clicked: ${it.itemId}")
+            when(it.itemId){
+                R.id.homeIcon -> {
+                }
+                R.id.searchIcon -> {
+                    var fragmentToAdd = AddEventFragment()
+                    setFragmentContainerContent(fragmentToAdd)
+                }
+                R.id.placeholder -> {
+                    var fragmentToAdd = AddEventFragment()
+                    setFragmentContainerContent(fragmentToAdd)
+                }
+                R.id.messagesIcon -> {
+
+                }
+                R.id.settingsIcon -> {
+
+                }
+                else -> {
+                }
+            }
+            return@setOnMenuItemClickListener true
+        }*/
     }
 
-    private fun setFragmentContainerContent(){
+    private fun setFragmentContainerContent(fragmentToAdd: Fragment){
         var transaction = supportFragmentManager.beginTransaction()
-        var fragmentToAdd = AddEventFragment()
         transaction.replace(mapBinding.fragmentContainer.id, fragmentToAdd)
         transaction.commit()
     }
