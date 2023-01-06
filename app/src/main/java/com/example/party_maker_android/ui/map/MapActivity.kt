@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityMapBinding
+import com.example.party_maker_android.ui.fragments.AddEventFragment
 
 class MapActivity : AppCompatActivity() {
     lateinit var mapBinding: ActivityMapBinding
@@ -22,9 +23,19 @@ class MapActivity : AppCompatActivity() {
 
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
+        setFragmentContainerContent()
     }
 
+    private fun navMenuItemSelected(){
+        return
+    }
 
+    private fun setFragmentContainerContent(){
+        var transaction = supportFragmentManager.beginTransaction()
+        var fragmentToAdd = AddEventFragment()
+        transaction.replace(mapBinding.fragmentContainer.id, fragmentToAdd)
+        transaction.commit()
+    }
 
     //TODO - request location, otherwise app shouldnt be runneint
     /*private fun isLocationPermissionGranted(): Boolean {

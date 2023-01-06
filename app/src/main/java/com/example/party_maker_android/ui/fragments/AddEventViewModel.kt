@@ -1,6 +1,7 @@
 package com.example.party_maker_android.ui.fragments
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,9 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
 
-class AddEventViewModel(application: Application) : ViewModel() {
+class AddEventViewModel : ViewModel() {
 
-    private val eventRepo = EventRepository(Dispatchers.IO, application.applicationContext)
+    private lateinit var eventRepo: EventRepository
     private var errorMessage = MutableLiveData<String>()
     private var musicGenres: List<MusicGenre>? = null
     private var isFormValid: Boolean = false
@@ -27,6 +28,9 @@ class AddEventViewModel(application: Application) : ViewModel() {
                 errorMessage.value = error.message
             }
         }
+    }
+    fun setContext(context: Context){
+        eventRepo = EventRepository(Dispatchers.IO, context)
     }
 
     private var isDescriptionValid: Boolean = false
