@@ -106,6 +106,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/spinner" />
 
+        <fragment
+            android:name="com.example.party_maker_android.fragment_select_photo"
+            android:id="@+id/select_photo_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/login_input_margin"
+            android:layout_marginRight="@dimen/login_input_margin"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/current_location_text"
+            tools:layout="@layout/fragment_select_photo" />
+
         <TextView
             android:id="@+id/add_event_message"
             android:layout_width="match_parent"
@@ -117,7 +131,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/current_location_text" />
+            app:layout_constraintTop_toTopOf="@id/select_photo_fragment" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

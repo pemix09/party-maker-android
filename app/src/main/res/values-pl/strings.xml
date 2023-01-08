@@ -28,4 +28,6 @@
     <string name="event_name_input_hint">Nazwa wydarzenia</string>
     <string name="event_description_hint">Opis wydarzenia</string>
     <string name="create_event_text">Stwórz swoje wydarzenie!</string>
+    <string name="select_from_gallery">Wybierz z galerii</string>
+    <string name="make_photo">Zrób zdjęcie</string>
 </resources>
