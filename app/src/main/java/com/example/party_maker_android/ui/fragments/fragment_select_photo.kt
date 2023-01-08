@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.example.party_maker_android.Services.Base64Helper
 import com.example.party_maker_android.databinding.FragmentSelectPhotoBinding
 
 
@@ -33,6 +34,10 @@ class fragment_select_photo : Fragment() {
     ): View? {
         binding = FragmentSelectPhotoBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,24 +107,28 @@ class fragment_select_photo : Fragment() {
             binding.selectPhotoText.isVisible = false
             binding.selectFromGalleryButton.isVisible = false
             binding.makePhotoButton.isVisible = false
-        }
-        //photo from galery
-        if(requestCode == pickPhotoRequestCode && resultCode == Activity.RESULT_OK && data != null){
-            selectedPhoto = data.data
-            if(Build.VERSION.SDK_INT >= 28){
-                val source = ImageDecoder.createSource(context?.contentResolver!!, selectedPhoto!!)
-                selectedBitMap = ImageDecoder.decodeBitmap(source)
+
+            //photo from gal;ery
+            if(requestCode == pickPhotoRequestCode && resultCode == Activity.RESULT_OK){
+                selectedPhoto = data.data
+                if(Build.VERSION.SDK_INT >= 28){
+                    val source = ImageDecoder.createSource(context?.contentResolver!!, selectedPhoto!!)
+                    selectedBitMap = ImageDecoder.decodeBitmap(source)
+                    binding.selectedPhotoImage.setImageBitmap(selectedBitMap)
+                }
+                else{
+                    selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
+                    binding.selectedPhotoImage.setImageBitmap(selectedBitMap)
+                }
+            }
+            //photo from camera
+            else if(requestCode == makePhotoRequestCode && resultCode == Activity.RESULT_OK){
+                selectedBitMap = data.extras?.get("data") as Bitmap
                 binding.selectedPhotoImage.setImageBitmap(selectedBitMap)
             }
-            else{
-                selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
-                binding.selectedPhotoImage.setImageBitmap(selectedBitMap)
-            }
-        }
-        //photo from camera
-        else if(requestCode == makePhotoRequestCode && resultCode == Activity.RESULT_OK && data != null){
-            selectedBitMap = data.extras?.get("data") as Bitmap
-            binding.selectedPhotoImage.setImageBitmap(selectedBitMap)
+
+            var parent = parentFragment as AddEventFragment
+            parent.addSelectedPhoto(Base64Helper.getBase64StringFromBitmap(selectedBitMap!!))
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

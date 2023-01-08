@@ -20,7 +20,8 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
     suspend fun createEvent(eventToAdd: EventEntity){
         withContext(dispatcher){
             var accessToken = userService.getAccessToken()
-            var response: Response<Void> = eventHttpClient.create(accessToken?.token!!, eventToAdd)
+            var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+            var response: Response<Void> = eventHttpClient.create(formattedAccessToken, eventToAdd)
 
             if(!response.isSuccessful) {
 

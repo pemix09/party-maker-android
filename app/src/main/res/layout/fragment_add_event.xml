@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="70dp"
     tools:layout_editor_absoluteX="1dp"
     tools:layout_editor_absoluteY="1dp"
     android:fillViewport="true">
@@ -81,6 +82,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/login_input_margin"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/login_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_input_container"
+            android:text="@string/pick_time"
+            android:enabled="false"
+            android:onClick="showTimePickerDialog" />
+
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
@@ -91,7 +107,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description_input_container"
+            app:layout_constraintTop_toBottomOf="@+id/time_picker"
             tools:layout_editor_absoluteX="0dp" />
 
         <TextView
@@ -120,18 +136,30 @@
             app:layout_constraintTop_toTopOf="@id/current_location_text"
             tools:layout="@layout/fragment_select_photo" />
 
+        <Button
+            android:id="@+id/add_event_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/login_input_margin"
+            android:layout_marginRight="@dimen/login_input_margin"
+            android:enabled="false"
+            android:text='@string/add_event_button'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/select_photo_fragment"/>
+
         <TextView
             android:id="@+id/add_event_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/login_input_margin"
             android:layout_marginRight="@dimen/login_input_margin"
-            android:layout_marginTop="40dp"
             android:textColor="@color/error"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/select_photo_fragment" />
+            app:layout_constraintTop_toBottomOf="@id/add_event_button" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

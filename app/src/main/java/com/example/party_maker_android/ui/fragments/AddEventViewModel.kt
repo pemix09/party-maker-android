@@ -12,16 +12,28 @@ import com.example.party_maker_android.models.EventEntity
 import com.example.party_maker_android.network.model.MusicGenre
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 import kotlin.coroutines.coroutineContext
 
 class AddEventViewModel : ViewModel() {
 
     var errorMessage = MutableLiveData<String>()
     var location = MutableLiveData<Location>()
+    var photo: String? = null
+        set(value){
+            field = value
+            checkFormState()
+        }
+    var date: Date? = null
+        set(value){
+            field = value
+            checkFormState()
+        }
     var isFormValid = MutableLiveData<Boolean>()
     private lateinit var eventRepo: EventRepository
     private lateinit var locationService: LocationService
     private var musicGenres = arrayOf<String>("House", "Rap", "Trap", "Rock", "Techno")
+
 
 
     fun setContext(context: Context){
@@ -77,20 +89,23 @@ class AddEventViewModel : ViewModel() {
         }
 
     private fun checkFormState(){
-        isFormValid.value = isDescriptionValid && isNameValid
+        isFormValid.value = isDescriptionValid && isNameValid && photo != null && location.value != null
     }
 
-    //TODO - to make valid event and add it
-    private fun addEvent(){
+    fun addEvent(){
         var eventToAdd: EventEntity = EventEntity().also{
+            it.name = name
             it.description = description
-            if(location.value != null){
-                it.longitude = location.value!!.longitude
-                it.latitude = location.value!!.latitude
+            it.longitude = location.value!!.longitude
+            it.latitude = location.value!!.latitude
+            it.photo = photo
+            it.musicGenreId = 1
+
+            var calendar = Calendar.getInstance().also{
+                it.time = Calendar.getInstance().time
+                it.add(Calendar.MONTH, 1)
             }
-            else{
-                throw Error("Cannot determine location for new event!")
-            }
+            var eventDate = calendar.time
         }
 
         viewModelScope.launch {

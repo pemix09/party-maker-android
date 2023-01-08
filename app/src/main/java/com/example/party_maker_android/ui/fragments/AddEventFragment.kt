@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
     companion object {
         fun newInstance() = AddEventFragment()
     }
+    private val TAG = "AddEventFragment"
     private lateinit var fragmentContext: Context
     private lateinit var viewModel: AddEventViewModel
     private lateinit var binding: FragmentAddEventBinding
@@ -50,6 +52,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         setModelObservers()
         setViewChangeListeners()
+        setAddEventAction()
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
@@ -58,6 +61,13 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>){
 
+    }
+    fun addSelectedPhoto(base64Photo: String){
+        viewModel.photo = base64Photo
+    }
+
+    fun showTimePickerDialog(view: View){
+        Log.i(TAG, "date picker was clicked!")
     }
 
     private fun setModelObservers(){
@@ -73,6 +83,9 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         viewModel.nameValidationMessage.observe(viewLifecycleOwner){
             binding.nameInputContainer.helperText = it
         }
+        viewModel.isFormValid.observe(viewLifecycleOwner){
+            binding.addEventButton.isEnabled = it
+        }
     }
 
     private fun setViewChangeListeners(){
@@ -81,6 +94,13 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
         binding.nameInput.addTextChangedListener {
             viewModel.name = it.toString()
+        }
+    }
+
+
+    private fun setAddEventAction(){
+        binding.addEventButton.setOnClickListener {
+            viewModel.addEvent()
         }
     }
 }

@@ -30,4 +30,5 @@
     <string name="create_event_text">Stwórz swoje wydarzenie!</string>
     <string name="select_from_gallery">Wybierz z galerii</string>
     <string name="make_photo">Zrób zdjęcie</string>
+    <string name="add_event_button">Dodaj wydarzenie</string>
 </resources>

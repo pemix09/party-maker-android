@@ -37,5 +37,7 @@
     <string name="select_photo_text">Select photo for event:</string>
     <string name="select_from_gallery">Select from gallery</string>
     <string name="make_photo">Make photo</string>
+    <string name="add_event_button">Add event</string>
+    <string name="pick_time">pick time</string>
 
 </resources>
