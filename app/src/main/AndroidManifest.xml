@@ -35,14 +35,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.map.MapActivity"
+            android:name=".ui.App.AppActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".StartActivity"
             android:exported="true"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>

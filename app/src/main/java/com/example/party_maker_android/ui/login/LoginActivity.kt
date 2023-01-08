@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityLoginBinding
-import com.example.party_maker_android.ui.map.MapActivity
+import com.example.party_maker_android.ui.App.AppActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginBinding: ActivityLoginBinding
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginModel.loginSuccess.observe(this){
             if(it == true){
-                var mapIntent = Intent(this, MapActivity::class.java)
+                var mapIntent = Intent(this, AppActivity::class.java)
                 this.startActivity(mapIntent)
             }
             else{

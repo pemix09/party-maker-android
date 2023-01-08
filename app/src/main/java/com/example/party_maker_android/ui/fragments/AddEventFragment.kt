@@ -1,11 +1,8 @@
 package com.example.party_maker_android.ui.fragments
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.provider.ContactsContract.Profile
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,7 +13,7 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentAddEventBinding
-import com.example.party_maker_android.ui.map.MapActivity
+import com.example.party_maker_android.ui.App.AppActivity
 
 class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -24,7 +21,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         fun newInstance() = AddEventFragment()
     }
     private val TAG = "AddEventFragment"
-    private lateinit var fragmentActivityContext: MapActivity
+    private lateinit var fragmentActivityContext: AppActivity
     private lateinit var viewModel: AddEventViewModel
     private lateinit var binding: FragmentAddEventBinding
 
@@ -37,7 +34,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onAttach(activity: Activity) {
-        fragmentActivityContext = activity as MapActivity
+        fragmentActivityContext = activity as AppActivity
         super.onAttach(activity)
     }
 

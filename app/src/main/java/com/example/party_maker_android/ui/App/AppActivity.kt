@@ -1,4 +1,4 @@
-package com.example.party_maker_android.ui.map
+package com.example.party_maker_android.ui.App
 
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -14,9 +14,9 @@ import com.example.party_maker_android.ui.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class MapActivity : AppCompatActivity() {
+class AppActivity : AppCompatActivity() {
     lateinit var mapBinding: ActivityMapBinding
-    lateinit var mapModel: MapModel
+    lateinit var mapModel: AppModel
     private val TAG = "mapActivity"
 
 
@@ -31,7 +31,7 @@ class MapActivity : AppCompatActivity() {
         mapBinding = ActivityMapBinding.inflate(layoutInflater)
 
         setContentView(mapBinding.root)
-        mapModel = ViewModelProvider(this)[MapModel::class.java]
+        mapModel = ViewModelProvider(this)[AppModel::class.java]
 
         setInitialMenuState()
         setMenuItemClickListener()

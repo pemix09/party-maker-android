@@ -4,24 +4,21 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.viewModelScope
 import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.network.HttpClientsFactory
 import com.example.party_maker_android.network.model.AccessToken
 import com.example.party_maker_android.network.model.RefreshToken
-import com.example.party_maker_android.network.requests.LoginRequest
 import com.example.party_maker_android.network.requests.RefreshTokenRequest
-import com.example.party_maker_android.network.responses.LoginResponse
 import com.example.party_maker_android.network.responses.RefreshTokenResponse
 import com.example.party_maker_android.ui.login.LoginActivity
-import com.example.party_maker_android.ui.map.MapActivity
+import com.example.party_maker_android.ui.App.AppActivity
 import com.example.party_maker_android.ui.welcome.WelcomeActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MainActivity : Activity() {
+class StartActivity : Activity() {
 
     var userService = UserService(this)
 
@@ -35,7 +32,7 @@ class MainActivity : Activity() {
             this.startActivity(welcomeIntent)
         }
         else if(accessToken?.isValid()!!){
-            var mapIntent = Intent(this, MapActivity().javaClass)
+            var mapIntent = Intent(this, AppActivity().javaClass)
             this.startActivity(mapIntent)
         }
         else if(refreshToken?.isValid()!!){
@@ -57,7 +54,7 @@ class MainActivity : Activity() {
 
             if(error == false)
             {
-                var mapIntent = Intent(this, MapActivity().javaClass)
+                var mapIntent = Intent(this, AppActivity().javaClass)
                 this.startActivity(mapIntent)
             }
             else{
