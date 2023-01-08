@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityMapBinding
 import com.example.party_maker_android.ui.fragments.AddEventFragment
+import com.example.party_maker_android.ui.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -34,6 +35,12 @@ class MapActivity : AppCompatActivity() {
 
         setInitialMenuState()
         setMenuItemClickListener()
+    }
+
+    //Navigate to profile, to show user's events
+    fun onNewEventCreated(){
+        val profileFragment = ProfileFragment()
+        setFragmentContainerContent(profileFragment)
     }
 
     private fun setInitialMenuState(){

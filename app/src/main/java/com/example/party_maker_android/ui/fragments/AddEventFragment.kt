@@ -2,8 +2,10 @@ package com.example.party_maker_android.ui.fragments
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.provider.ContactsContract.Profile
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentAddEventBinding
+import com.example.party_maker_android.ui.map.MapActivity
 
 class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -21,7 +24,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         fun newInstance() = AddEventFragment()
     }
     private val TAG = "AddEventFragment"
-    private lateinit var fragmentContext: Context
+    private lateinit var fragmentActivityContext: MapActivity
     private lateinit var viewModel: AddEventViewModel
     private lateinit var binding: FragmentAddEventBinding
 
@@ -34,17 +37,17 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onAttach(activity: Activity) {
-        fragmentContext = activity
+        fragmentActivityContext = activity as MapActivity
         super.onAttach(activity)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AddEventViewModel::class.java).also {
-            it.setContext(fragmentContext)
+            it.setContext(fragmentActivityContext)
         }
 
-        ArrayAdapter.createFromResource(fragmentContext, R.array.music_genre_array, android.R.layout.simple_spinner_item)
+        ArrayAdapter.createFromResource(fragmentActivityContext, R.array.music_genre_array, android.R.layout.simple_spinner_item)
             .also {
                 it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spinner.adapter = it
@@ -86,6 +89,9 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         viewModel.isFormValid.observe(viewLifecycleOwner){
             binding.addEventButton.isEnabled = it
         }
+        viewModel.eventAddedSuccessfully.observe(viewLifecycleOwner){
+            fragmentActivityContext.onNewEventCreated()
+        }
     }
 
     private fun setViewChangeListeners(){
@@ -94,6 +100,15 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
         binding.nameInput.addTextChangedListener {
             viewModel.name = it.toString()
+        }
+        binding.placeInput.addTextChangedListener {
+            viewModel.place = it.toString()
+            if(it.toString().isEmpty()){
+                binding.placeInputContainer.helperText = "Place cannot be empty!"
+            }
+            else{
+                binding.placeInputContainer.helperText = null
+            }
         }
     }
 
