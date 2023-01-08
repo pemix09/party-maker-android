@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityMapBinding
 import com.example.party_maker_android.ui.fragments.AddEventFragment
+import com.example.party_maker_android.ui.fragments.MapFragment
 import com.example.party_maker_android.ui.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -60,6 +61,8 @@ class AppActivity : AppCompatActivity() {
             Log.i("MenuClicked", "Menu item clicked: ${it.itemId}")
             when(it.itemId){
                 R.id.homeIcon -> {
+                    val mapFragment = MapFragment.newInstance()
+                    setFragmentContainerContent(mapFragment)
                 }
                 R.id.searchIcon -> {
 
