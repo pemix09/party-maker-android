@@ -1,11 +1,11 @@
-package com.example.party_maker_android.network.services
+package com.example.party_maker_android.network.clients
 
 import com.example.party_maker_android.models.EventEntity
 import com.example.party_maker_android.network.model.MusicGenre
 import retrofit2.Response
 import retrofit2.http.*
 
-interface IEventService {
+interface IEventClient {
 
     @GET("Event/GetById")
     suspend fun getById(

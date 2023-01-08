@@ -6,15 +6,14 @@ import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.models.EventEntity
 import com.example.party_maker_android.network.HttpClientsFactory
 import com.example.party_maker_android.network.model.MusicGenre
-import com.example.party_maker_android.network.services.IEventService
+import com.example.party_maker_android.network.clients.IEventClient
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class EventRepository(private val dispatcher: CoroutineDispatcher, private val context: Context) {
 
-    private val eventHttpClient: IEventService = HttpClientsFactory(context).getEventClient()
+    private val eventHttpClient: IEventClient = HttpClientsFactory(context).getEventClient()
     private val userService = UserService(context)
 
     suspend fun createEvent(eventToAdd: EventEntity){
