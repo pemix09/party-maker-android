@@ -107,7 +107,7 @@
             app:layout_constraintTop_toTopOf="@id/spinner" />
 
         <fragment
-            android:name="com.example.party_maker_android.fragment_select_photo"
+            android:name="com.example.party_maker_android.ui.fragments.fragment_select_photo"
             android:id="@+id/select_photo_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
