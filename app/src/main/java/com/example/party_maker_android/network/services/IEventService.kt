@@ -13,10 +13,23 @@ interface IEventService {
         @Query("EventId") eventId: Int
     ): Response<EventEntity>
 
-    @GET("Event/GetByQuery")
-    suspend fun GetByQuery(
+    @GET("Event/GetForAreaByQuery")
+    suspend fun getForAreaByQuery(
         @Header("Authorization") token: String,
-        @Query("Query") query: String
+        @Query("Query") query: String,
+        @Query("latNorth") latNorth: Double,
+        @Query("latSouth") latSouth: Double,
+        @Query("lonEast") lonEast: Double,
+        @Query("lonWest") lonWest: Double
+    ): Response<List<EventEntity>>
+
+    @GET("Event/GetForArea")
+    suspend fun getForArea(
+        @Header("Authorization") token: String,
+        @Query("latNorth") latNorth: Double,
+        @Query("latSouth") latSouth: Double,
+        @Query("lonEast") lonEast: Double,
+        @Query("lonWest") lonWest: Double
     ): Response<List<EventEntity>>
 
     @POST("Event/Create")

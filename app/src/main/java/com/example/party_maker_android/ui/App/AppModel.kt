@@ -10,6 +10,7 @@ import com.example.party_maker_android.Services.LocationService
 import com.example.party_maker_android.models.EventEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.osmdroid.util.BoundingBox
 
 class AppModel(private val applicationContext: Application): AndroidViewModel(applicationContext) {
 
@@ -17,25 +18,25 @@ class AppModel(private val applicationContext: Application): AndroidViewModel(ap
     private var eventRepo: EventRepository = EventRepository(Dispatchers.IO, applicationContext.applicationContext)
     private var events: List<EventEntity>? = null
 
-    init {
-        updateLocation()
-    }
 
-
-    fun updateLocation(){
-        events = loadEvents(locationService.getCurrentLocation())
+    fun updateLocation(boundingBox: BoundingBox){
+        var latitudeNorth: Double = boundingBox.latNorth
+        var latitudeSouth: Double = boundingBox.latSouth
+        var longitudeEast: Double = boundingBox.lonEast
+        var longitudeWest: Double = boundingBox.lonWest
+        events = loadEvents(latitudeNorth, latitudeSouth, longitudeEast, longitudeWest)
     }
 
     //first loading of events, should be based on localisation
-    private fun loadEvents(location: Location): List<EventEntity>?{
+    private fun loadEvents(latNorth: Double, latSouth: Double, lonEast: Double, lonWest: Double): List<EventEntity>?{
         var events: List<EventEntity>? = null
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                eventRepo.getEventWithQuery("dsa")
+                events = eventRepo.getEventsForAreaWithQuery("dsa", latNorth, latSouth, lonEast, lonWest)
             }
             catch(ex: Exception){
-                Log.e("Fetching events error","Some error happend while fetching events!")
+                Log.e("Fetching events error","Some error happend while fetching events: ${ex.message}")
             }
         }
         return events

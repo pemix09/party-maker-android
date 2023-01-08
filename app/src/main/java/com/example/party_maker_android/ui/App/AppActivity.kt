@@ -13,6 +13,7 @@ import com.example.party_maker_android.ui.fragments.AddEventFragment
 import com.example.party_maker_android.ui.fragments.MapFragment
 import com.example.party_maker_android.ui.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.osmdroid.util.BoundingBox
 
 
 class AppActivity : AppCompatActivity() {
@@ -42,6 +43,11 @@ class AppActivity : AppCompatActivity() {
     fun onNewEventCreated(){
         val profileFragment = ProfileFragment()
         setFragmentContainerContent(profileFragment)
+    }
+
+    //when we change location of the map
+    fun changeMapLocation(boundingBox: BoundingBox){
+        mapModel.updateLocation(boundingBox)
     }
 
     private fun setInitialMenuState(){

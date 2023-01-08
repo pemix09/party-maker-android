@@ -35,12 +35,34 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
         }
     }
 
-    suspend fun getEventWithQuery(query: String): List<EventEntity>?{
+    suspend fun getEventsForArea(latNorth: Double, latSouth: Double, lonEast: Double, lonWest: Double): List<EventEntity>?{
         var events: List<EventEntity>?
 
         withContext(dispatcher){
             var accessToken = userService.getAccessToken()
-            var response: Response<List<EventEntity>> = eventHttpClient.GetByQuery(accessToken?.token!!, query)
+            var response: Response<List<EventEntity>> = eventHttpClient.getForArea(accessToken?.token!!, latNorth, latSouth, lonEast, lonWest)
+
+            if(!response.isSuccessful){
+
+                if(response.code() == 500){
+                    throw Exception("Server not available, check your internet connection and try later!")
+                }
+                else{
+                    throw Exception("Getting events by query unsuccessful, cause: ${response.errorBody()?.toString()}")
+                }
+            }
+
+            events = response.body()
+        }
+        return events;
+    }
+
+    suspend fun getEventsForAreaWithQuery(query: String, latNorth: Double, latSouth: Double, lonEast: Double, lonWest: Double): List<EventEntity>?{
+        var events: List<EventEntity>?
+
+        withContext(dispatcher){
+            var accessToken = userService.getAccessToken()
+            var response: Response<List<EventEntity>> = eventHttpClient.getForAreaByQuery(accessToken?.token!!, query, latNorth, latSouth, lonEast, lonWest)
 
             if(!response.isSuccessful){
 
