@@ -76,8 +76,9 @@ class AppActivity : AppCompatActivity() {
                 R.id.messagesIcon -> {
 
                 }
-                R.id.settingsIcon -> {
-
+                R.id.profileIcon -> {
+                    val profileFragment = ProfileFragment.newInstance()
+                    setFragmentContainerContent(profileFragment)
                 }
                 else -> {
                 }

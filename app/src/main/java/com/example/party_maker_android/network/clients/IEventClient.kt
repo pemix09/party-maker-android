@@ -7,12 +7,14 @@ import retrofit2.http.*
 
 interface IEventClient {
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("Event/GetById")
     suspend fun getById(
         @Header("Authorization") token: String,
         @Query("EventId") eventId: Int
     ): Response<EventEntity>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("Event/GetForAreaByQuery")
     suspend fun getForAreaByQuery(
         @Header("Authorization") token: String,
@@ -23,6 +25,7 @@ interface IEventClient {
         @Query("lonWest") lonWest: Double
     ): Response<List<EventEntity>>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("Event/GetForArea")
     suspend fun getForArea(
         @Header("Authorization") token: String,
@@ -32,6 +35,7 @@ interface IEventClient {
         @Query("lonWest") lonWest: Double
     ): Response<List<EventEntity>>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("Event/Create")
     suspend fun create(
         @Header("Authorization") token: String,
@@ -43,4 +47,11 @@ interface IEventClient {
     suspend fun getMusicGenres(
         @Header("Authorization") token: String
     ): Response<List<MusicGenre>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @GET("Event/GetAllOfCurrentUser")
+    suspend fun getAllOfCurrentUser(
+        @Header("Authorization") token: String
+    ): Response<List<EventEntity>>
+
 }

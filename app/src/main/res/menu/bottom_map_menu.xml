@@ -16,7 +16,7 @@
         android:title="Messages"
         android:icon="@drawable/whiskey"/>
     <item
-        android:id="@+id/settingsIcon"
-        android:title="Settings"
-        android:icon="@drawable/whiskey"/>
+        android:id="@+id/profileIcon"
+        android:title="Profile"
+        android:icon="@drawable/profile_icon"/>
 </menu>

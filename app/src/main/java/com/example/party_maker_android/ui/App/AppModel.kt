@@ -33,7 +33,7 @@ class AppModel(private val applicationContext: Application): AndroidViewModel(ap
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                events = eventRepo.getEventsForAreaWithQuery("dsa", latNorth, latSouth, lonEast, lonWest)
+                events = eventRepo.getEventsForArea(latNorth, latSouth, lonEast, lonWest)
             }
             catch(ex: Exception){
                 Log.e("Fetching events error","Some error happend while fetching events: ${ex.message}")

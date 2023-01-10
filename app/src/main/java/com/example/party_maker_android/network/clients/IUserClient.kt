@@ -1,14 +1,13 @@
 package com.example.party_maker_android.network.clients
 
+import com.example.party_maker_android.network.model.UserEntity
 import com.example.party_maker_android.network.requests.LoginRequest
 import com.example.party_maker_android.network.requests.RefreshTokenRequest
 import com.example.party_maker_android.network.requests.RegisterRequest
 import com.example.party_maker_android.network.responses.LoginResponse
 import com.example.party_maker_android.network.responses.RefreshTokenResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface IUserClient {
 
@@ -30,5 +29,10 @@ interface IUserClient {
         @Body requestBody: RefreshTokenRequest
     ): Response<RefreshTokenResponse>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @GET("/User/GetLogged")
+    suspend fun getCurrentUser(
+        @Header("Authorization") token: String
+    ): Response<UserEntity>
 
 }

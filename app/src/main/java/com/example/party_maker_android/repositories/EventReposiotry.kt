@@ -2,6 +2,7 @@
 package com.example.party_maker_android
 
 import android.content.Context
+import android.util.Log
 import com.example.party_maker_android.Services.UserService
 import com.example.party_maker_android.models.EventEntity
 import com.example.party_maker_android.network.HttpClientsFactory
@@ -15,6 +16,7 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
 
     private val eventHttpClient: IEventClient = HttpClientsFactory(context).getEventClient()
     private val userService = UserService(context)
+    private val TAG = "EventRepository"
 
     suspend fun createEvent(eventToAdd: EventEntity){
         withContext(dispatcher){
@@ -32,6 +34,28 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
                 }
             }
         }
+    }
+
+    suspend fun getEventsForCurrentUser(): List<EventEntity>?{
+        var events: List<EventEntity>?
+
+        withContext(dispatcher){
+            var accessToken = userService.getAccessToken()
+            var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+            var response: Response<List<EventEntity>> = eventHttpClient.getAllOfCurrentUser(formattedAccessToken)
+
+            if(!response.isSuccessful){
+                if(response.code() == 500){
+                    throw Exception("Server not available, check your internet connection and try later!")
+                }
+                else{
+                    throw Exception("Getting events for user unsuccessful, cause: ${response.errorBody()?.toString()}")
+                }
+            }
+            Log.i(TAG, "Getting user's events successful!")
+            events = response.body()
+        }
+        return events;
     }
 
     suspend fun getEventsForArea(latNorth: Double, latSouth: Double, lonEast: Double, lonWest: Double): List<EventEntity>?{
