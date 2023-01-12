@@ -8,8 +8,7 @@ import com.example.party_maker_android.models.EventEntity
 import com.example.party_maker_android.network.HttpClientsFactory
 import com.example.party_maker_android.network.model.MusicGenre
 import com.example.party_maker_android.network.clients.IEventClient
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.Response
 
 class EventRepository(private val dispatcher: CoroutineDispatcher, private val context: Context) {
@@ -37,9 +36,7 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
     }
 
     suspend fun getEventsForCurrentUser(): List<EventEntity>?{
-        var events: List<EventEntity>?
-
-        withContext(dispatcher){
+        var getEventsJob = GlobalScope.async(dispatcher){
             var accessToken = userService.getAccessToken()
             var formattedAccessToken = "Bearer ${accessToken?.token!!}"
             var response: Response<List<EventEntity>> = eventHttpClient.getAllOfCurrentUser(formattedAccessToken)
@@ -53,9 +50,10 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
                 }
             }
             Log.i(TAG, "Getting user's events successful!")
-            events = response.body()
+            return@async response.body()
         }
-        return events;
+        Log.i(TAG, "Events returned to main thread")
+        return getEventsJob.await();
     }
 
     suspend fun getEventsForArea(latNorth: Double, latSouth: Double, lonEast: Double, lonWest: Double): List<EventEntity>?{

@@ -35,7 +35,7 @@ class ProfileFragment : Fragment() {
 
     private fun setViewModelObservers(){
         viewModel.errorMessage.observe(viewLifecycleOwner){
-
+            binding.profileErrorMessage.text = it.toString()
         }
         viewModel.currentUser.observe(viewLifecycleOwner){
             binding.profileName.text = it?.userName

@@ -1,6 +1,7 @@
 package com.example.party_maker_android.ui.fragments
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,10 +10,12 @@ import com.example.party_maker_android.models.EventEntity
 import com.example.party_maker_android.network.model.UserEntity
 import com.example.party_maker_android.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class ProfileViewModel : ViewModel() {
 
+    private val TAG = "ProfileViewModel"
     private lateinit var userRepository: UserRepository
     private lateinit var eventRepository: EventRepository
     var currentUser = MutableLiveData<UserEntity?>()
@@ -27,48 +30,26 @@ class ProfileViewModel : ViewModel() {
     }
 
     private fun fetchUser(){
-        var user: UserEntity? = null
-        var errorMsg: String? = null
-
         viewModelScope.launch {
             try{
-                user = userRepository.getCurrentUser()
+                currentUser.value = userRepository.getCurrentUser()
             }
             catch(error: Exception){
-                errorMsg = error.message
-            }
-            if(user == null){
-                errorMsg = "Error fetching user data"
+                Log.e(TAG, "Error fetching user details: ${error.message}")
+                errorMessage.value = error.message
             }
         }
-
-        if(errorMsg != null){
-            errorMessage.value = errorMsg
-        }
-
     }
 
     private fun fetchEvents(){
-        var events: List<EventEntity>? = null
-        var errorMsg: String? = null
-
         viewModelScope.launch {
             try{
-                events = eventRepository.getEventsForCurrentUser()
+                eventsOfCurrentUser.value = eventRepository.getEventsForCurrentUser()
             }
             catch(error: Exception){
-                errorMsg = error.message
+                Log.e(TAG, "Some error while fetching events: ${error.message}")
+                errorMessage.value = error.message
             }
-            if(events == null){
-                errorMsg = "Error fetching user data"
-            }
-        }
-
-        if(errorMsg != null){
-            errorMessage.value = errorMsg
-        }
-        if(events != null){
-            eventsOfCurrentUser.value = events
         }
     }
 }
