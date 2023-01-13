@@ -1,23 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.ProfileFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="300dp"
+        android:paddingTop="80dp"
+        android:paddingHorizontal="20dp"
+        android:background="#fece2f">
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/profile_icon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/profile_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Profile picture"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/profile_image"
+            android:includeFontPadding="false"
+            android:layout_marginStart="10dp"/>
 
         <TextView
-            android:id="@+id/profileName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:id="@+id/profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_userName"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/profile_image"
+            android:text="email" />
+
         <TextView
-            android:id="@+id/profileErrorMessage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:id="@+id/profile_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profile_email"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/profile_image"
+            android:text="role"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:id=""
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/profile_image"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="11dp">
 
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_toRightOf=""
+            app:cardCornerRadius="50dp"
+            app:cardElevation="11dp">
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
 </ScrollView>

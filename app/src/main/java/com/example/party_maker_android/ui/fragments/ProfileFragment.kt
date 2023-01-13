@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.party_maker_android.R
+import com.example.party_maker_android.Services.Base64Helper
 import com.example.party_maker_android.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -35,10 +37,16 @@ class ProfileFragment : Fragment() {
 
     private fun setViewModelObservers(){
         viewModel.errorMessage.observe(viewLifecycleOwner){
-            binding.profileErrorMessage.text = it.toString()
+            val toast = Toast.makeText(context, it.toString(), Toast.LENGTH_LONG)
+            toast.show()
         }
         viewModel.currentUser.observe(viewLifecycleOwner){
-            binding.profileName.text = it?.userName
+            binding.profileUserName.text = it?.userName
+            if(it?.photo != null){
+                binding.profileImage.setImageBitmap(Base64Helper.getBitmapFromBase64(it.photo!!))
+            }
+            binding.profileEmail.text = it?.email
+            binding.profileRole.text = it?.role
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.party_maker_android.EventRepository
+import com.example.party_maker_android.Services.Base64Helper
 import com.example.party_maker_android.models.EventEntity
 import com.example.party_maker_android.network.model.UserEntity
 import com.example.party_maker_android.repositories.UserRepository
