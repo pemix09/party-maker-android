@@ -29,14 +29,14 @@
         android:theme="@style/Theme.Partymakerandroid"
         tools:targetApi="31">
         <activity
-            android:name=".ui.register.RegisterActivity"
+            android:name=".presentation.activities.views.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.App.AppActivity"
+            android:name=".presentation.activities.views.AppActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -57,11 +57,11 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.welcome.WelcomeActivity"
+            android:name=".presentation.activities.views.WelcomeActivity"
             android:exported="false"
             android:label="@string/welcome_activity_name" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".presentation.activities.views.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login" />
     </application>

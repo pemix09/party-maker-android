@@ -34,4 +34,6 @@
     <string name="pick_time">Wybierz datę</string>
     <string name="place_hint">Miejsce wydarzenia</string>
     <string name="select_photo_text">Wybierz zdjęcie eventu:</string>
+    <string name="registration_date_text">od: %s</string>
+    <string name="profile_rating_text">ocena: %s</string>
 </resources>

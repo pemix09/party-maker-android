@@ -38,5 +38,7 @@
     <string name="add_event_button">Add event</string>
     <string name="pick_time">pick time</string>
     <string name="place_hint">place of the event</string>
+    <string name="registration_date_text">since: %s</string>
+    <string name="profile_rating_text">rating: %s</string>
 
 </resources>
