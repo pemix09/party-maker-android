@@ -2,6 +2,7 @@ package com.example.party_maker_android.presentation.activities.views
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
@@ -49,7 +50,8 @@ class LoginActivity : AppCompatActivity() {
                 this.startActivity(mapIntent)
             }
             else{
-                //TODO - show here loginErrorMessage to the user
+                loginBinding.loginErrorMessage.visibility = TextView.VISIBLE
+                loginBinding.loginErrorMessage.text = loginModel.loginFeedBackMessage.value
             }
         }
     }

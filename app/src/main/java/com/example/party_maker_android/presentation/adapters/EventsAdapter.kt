@@ -31,8 +31,13 @@ class EventsAdapter(private val ctx: Context, private val events: List<EventEnti
         var view = inflater.inflate(R.layout.event_list_item, null)
         var eventName = view.findViewById<TextView>(R.id.eventName)
         var eventImage = view.findViewById<ImageView>(R.id.eventPhoto)
+        var eventDescription = view.findViewById<TextView>(R.id.eventDescription)
+        var eventPlace = view.findViewById<TextView>(R.id.eventPlace)
+
         eventName.text = events[position].name
         eventImage.setImageBitmap(events[position].photo?.let { Base64Helper.getBitmapFromBase64(it) })
+        eventDescription.text = events[position].description
+        eventPlace.text = events[position].place
 
         return view
     }

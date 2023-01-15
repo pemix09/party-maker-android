@@ -76,6 +76,18 @@
             android:maxLength="16"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/login_error_message"
+        style="@style/login_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password_input_container" />
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
@@ -85,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_password_input_container" />
+        app:layout_constraintTop_toBottomOf="@+id/login_error_message" />
 
     <TextView
         android:id="@+id/login_forgot_password"

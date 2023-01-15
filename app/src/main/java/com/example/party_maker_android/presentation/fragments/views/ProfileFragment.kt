@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.services.Base64Helper
@@ -60,13 +61,27 @@ class ProfileFragment : Fragment() {
             binding.sinceText.text = context?.getString(R.string.registration_date_text, date)
         }
         viewModel.organizedEvents.observe(viewLifecycleOwner){ organizedEvents ->
-            if(organizedEvents != null){
+            if(organizedEvents != null && organizedEvents.isNotEmpty()){
                 var adapter = context?.let { ctx -> EventsAdapter(ctx, organizedEvents) }
                 binding.organizedEventsList.adapter = adapter
-                binding.organizedEventsList.setOnClickListener {
-                    //TODO - here we have to start intent of event
-                    Log.i(TAG, "Event was clicked! ${it.id}")
+                binding.organizedEventsList.setOnItemClickListener { adapterView, view, index, id ->
+                    //TODO - start new fragment or activity with event details
                 }
+            }
+            else{
+                binding.emptyOrganizedEventsText.visibility = TextView.VISIBLE
+            }
+        }
+        viewModel.followedEvents.observe(viewLifecycleOwner){ followedEvents ->
+            if(followedEvents != null && followedEvents.isNotEmpty()){
+                var adapter = context?.let { ctx -> EventsAdapter(ctx, followedEvents) }
+                binding.followedEventsList.adapter = adapter
+                binding.followedEventsList.setOnItemClickListener { adapterView, view, index, id ->
+                    //TODO - start new fragment or activity with event details
+                }
+            }
+            else{
+                binding.emptyFollowedEventsText.visibility = TextView.VISIBLE
             }
         }
     }

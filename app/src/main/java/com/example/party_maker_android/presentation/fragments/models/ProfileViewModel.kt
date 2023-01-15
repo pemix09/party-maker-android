@@ -47,6 +47,7 @@ class ProfileViewModel : ViewModel() {
                 var eventsOfCurrentUser = eventRepository.getEventsForCurrentUser()
                 followedEvents.value = eventsOfCurrentUser?.followed
                 organizedEvents.value = eventsOfCurrentUser?.organized
+                Log.i(TAG, "Events: ${organizedEvents.value?.size}, first's id: ${organizedEvents?.value?.get(0)?.id!!}")
             }
             catch(error: Exception){
                 Log.e(TAG, "Some error while fetching events: ${error.message}")
