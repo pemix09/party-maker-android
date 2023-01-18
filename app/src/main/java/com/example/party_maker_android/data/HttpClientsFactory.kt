@@ -9,8 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class HttpClientsFactory(val context: Context) {
-    private val url: String = context.getString(R.string.BackEndAddress)
+class HttpClientsFactory(private val url: String) {
 
     //TODO logging body may slow down performance, shouldn't be used in production
     private var logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)

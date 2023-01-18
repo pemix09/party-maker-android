@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.party_maker_android.R
-import com.example.party_maker_android.presentation.fragments.models.EventDetailsViewModel
+import com.example.party_maker_android.presentation.fragments.viewModels.EventDetailsViewModel
 
 class EventDetailsFragment : Fragment() {
 

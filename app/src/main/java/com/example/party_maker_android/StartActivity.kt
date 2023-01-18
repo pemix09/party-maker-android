@@ -40,7 +40,8 @@ class StartActivity : Activity() {
             var context: Context = this
 
             MainScope().launch(Dispatchers.IO) {
-                var userHttpService = HttpClientsFactory(context).getUserClient()
+                var backEndAddress = context.getString(R.string.BackEndAddress)
+                var userHttpService = HttpClientsFactory(backEndAddress).getUserClient()
                 var refreshTokenRequest = RefreshTokenRequest(accessToken.token!!, refreshToken.token!!)
                 val result: Response<RefreshTokenResponse> = userHttpService.RefreshToken(refreshTokenRequest)
 

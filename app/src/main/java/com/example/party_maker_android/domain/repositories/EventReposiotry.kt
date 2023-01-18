@@ -14,7 +14,8 @@ import retrofit2.Response
 
 class EventRepository(private val dispatcher: CoroutineDispatcher, private val context: Context) {
 
-    private val eventHttpClient: IEventClient = HttpClientsFactory(context).getEventClient()
+    private val backEndAddress = context.getString(R.string.BackEndAddress)
+    private val eventHttpClient: IEventClient = HttpClientsFactory(backEndAddress).getEventClient()
     private val userService = UserService(context)
     private val TAG = "EventRepository"
 

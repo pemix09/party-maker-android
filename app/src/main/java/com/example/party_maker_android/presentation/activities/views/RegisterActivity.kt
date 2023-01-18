@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.databinding.ActivityRegisterBinding
 import androidx.core.widget.addTextChangedListener
-import com.example.party_maker_android.presentation.activities.models.RegisterViewModel
+import com.example.party_maker_android.presentation.activities.viewModels.RegisterViewModel
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityRegisterBinding

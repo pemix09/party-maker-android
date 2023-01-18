@@ -7,82 +7,54 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityLoginBinding
-import com.example.party_maker_android.presentation.activities.models.LoginModel
+import com.example.party_maker_android.presentation.activities.viewModels.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginBinding: ActivityLoginBinding
-    private lateinit var loginModel: LoginModel
-    private var emailIputValid: Boolean = false
-    private var passwordInputValid: Boolean = false
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
 
-        loginModel = ViewModelProvider(this)[LoginModel::class.java]
+        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-        SetListeners()
+        setViewListeners()
+        setViewModelObservers()
     }
 
-    private fun SetListeners(){
+    private fun setViewListeners(){
         loginBinding.loginButton.setOnClickListener {
-            var email = loginBinding.loginEmailInput.text.toString()
-            var password = loginBinding.loginPasswordInput.text.toString()
-            loginModel.Login(email, password)
+            loginViewModel.login()
         }
 
         loginBinding.loginEmailInput.addTextChangedListener {
-            loginBinding.loginEmailInputContainer.helperText = validateEmail()
-            loginBinding.loginButton.isEnabled = emailIputValid && passwordInputValid
+            loginViewModel.validateEmail(it.toString())
+            loginBinding.loginEmailInputContainer.helperText = loginViewModel.emailValidationMessage
+            loginBinding.loginButton.isEnabled = loginViewModel.areInputsValid
         }
 
         loginBinding.loginPasswordInput.addTextChangedListener {
-            loginBinding.loginPasswordInputContainer.helperText = validatePassword()
-            loginBinding.loginButton.isEnabled = emailIputValid && passwordInputValid
+            loginViewModel.validatePassword(it.toString())
+            loginBinding.loginPasswordInputContainer.helperText = loginViewModel.passwordValidationMessage
+            loginBinding.loginButton.isEnabled = loginViewModel.areInputsValid
         }
 
-        loginModel.loginSuccess.observe(this){
+
+    }
+
+    private fun setViewModelObservers(){
+        loginViewModel.loginSuccess.observe(this){
             if(it == true){
                 var mapIntent = Intent(this, AppActivity::class.java)
                 this.startActivity(mapIntent)
             }
             else{
                 loginBinding.loginErrorMessage.visibility = TextView.VISIBLE
-                loginBinding.loginErrorMessage.text = loginModel.loginFeedBackMessage.value
+                loginBinding.loginErrorMessage.text = loginViewModel.loginFeedBackMessage.value
             }
         }
     }
-
-    private fun validatePassword(): String?{
-        val password = loginBinding.loginPasswordInput.text.toString()
-        val passMinLen = 8
-
-        if(password.length < passMinLen){
-            this.passwordInputValid = false
-            return getString(R.string.password_min_length_error_message, passMinLen)
-        }
-
-        this.passwordInputValid = true
-        return null
-    }
-    private fun validateEmail(): String?{
-        val email = loginBinding.loginEmailInput.text.toString()
-
-        if(email.isEmpty()){
-            this.emailIputValid = false
-            return getString(R.string.email_required_error_message)
-        }
-        if(android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() == false){
-            this.emailIputValid = false
-            return getString(R.string.email_not_valid_error_message)
-        }
-
-        this.emailIputValid = true
-        return null
-    }
-
-
 }

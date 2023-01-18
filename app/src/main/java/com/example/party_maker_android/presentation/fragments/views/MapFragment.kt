@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.party_maker_android.databinding.FragmentMapBinding
-import com.example.party_maker_android.presentation.fragments.models.MapViewModel
+import com.example.party_maker_android.presentation.fragments.viewModels.MapViewModel
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.views.MapController
 import org.osmdroid.views.MapView

@@ -1,4 +1,4 @@
-package com.example.party_maker_android.presentation.activities.models
+package com.example.party_maker_android.presentation.activities.viewModels
 
 import android.app.Application
 import android.util.Log
@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.osmdroid.util.BoundingBox
 
-class AppModel(private val applicationContext: Application): AndroidViewModel(applicationContext) {
+class AppViewModel(private val applicationContext: Application): AndroidViewModel(applicationContext) {
 
     private var locationService = LocationService(applicationContext.applicationContext)
     private var eventRepo: EventRepository = EventRepository(Dispatchers.IO, applicationContext.applicationContext)

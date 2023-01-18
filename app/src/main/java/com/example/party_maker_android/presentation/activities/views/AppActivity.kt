@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityMapBinding
-import com.example.party_maker_android.presentation.activities.models.AppModel
+import com.example.party_maker_android.presentation.activities.viewModels.AppViewModel
 import com.example.party_maker_android.presentation.fragments.views.AddEventFragment
 import com.example.party_maker_android.presentation.fragments.views.MapFragment
 import com.example.party_maker_android.presentation.fragments.views.ProfileFragment
@@ -19,7 +19,7 @@ import org.osmdroid.util.BoundingBox
 
 class AppActivity : AppCompatActivity() {
     lateinit var mapBinding: ActivityMapBinding
-    lateinit var mapModel: AppModel
+    lateinit var mapModel: AppViewModel
     private val TAG = "mapActivity"
 
 
@@ -34,7 +34,7 @@ class AppActivity : AppCompatActivity() {
         mapBinding = ActivityMapBinding.inflate(layoutInflater)
 
         setContentView(mapBinding.root)
-        mapModel = ViewModelProvider(this)[AppModel::class.java]
+        mapModel = ViewModelProvider(this)[AppViewModel::class.java]
 
         setInitialMenuState()
         setMenuItemClickListener()

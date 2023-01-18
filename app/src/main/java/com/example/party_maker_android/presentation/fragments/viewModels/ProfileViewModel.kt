@@ -1,4 +1,4 @@
-package com.example.party_maker_android.presentation.fragments.models
+package com.example.party_maker_android.presentation.fragments.viewModels
 
 import android.content.Context
 import android.util.Log

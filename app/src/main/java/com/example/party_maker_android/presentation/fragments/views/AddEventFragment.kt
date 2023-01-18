@@ -14,7 +14,7 @@ import androidx.core.widget.addTextChangedListener
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentAddEventBinding
 import com.example.party_maker_android.presentation.activities.views.AppActivity
-import com.example.party_maker_android.presentation.fragments.models.AddEventViewModel
+import com.example.party_maker_android.presentation.fragments.viewModels.AddEventViewModel
 
 class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 

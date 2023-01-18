@@ -2,6 +2,7 @@ package com.example.party_maker_android.domain.repositories
 
 import android.content.Context
 import android.util.Log
+import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.services.UserService
 import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.data.clients.IUserClient
@@ -13,7 +14,8 @@ import retrofit2.Response
 
 class UserRepository(private val dispatcher: CoroutineDispatcher, private val context: Context) {
 
-    private val userHttpClient: IUserClient = HttpClientsFactory(context).getUserClient()
+    private val backEndAddress = context.getString(R.string.BackEndAddress)
+    private val userHttpClient: IUserClient = HttpClientsFactory(backEndAddress).getUserClient()
     private val userService = UserService(context)
     private val TAG = "UserRepository"
 

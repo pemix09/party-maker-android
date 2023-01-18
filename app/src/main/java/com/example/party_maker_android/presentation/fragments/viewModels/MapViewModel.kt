@@ -1,4 +1,4 @@
-package com.example.party_maker_android.presentation.fragments.models
+package com.example.party_maker_android.presentation.fragments.viewModels
 
 import androidx.lifecycle.ViewModel
 

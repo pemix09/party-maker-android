@@ -1,4 +1,4 @@
-package com.example.party_maker_android.presentation.activities.models
+package com.example.party_maker_android.presentation.activities.viewModels
 
 import android.app.Application
 import android.content.Intent
@@ -103,7 +103,8 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
 
     fun register(email: String, userName: String, password: String){
         val context = getApplication<Application>().applicationContext
-        var userHttpService = HttpClientsFactory(context).getUserClient()
+        val backEndAddress = context.getString(R.string.BackEndAddress)
+        var userHttpService = HttpClientsFactory(backEndAddress).getUserClient()
 
         viewModelScope.launch(Dispatchers.IO) {
 
