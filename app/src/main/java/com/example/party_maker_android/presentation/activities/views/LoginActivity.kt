@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
             }
             else{
                 loginBinding.loginErrorMessage.visibility = TextView.VISIBLE
-                loginBinding.loginErrorMessage.text = loginViewModel.loginFeedBackMessage.value
+                loginBinding.loginErrorMessage.text = loginViewModel.loginFeedBackMessage
             }
         }
     }

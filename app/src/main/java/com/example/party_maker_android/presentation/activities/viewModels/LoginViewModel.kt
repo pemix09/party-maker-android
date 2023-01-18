@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
-    val loginFeedBackMessage = MutableLiveData<String>()
     val loginSuccess = MutableLiveData<Boolean>()
+    var loginFeedBackMessage: String? = null
     var passwordValidationMessage: String? = null
     var emailValidationMessage: String? = null
     var isPasswordInputValid: Boolean = false
@@ -30,9 +30,18 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     //only available, when the input fields are valid
     fun login(){
         if(areInputsValid){
-            viewModelScope.launch{
-                loginModel.login()
+            try{
+                viewModelScope.launch{
+                    loginModel.login()
+                }
+                loginSuccess.value = true
+                loginFeedBackMessage = "Login successful!"
             }
+            catch(error: Error){
+                loginSuccess.value = false
+                loginFeedBackMessage = "Login failed, details: ${error.message}"
+            }
+
         }
     }
 
