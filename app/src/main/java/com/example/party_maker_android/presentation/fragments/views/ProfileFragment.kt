@@ -38,6 +38,7 @@ class ProfileFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.setContext(requireContext())
         setViewModelObservers()
+        viewModel.fetchData()
     }
 
     private fun setViewModelObservers(){
