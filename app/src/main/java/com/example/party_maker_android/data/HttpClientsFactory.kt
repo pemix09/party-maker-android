@@ -3,11 +3,13 @@ package com.example.party_maker_android.data
 import android.content.Context
 import com.example.party_maker_android.R
 import com.example.party_maker_android.data.clients.IEventClient
+import com.example.party_maker_android.data.clients.IMessageClient
 import com.example.party_maker_android.data.clients.IUserClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 class HttpClientsFactory(private val url: String) {
 
@@ -20,7 +22,6 @@ class HttpClientsFactory(private val url: String) {
     }
 
     fun getUserClient(): IUserClient{
-
         return Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient.build())
@@ -29,12 +30,19 @@ class HttpClientsFactory(private val url: String) {
     }
 
     fun getEventClient(): IEventClient{
-
         return Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient.build())
             .build()
             .create(IEventClient::class.java)
+    }
+
+    fun getMessageClient(): IMessageClient{
+        return Retrofit.Builder().baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient.build())
+            .build()
+            .create(IMessageClient::class.java)
     }
 
 

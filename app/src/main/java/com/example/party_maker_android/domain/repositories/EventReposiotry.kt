@@ -75,6 +75,7 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
         return organized!!
     }
 
+    //TODO - make right things, not use with context!
     suspend fun getEventsForArea(
         latNorth: Double,
         latSouth: Double,
@@ -111,6 +112,7 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
         return events;
     }
 
+    //TODO - make right things, not use with context!
     suspend fun getEventsForAreaWithQuery(
         query: String,
         latNorth: Double,

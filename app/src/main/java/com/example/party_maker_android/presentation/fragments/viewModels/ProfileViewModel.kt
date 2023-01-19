@@ -23,7 +23,7 @@ class ProfileViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String?>()
 
     fun setContext(context: Context){
-        userRepository = UserRepository(Dispatchers.IO, context)
+        userRepository = UserRepository(context)
         eventRepository = EventRepository(Dispatchers.IO, context)
         fetchUser()
         fetchEvents()

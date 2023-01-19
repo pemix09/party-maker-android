@@ -7,12 +7,9 @@ import com.example.party_maker_android.domain.services.UserService
 import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.data.clients.IUserClient
 import com.example.party_maker_android.domain.models.UserEntity
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class UserRepository(private val dispatcher: CoroutineDispatcher, private val context: Context) {
+class UserRepository(private val context: Context) {
 
     private val backEndAddress = context.getString(R.string.BackEndAddress)
     private val userHttpClient: IUserClient = HttpClientsFactory(backEndAddress).getUserClient()
