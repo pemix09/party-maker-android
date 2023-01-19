@@ -20,8 +20,8 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
 
     //in memory objects - the fastest access!
     companion object {
-        var followed: List<EventEntity>? = null
-        var organized: List<EventEntity>? = null
+        private var followed: List<EventEntity>? = null
+        private var organized: List<EventEntity>? = null
     }
 
     suspend fun createEvent(eventToAdd: EventEntity) {

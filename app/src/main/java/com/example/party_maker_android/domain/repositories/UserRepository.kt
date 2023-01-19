@@ -19,26 +19,30 @@ class UserRepository(private val dispatcher: CoroutineDispatcher, private val co
     private val userService = UserService(context)
     private val TAG = "UserRepository"
 
+    companion object{
+        private var currentUser: UserEntity? = null
+    }
     suspend fun getCurrentUser(): UserEntity?{
-        var user: UserEntity? = null
-
-        withContext(dispatcher){
-            var accessToken = userService.getAccessToken()
-            var formattedAccessToken = "Bearer ${accessToken?.token!!}"
-
-            runBlocking {
-                var response: Response<UserEntity> = userHttpClient.getCurrentUser(formattedAccessToken)
-
-                if(response.isSuccessful){
-                    Log.i(TAG ,"User data fetched successfully!")
-                    user = response.body()
-                }
-                else{
-                    throw Error("User not fetched successfully, reason: ${response.errorBody().toString()}")
-                }
-            }
+        if(currentUser != null) return currentUser
+        else if(false){
+            //TODO - user in local memory
         }
+        else{
+            fetchCurrentUser()
+        }
+        return currentUser
+    }
 
-        return user
+    private suspend fun fetchCurrentUser(){
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var response: Response<UserEntity> = userHttpClient.getCurrentUser(formattedAccessToken)
+        if(response.isSuccessful){
+            Log.i(TAG ,"User data fetched successfully!")
+            currentUser = response.body()
+        }
+        else{
+            throw Error("User not fetched successfully, reason: ${response.errorBody().toString()}")
+        }
     }
 }
