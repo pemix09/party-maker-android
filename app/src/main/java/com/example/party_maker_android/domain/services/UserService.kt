@@ -25,7 +25,13 @@ class UserService(private val context: Context) {
         private var refreshToken: RefreshToken? = null
     }
 
-
+    fun isUserLogged(): Boolean{
+        if(accessToken != null && accessToken?.isValid()!!) return true
+        else{
+            accessToken = readAccessToken()
+            return accessToken != null && accessToken?.isValid()!!
+        }
+    }
     fun getAccessToken(): AccessToken?{
         if(accessToken != null){
             return accessToken

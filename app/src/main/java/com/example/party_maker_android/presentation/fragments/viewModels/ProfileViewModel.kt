@@ -44,10 +44,8 @@ class ProfileViewModel : ViewModel() {
     private fun fetchEvents(){
         viewModelScope.launch {
             try{
-                var eventsOfCurrentUser = eventRepository.getEventsForCurrentUser()
-                followedEvents.value = eventsOfCurrentUser?.followed
-                organizedEvents.value = eventsOfCurrentUser?.organized
-                Log.i(TAG, "Events: ${organizedEvents.value?.size}, first's id: ${organizedEvents?.value?.get(0)?.id!!}")
+                followedEvents.value = eventRepository.getFollowedEvents()
+                organizedEvents.value = eventRepository.getOrganizedEvents()
             }
             catch(error: Exception){
                 Log.e(TAG, "Some error while fetching events: ${error.message}")
