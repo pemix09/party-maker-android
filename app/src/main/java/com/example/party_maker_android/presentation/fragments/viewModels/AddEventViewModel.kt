@@ -45,7 +45,7 @@ class AddEventViewModel : ViewModel() {
 
 
     fun setContext(context: Context){
-        eventRepo = EventRepository(Dispatchers.IO, context)
+        eventRepo = EventRepository(context)
         locationService = LocationService(context)
         location.value = locationService.getCurrentLocation()
     }
