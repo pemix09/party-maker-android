@@ -30,6 +30,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
+        setViewObservers()
         return binding.root
     }
 
@@ -41,6 +42,14 @@ class ProfileFragment : Fragment() {
         viewModel.fetchData()
     }
 
+    private fun setViewObservers(){
+        binding.organizedEventsList.setOnItemClickListener { adapterView, view, index, id ->
+            //TODO - start new fragment or activity with event details
+        }
+        binding.followedEventsList.setOnItemClickListener { adapterView, view, index, id ->
+            //TODO - start new fragment or activity with event details
+        }
+    }
     private fun setViewModelObservers(){
         viewModel.errorMessage.observe(viewLifecycleOwner){
             val toast = Toast.makeText(context, it.toString(), Toast.LENGTH_LONG)
@@ -63,9 +72,7 @@ class ProfileFragment : Fragment() {
             if(organizedEvents != null && organizedEvents.isNotEmpty()){
                 var adapter = context?.let { ctx -> EventsAdapter(ctx, organizedEvents) }
                 binding.organizedEventsList.adapter = adapter
-                binding.organizedEventsList.setOnItemClickListener { adapterView, view, index, id ->
-                    //TODO - start new fragment or activity with event details
-                }
+
             }
             else{
                 binding.emptyOrganizedEventsText.visibility = TextView.VISIBLE
@@ -75,9 +82,7 @@ class ProfileFragment : Fragment() {
             if(followedEvents != null && followedEvents.isNotEmpty()){
                 var adapter = context?.let { ctx -> EventsAdapter(ctx, followedEvents) }
                 binding.followedEventsList.adapter = adapter
-                binding.followedEventsList.setOnItemClickListener { adapterView, view, index, id ->
-                    //TODO - start new fragment or activity with event details
-                }
+
             }
             else{
                 binding.emptyFollowedEventsText.visibility = TextView.VISIBLE

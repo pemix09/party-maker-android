@@ -73,7 +73,12 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setModelObservers(){
         viewModel.location.observe(viewLifecycleOwner){
-            binding.currentLocationText.text = "longitude: ${it.longitude}, latitude: ${it.longitude}"
+            if(it != null){
+                binding.currentLocationText.text = "longitude: ${it.longitude}, latitude: ${it.longitude}"
+            }
+            else{
+                binding.currentLocationText.text = "Couldn't determine location"
+            }
         }
         viewModel.errorMessage.observe(viewLifecycleOwner){
             binding.addEventMessage.text = it.toString()

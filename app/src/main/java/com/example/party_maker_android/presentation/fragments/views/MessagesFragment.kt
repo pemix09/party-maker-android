@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentMessagesBinding
+import com.example.party_maker_android.presentation.adapters.EventsAdapter
 import com.example.party_maker_android.presentation.fragments.viewModels.MessagesViewModel
 
 class MessagesFragment : Fragment() {
@@ -24,7 +26,7 @@ class MessagesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMessagesBinding.inflate(inflater, container, false)
-        //TODO set view observers
+        setViewObservers()
         return binding.root
     }
 
@@ -37,8 +39,20 @@ class MessagesFragment : Fragment() {
     }
 
     private fun setViewModelObservers(){
-        viewModel.messagesToShow.observe(viewLifecycleOwner){
-            //TODO - show messages on fragment
+        viewModel.eventToShow.observe(viewLifecycleOwner){
+            if(it != null && it.isNotEmpty()){
+                var adapter = context?.let { ctx -> EventsAdapter(ctx, it) }
+                binding.eventsToShowForMessagesList.adapter = adapter
+            }
+            else{
+                binding.noEventsToShowMessage.visibility = TextView.VISIBLE
+            }
+        }
+    }
+
+    private fun setViewObservers(){
+        binding.eventsToShowForMessagesList.setOnItemClickListener { adapterView, view, index, id ->
+
         }
     }
 

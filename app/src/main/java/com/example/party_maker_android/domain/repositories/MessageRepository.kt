@@ -19,6 +19,8 @@ class MessageRepository(private val context: Context) {
     }
 
     fun getMessagesForUser(userId: String): List<Message>{
+
+        //var messagesResponse = messageHttpClient.
         return null!!
         //TODO
     }

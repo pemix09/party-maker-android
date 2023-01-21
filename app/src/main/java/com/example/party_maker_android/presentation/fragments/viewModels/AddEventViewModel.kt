@@ -17,7 +17,7 @@ class AddEventViewModel : ViewModel() {
     val TAG = "AddEventViewModel"
     var errorMessage = MutableLiveData<String>()
     var eventAddedSuccessfully = MutableLiveData<Boolean>()
-    var location = MutableLiveData<Location>()
+    var location = MutableLiveData<Location?>()
     var photo: String? = null
         set(value){
             field = value
@@ -53,6 +53,7 @@ class AddEventViewModel : ViewModel() {
         }
         catch(error: Error){
             Log.e(TAG, "${error.message}")
+            location.value = null
         }
     }
 
