@@ -14,7 +14,7 @@ import org.osmdroid.util.BoundingBox
 class AppViewModel(private val applicationContext: Application): AndroidViewModel(applicationContext) {
 
     private var locationService = LocationService(applicationContext.applicationContext)
-    private var eventRepo: EventRepository = EventRepository(Dispatchers.IO, applicationContext.applicationContext)
+    private var eventRepo: EventRepository = EventRepository(applicationContext.applicationContext)
     private var events: List<EventEntity>? = null
 
 
