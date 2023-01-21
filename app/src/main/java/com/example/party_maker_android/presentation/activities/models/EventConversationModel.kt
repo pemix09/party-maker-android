@@ -9,13 +9,17 @@ import com.example.party_maker_android.domain.repositories.UserRepository
 class EventConversationModel(private val context: Context) {
     private var messageRepository = MessageRepository(context)
     private var userRepository = UserRepository(context)
+    var eventId: Int? = null
 
-    suspend fun getMessagesForEvent(eventId: Int): List<Message>{
-        return messageRepository.getMessagesForEvent(eventId)
+    suspend fun getMessagesForEvent(): List<Message>{
+        return messageRepository.getMessagesForEvent(eventId!!)
     }
 
     suspend fun getCurrentUser(): UserEntity{
         return userRepository.getCurrentUser()!!
     }
 
+    suspend fun sendMessage(message: String){
+        messageRepository.sendMessageToEvent(message, eventId!!)
+    }
 }

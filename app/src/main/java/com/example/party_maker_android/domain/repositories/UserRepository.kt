@@ -30,6 +30,7 @@ class UserRepository(private val context: Context) {
         return currentUser
     }
 
+
     private suspend fun fetchCurrentUser(){
         var accessToken = userService.getAccessToken()
         var formattedAccessToken = "Bearer ${accessToken?.token!!}"
@@ -42,4 +43,6 @@ class UserRepository(private val context: Context) {
             throw Error("User not fetched successfully, reason: ${response.errorBody().toString()}")
         }
     }
+
+
 }

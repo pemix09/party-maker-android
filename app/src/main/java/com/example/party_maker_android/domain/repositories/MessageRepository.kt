@@ -3,6 +3,7 @@ package com.example.party_maker_android.domain.repositories
 import android.content.Context
 import com.example.party_maker_android.R
 import com.example.party_maker_android.data.HttpClientsFactory
+import com.example.party_maker_android.data.requests.CreateMessageRequest
 import com.example.party_maker_android.domain.models.Message
 import com.example.party_maker_android.domain.services.UserService
 
@@ -29,6 +30,16 @@ class MessageRepository(private val context: Context) {
         }
     }
 
+    suspend fun sendMessageToEvent(msg: String, eventId: Int){
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var request = CreateMessageRequest(msg, eventId)
+        var response = messageHttpClient.sendMessage(formattedAccessToken, request)
+
+        if(!response.isSuccessful){
+            throw Error(response.errorBody().toString())
+        }
+    }
     fun getMessagesForUser(userId: String): List<Message>{
 
         //var messagesResponse = messageHttpClient.

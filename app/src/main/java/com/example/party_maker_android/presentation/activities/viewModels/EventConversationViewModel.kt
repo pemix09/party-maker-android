@@ -17,7 +17,16 @@ class EventConversationViewModel(application: Application): AndroidViewModel(app
     fun refreshEventConversation(eventId: Int){
         viewModelScope.launch {
             user.value = eventConversationModel.getCurrentUser()
-            eventConversation.value = eventConversationModel.getMessagesForEvent(eventId)
+            eventConversationModel.eventId = eventId
+            eventConversation.value = eventConversationModel.getMessagesForEvent()
         }
     }
+
+    fun sendMessage(message: String){
+        viewModelScope.launch {
+            eventConversationModel.sendMessage(message)
+            eventConversation.value = eventConversationModel.getMessagesForEvent()
+        }
+    }
+
 }

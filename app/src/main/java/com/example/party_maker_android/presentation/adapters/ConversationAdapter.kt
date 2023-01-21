@@ -31,14 +31,14 @@ class ConversationAdapter(private val ctx: Context, private val messages: List<M
         //current user - should be on the right
         if(msg.senderId == currentUserId){
             var currentUserMessage = inflater.inflate(R.layout.conversation_current_user_message, null)
-            currentUserMessage.findViewById<TextView>(R.id.current_user_name).text = msg.senderId
+            currentUserMessage.findViewById<TextView>(R.id.current_user_name).text = msg.senderName
             currentUserMessage.findViewById<TextView>(R.id.current_user_message_text).text = msg.content
             return currentUserMessage
         }
         //some other user message - on the left
         else{
             var otherUserMessage = inflater.inflate(R.layout.conversation_someone_message, null)
-            otherUserMessage.findViewById<TextView>(R.id.other_user_sender_name).text = msg.senderId
+            otherUserMessage.findViewById<TextView>(R.id.other_user_sender_name).text = msg.senderName
             otherUserMessage.findViewById<TextView>(R.id.other_user_message_text).text = msg.content
             return otherUserMessage
         }

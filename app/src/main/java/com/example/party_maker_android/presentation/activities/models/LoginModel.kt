@@ -16,8 +16,6 @@ import retrofit2.Response
 class LoginModel(private val context: Context) {
     var email: String? = null
     var password: String? = null
-    var loginSuccess: Boolean = false
-    var loginFeedBackMessage: String? = null
 
     suspend fun login(defaultDispatcher: CoroutineDispatcher = Dispatchers.Default){
         var backEndAddress = context.getString(R.string.BackEndAddress)
@@ -25,17 +23,13 @@ class LoginModel(private val context: Context) {
         var userService = UserService(context)
         var loginRequest = LoginRequest(email!!, password!!)
 
-        withContext(defaultDispatcher){
-            val result: Response<LoginResponse> = userHttpService.Login(loginRequest)
+        val result: Response<LoginResponse> = userHttpService.Login(loginRequest)
 
-            if(result.isSuccessful){
-                userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
-                loginSuccess = true
-            }
-            else{
-                loginFeedBackMessage = result.errorBody().toString()
-                loginSuccess = false
-            }
+        if(result.isSuccessful){
+            userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
+        }
+        else{
+            throw Error(result.errorBody().toString())
         }
     }
 }

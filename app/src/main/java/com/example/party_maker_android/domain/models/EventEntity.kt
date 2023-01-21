@@ -43,4 +43,10 @@ class EventEntity {
 
     @SerializedName("longitude")
     var longitude: Double? = null
+
+    @SerializedName("lastMessage")
+    var lastMessage: String? = null
+
+    @SerializedName("lastMessageTime")
+    var lastMessageDate: String? = null
 }
