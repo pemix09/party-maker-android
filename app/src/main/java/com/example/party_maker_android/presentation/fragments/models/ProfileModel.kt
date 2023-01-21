@@ -17,10 +17,6 @@ class ProfileModel(context: Context) {
     private val TAG = "Profile model"
     private var userRepository = UserRepository(context)
     private var eventRepository = EventRepository(context)
-    var followedEvents = MutableLiveData<List<EventEntity>>()
-    var organizedEvents = MutableLiveData<List<EventEntity>>()
-    var errorMessage = MutableLiveData<String>()
-
 
     suspend fun getUser(): UserEntity {
         return userRepository.getCurrentUser()!!

@@ -17,7 +17,7 @@ class MessagesModel(context: Context) {
     suspend fun getEventsForCurrentUser(): List<EventEntity>?{
         var user = userRepository.getCurrentUser()!!
         return if(user != null){
-            eventRepository.getFollowedEvents()
+            eventRepository.getOrganizedEvents()
         } else{
             null
         }
