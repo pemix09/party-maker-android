@@ -4,23 +4,35 @@ import android.content.Context
 import com.example.party_maker_android.R
 import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.domain.models.Message
+import com.example.party_maker_android.domain.services.UserService
 
 class MessageRepository(private val context: Context) {
     private val backEndAddress = context.getString(R.string.BackEndAddress)
     private val messageHttpClient = HttpClientsFactory(backEndAddress).getMessageClient()
+    private val userService = UserService(context)
 
     companion object{
 
     }
 
-    fun getMessagesForEvent(eventId: Int): List<Message>{
-        return null!!
-        //TODO kurde faja
+    suspend fun getMessagesForEvent(eventId: Int): List<Message>{
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+
+        var response = messageHttpClient.getMessagesForParty(formattedAccessToken, eventId)
+
+        if(response.isSuccessful){
+            return response.body()!!
+        }
+        else{
+            throw Error(response.errorBody().toString())
+        }
     }
 
     fun getMessagesForUser(userId: String): List<Message>{
 
         //var messagesResponse = messageHttpClient.
+        throw NotImplementedError()
         return null!!
         //TODO
     }

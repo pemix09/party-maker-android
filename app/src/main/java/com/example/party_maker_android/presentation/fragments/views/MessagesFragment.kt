@@ -1,5 +1,6 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentMessagesBinding
+import com.example.party_maker_android.presentation.activities.views.EventConversationActivity
 import com.example.party_maker_android.presentation.adapters.EventsAdapter
 import com.example.party_maker_android.presentation.fragments.viewModels.MessagesViewModel
 
@@ -52,7 +54,9 @@ class MessagesFragment : Fragment() {
 
     private fun setViewObservers(){
         binding.eventsToShowForMessagesList.setOnItemClickListener { adapterView, view, index, id ->
-
+            var eventConversationIntent = Intent(activity, EventConversationActivity::class.java)
+            eventConversationIntent.putExtra("eventId", id)
+            this.startActivity(eventConversationIntent)
         }
     }
 
