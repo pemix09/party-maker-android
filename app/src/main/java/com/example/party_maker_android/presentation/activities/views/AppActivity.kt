@@ -12,6 +12,7 @@ import com.example.party_maker_android.databinding.ActivityMapBinding
 import com.example.party_maker_android.presentation.activities.viewModels.AppViewModel
 import com.example.party_maker_android.presentation.fragments.views.AddEventFragment
 import com.example.party_maker_android.presentation.fragments.views.MapFragment
+import com.example.party_maker_android.presentation.fragments.views.MessagesFragment
 import com.example.party_maker_android.presentation.fragments.views.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.osmdroid.util.BoundingBox
@@ -47,9 +48,9 @@ class AppActivity : AppCompatActivity() {
     }
 
     //when we change location of the map
-    fun changeMapLocation(boundingBox: BoundingBox){
+    /*fun changeMapLocation(boundingBox: BoundingBox){
         mapModel.updateLocation(boundingBox)
-    }
+    }*/
 
     private fun setInitialMenuState(){
         mapBinding.bottomNavView.background = null
@@ -75,7 +76,8 @@ class AppActivity : AppCompatActivity() {
 
                 }
                 R.id.messagesIcon -> {
-
+                    val messagesFragment = MessagesFragment.newInstance()
+                    setFragmentContainerContent(messagesFragment)
                 }
                 R.id.profileIcon -> {
                     val profileFragment = ProfileFragment.newInstance()

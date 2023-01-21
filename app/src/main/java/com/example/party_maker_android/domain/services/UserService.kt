@@ -3,6 +3,7 @@ package com.example.party_maker_android.domain.services
 import android.content.Context
 import com.example.party_maker_android.domain.models.AccessToken
 import com.example.party_maker_android.domain.models.RefreshToken
+import com.example.party_maker_android.domain.models.UserEntity
 import com.google.gson.Gson
 import java.io.File
 import java.io.FileInputStream
@@ -13,13 +14,7 @@ class UserService(private val context: Context) {
     private val refreshTokenFile = "refreshToken.txt"
     private val gson = Gson()
 
-
-
-    fun saveUserTokens(accessToken: AccessToken, refreshToken: RefreshToken){
-        this.setAccessToken(accessToken)
-        this.setRefreshToken(refreshToken)
-    }
-
+    //in memory data - fastest access
     companion object{
         private var accessToken: AccessToken? = null
         private var refreshToken: RefreshToken? = null
@@ -32,6 +27,12 @@ class UserService(private val context: Context) {
             return accessToken != null && accessToken?.isValid()!!
         }
     }
+
+    fun saveUserTokens(accessToken: AccessToken, refreshToken: RefreshToken){
+        this.setAccessToken(accessToken)
+        this.setRefreshToken(refreshToken)
+    }
+
     fun getAccessToken(): AccessToken?{
         if(accessToken != null){
             return accessToken
@@ -56,6 +57,9 @@ class UserService(private val context: Context) {
         setAccessToken(accessToken)
     }
 
+    private suspend fun fetchUser(): UserEntity?{
+        return null
+    }
     private fun readAccessToken(): AccessToken? {
         var cryptoManager = CryptoManager(context)
         val file = File(context.filesDir, this.accessTokenFile)

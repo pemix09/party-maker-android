@@ -14,7 +14,7 @@
     <item
         android:id="@+id/messagesIcon"
         android:title="Messages"
-        android:icon="@drawable/whiskey"/>
+        android:icon="@drawable/message_icon"/>
     <item
         android:id="@+id/profileIcon"
         android:title="Profile"

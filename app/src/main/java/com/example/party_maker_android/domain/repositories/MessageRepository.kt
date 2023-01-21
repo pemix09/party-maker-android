@@ -17,4 +17,9 @@ class MessageRepository(private val context: Context) {
         return null!!
         //TODO kurde faja
     }
+
+    fun getMessagesForUser(userId: String): List<Message>{
+        return null!!
+        //TODO
+    }
 }

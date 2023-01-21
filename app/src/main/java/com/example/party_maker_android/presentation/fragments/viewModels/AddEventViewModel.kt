@@ -2,6 +2,7 @@ package com.example.party_maker_android.presentation.fragments.viewModels
 
 import android.content.Context
 import android.location.Location
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class AddEventViewModel : ViewModel() {
-
+    val TAG = "AddEventViewModel"
     var errorMessage = MutableLiveData<String>()
     var eventAddedSuccessfully = MutableLiveData<Boolean>()
     var location = MutableLiveData<Location>()
@@ -47,7 +48,12 @@ class AddEventViewModel : ViewModel() {
     fun setContext(context: Context){
         eventRepo = EventRepository(context)
         locationService = LocationService(context)
-        location.value = locationService.getCurrentLocation()
+        try{
+            location.value = locationService.getCurrentLocation()
+        }
+        catch(error: Error){
+            Log.e(TAG, "${error.message}")
+        }
     }
 
     private var isDescriptionValid: Boolean = false

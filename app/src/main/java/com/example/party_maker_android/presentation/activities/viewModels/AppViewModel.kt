@@ -9,7 +9,7 @@ import com.example.party_maker_android.domain.services.LocationService
 import com.example.party_maker_android.domain.models.EventEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.osmdroid.util.BoundingBox
+//import org.osmdroid.util.BoundingBox
 
 class AppViewModel(private val applicationContext: Application): AndroidViewModel(applicationContext) {
 
@@ -18,15 +18,15 @@ class AppViewModel(private val applicationContext: Application): AndroidViewMode
     private var events: List<EventEntity>? = null
 
 
-    fun updateLocation(boundingBox: BoundingBox){
+    /*fun updateLocation(boundingBox: BoundingBox){
         var latitudeNorth: Double = boundingBox.latNorth
         var latitudeSouth: Double = boundingBox.latSouth
         var longitudeEast: Double = boundingBox.lonEast
         var longitudeWest: Double = boundingBox.lonWest
         events = loadEvents(latitudeNorth, latitudeSouth, longitudeEast, longitudeWest)
-    }
+    }*/
 
-    //first loading of events, should be based on localisation
+    //first loading of events, should be based on localization
     private fun loadEvents(latNorth: Double, latSouth: Double, lonEast: Double, lonWest: Double): List<EventEntity>?{
         var events: List<EventEntity>? = null
 
@@ -35,7 +35,7 @@ class AppViewModel(private val applicationContext: Application): AndroidViewMode
                 events = eventRepo.getEventsForArea(latNorth, latSouth, lonEast, lonWest)
             }
             catch(ex: Exception){
-                Log.e("Fetching events error","Some error happend while fetching events: ${ex.message}")
+                Log.e("Fetching events error","Some error happened while fetching events: ${ex.message}")
             }
         }
         return events
