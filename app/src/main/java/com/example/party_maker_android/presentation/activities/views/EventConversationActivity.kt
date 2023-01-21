@@ -5,7 +5,10 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityEventConversationBinding
+import com.example.party_maker_android.domain.repositories.UserRepository
 import com.example.party_maker_android.presentation.activities.viewModels.EventConversationViewModel
+import com.example.party_maker_android.presentation.adapters.ConversationAdapter
+import com.example.party_maker_android.presentation.adapters.EventsAdapter
 
 class EventConversationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEventConversationBinding
@@ -32,7 +35,8 @@ class EventConversationActivity : AppCompatActivity() {
 
     private fun setViewModelObservers(){
         viewModel.eventConversation.observe(this){
-            //TODO - set here conversation for event
+            var adapter = this?.let { ctx -> ConversationAdapter(ctx, it, viewModel.user.value?.id!!) }
+            binding.conversation.adapter = adapter
         }
     }
 }
