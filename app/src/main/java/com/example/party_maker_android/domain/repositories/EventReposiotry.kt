@@ -11,7 +11,7 @@ import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
 import kotlinx.coroutines.*
 import retrofit2.Response
 
-class EventRepository(private val dispatcher: CoroutineDispatcher, private val context: Context) {
+class EventRepository(private val context: Context) {
 
     private val backEndAddress = context.getString(R.string.BackEndAddress)
     private val eventHttpClient: IEventClient = HttpClientsFactory(backEndAddress).getEventClient()
@@ -25,7 +25,7 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
     }
 
     suspend fun createEvent(eventToAdd: EventEntity) {
-        withContext(dispatcher) {
+        withContext(Dispatchers.IO) {
             var accessToken = userService.getAccessToken()
             var formattedAccessToken = "Bearer ${accessToken?.token!!}"
             var response: Response<Void> = eventHttpClient.create(formattedAccessToken, eventToAdd)
@@ -84,7 +84,7 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
     ): List<EventEntity>? {
         var events: List<EventEntity>?
 
-        withContext(dispatcher) {
+        withContext(Dispatchers.IO) {
             var accessToken = userService.getAccessToken()
             var response: Response<List<EventEntity>> = eventHttpClient.getForArea(
                 accessToken?.token!!,
@@ -122,7 +122,7 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
     ): List<EventEntity>? {
         var events: List<EventEntity>?
 
-        withContext(dispatcher) {
+        withContext(Dispatchers.IO) {
             var accessToken = userService.getAccessToken()
             var response: Response<List<EventEntity>> = eventHttpClient.getForAreaByQuery(
                 accessToken?.token!!,
@@ -154,7 +154,7 @@ class EventRepository(private val dispatcher: CoroutineDispatcher, private val c
     suspend fun getMusicGenres(): List<MusicGenre>? {
         var genres: List<MusicGenre>?
 
-        withContext(dispatcher) {
+        withContext(Dispatchers.IO) {
             var accessToken = userService.getAccessToken()
             var response: Response<List<MusicGenre>> =
                 eventHttpClient.getMusicGenres(accessToken?.token!!)

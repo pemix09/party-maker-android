@@ -16,9 +16,7 @@ import kotlinx.coroutines.withContext
 class ProfileModel(context: Context) {
     private val TAG = "Profile model"
     private var userRepository = UserRepository(context)
-
-    //TODO - delete dispatcher from here
-    private var eventRepository = EventRepository(Dispatchers.IO, context)
+    private var eventRepository = EventRepository(context)
     var followedEvents = MutableLiveData<List<EventEntity>>()
     var organizedEvents = MutableLiveData<List<EventEntity>>()
     var errorMessage = MutableLiveData<String>()
