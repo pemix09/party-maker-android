@@ -53,7 +53,12 @@ class LoginActivity : AppCompatActivity() {
             }
             else{
                 loginBinding.loginErrorMessage.visibility = TextView.VISIBLE
-                loginBinding.loginErrorMessage.text = loginViewModel.loginFeedBackMessage
+                loginBinding.loginErrorMessage.text = loginViewModel.loginFeedBackMessage.value
+            }
+        }
+        loginViewModel.loginFeedBackMessage.observe(this){
+            if(it != null){
+                loginBinding.loginErrorMessage.text = it
             }
         }
     }

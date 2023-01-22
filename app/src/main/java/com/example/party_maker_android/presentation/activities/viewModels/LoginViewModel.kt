@@ -15,7 +15,7 @@ import retrofit2.Response
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val loginSuccess = MutableLiveData<Boolean>()
-    var loginFeedBackMessage: String? = null
+    var loginFeedBackMessage = MutableLiveData<String>()
     var passwordValidationMessage: String? = null
     var emailValidationMessage: String? = null
     var isPasswordInputValid: Boolean = false
@@ -35,11 +35,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     loginModel.login()
                 }
                 loginSuccess.value = true
-                loginFeedBackMessage = "Login successful!"
+                loginFeedBackMessage.value = "Login successful!"
             }
             catch(error: Error){
                 loginSuccess.value = false
-                loginFeedBackMessage = "Login failed, details: ${error.message}"
+                loginFeedBackMessage.value = "Login failed, details: ${error.message}"
             }
 
         }
