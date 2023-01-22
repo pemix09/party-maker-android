@@ -62,6 +62,7 @@ class AppActivity : AppCompatActivity() {
         mapBinding.fab.setOnClickListener {
             var fragmentToAdd = AddEventFragment()
             setFragmentContainerContent(fragmentToAdd)
+            mapBinding.bottomNavView.selectedItemId = R.id.placeholder
         }
 
         //Here we should add more fragments to launch
