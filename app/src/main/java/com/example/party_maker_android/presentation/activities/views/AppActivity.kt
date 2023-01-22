@@ -35,22 +35,11 @@ class AppActivity : AppCompatActivity() {
         setContentView(mapBinding.root)
         mapModel = ViewModelProvider(this)[AppViewModel::class.java]
 
-        setInitialMenuState()
         setMenuItemClickListener()
     }
 
-    //Navigate to profile, to show user's events
-    fun onNewEventCreated(){
-        val profileFragment = ProfileFragment()
-        setFragmentContainerContent(profileFragment)
-    }
-
-    //when we change location of the map
-    /*fun changeMapLocation(boundingBox: BoundingBox){
-        mapModel.updateLocation(boundingBox)
-    }*/
-
-    private fun setInitialMenuState(){
+    override fun onResume() {
+        super.onResume()
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
         var selectedItemId = mapBinding.bottomNavView.selectedItemId

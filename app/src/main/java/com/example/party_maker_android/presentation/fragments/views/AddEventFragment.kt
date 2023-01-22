@@ -92,9 +92,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         viewModel.isFormValid.observe(viewLifecycleOwner){
             binding.addEventButton.isEnabled = it
         }
-        viewModel.eventAddedSuccessfully.observe(viewLifecycleOwner){
-            fragmentActivityContext.onNewEventCreated()
-        }
+
     }
 
     private fun setViewChangeListeners(){
