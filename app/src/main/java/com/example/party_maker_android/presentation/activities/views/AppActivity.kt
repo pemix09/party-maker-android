@@ -25,13 +25,7 @@ class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //close the app if location is not granted - it's base of the app
-        if(isLocationPermissionGranted() == false){
-            this.finishAffinity()
-        }
-
         mapBinding = ActivityMapBinding.inflate(layoutInflater)
-
         setContentView(mapBinding.root)
         mapModel = ViewModelProvider(this)[AppViewModel::class.java]
 
@@ -85,30 +79,6 @@ class AppActivity : AppCompatActivity() {
         var transaction = supportFragmentManager.beginTransaction()
         transaction.replace(mapBinding.fragmentContainer.id, fragmentToAdd)
         transaction.commit()
-    }
-
-    private fun isLocationPermissionGranted(): Boolean {
-        var requestCode = 100
-        return if (ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                requestCode
-            )
-            false
-        } else {
-            true
-        }
     }
 
 }

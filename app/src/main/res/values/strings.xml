@@ -40,6 +40,5 @@
     <string name="place_hint">place of the event</string>
     <string name="registration_date_text">since: %s</string>
     <string name="profile_rating_text">rating: %s</string>
-    <string name="title_activity_event_conversation">event conversation activity</string>
 
 </resources>

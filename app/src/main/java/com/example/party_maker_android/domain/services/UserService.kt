@@ -28,6 +28,18 @@ class UserService(private val context: Context) {
         }
     }
 
+    fun logOut(){
+        accessToken = null
+        refreshToken = null
+        val accTokenFile = File(context.filesDir, this.accessTokenFile)
+        if(accTokenFile.exists()){
+            accTokenFile.delete()
+        }
+        val refTokenFile = File(context.filesDir, this.refreshTokenFile)
+        if(refTokenFile.exists()){
+            refTokenFile.delete()
+        }
+    }
     fun saveUserTokens(accessToken: AccessToken, refreshToken: RefreshToken){
         this.setAccessToken(accessToken)
         this.setRefreshToken(refreshToken)

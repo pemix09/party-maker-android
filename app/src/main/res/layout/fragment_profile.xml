@@ -19,6 +19,23 @@
             android:paddingTop="80dp"
             app:layout_constraintTop_toTopOf="parent">
 
+            <LinearLayout
+                android:id="@+id/logoutPlaceholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logout_icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="logout" />
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="100dp"

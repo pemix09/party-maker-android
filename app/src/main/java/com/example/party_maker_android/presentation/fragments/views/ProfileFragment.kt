@@ -60,6 +60,9 @@ class ProfileFragment : Fragment() {
             setEventsContainerContent(null)
             showAllCards()
         }
+        binding.logoutPlaceholder.setOnClickListener {
+            viewModel.logout()
+        }
     }
     private fun setViewModelObservers(){
         viewModel.errorMessage.observe(viewLifecycleOwner){

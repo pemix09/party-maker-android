@@ -34,6 +34,8 @@ class ProfileViewModel : ViewModel() {
             organizedEvents.value = profileModel.getOrganizedEvents()
         }
     }
-
+    fun logout(){
+        profileModel.logout()
+    }
 
 }

@@ -5,4 +5,5 @@
     <dimen name="welcome_text">40sp</dimen>
 
     <dimen name="login_input_margin">30dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
