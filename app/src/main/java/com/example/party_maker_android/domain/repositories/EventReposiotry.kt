@@ -198,6 +198,19 @@ class EventRepository(private val context: Context) {
         return genres
     }
 
+    suspend fun getEventById(eventId: Int): EventEntity{
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var response: Response<EventEntity> = eventHttpClient.getById(formattedAccessToken, eventId)
+
+        if(response.isSuccessful){
+            return response?.body()!!
+        }
+        else{
+            Log.e(TAG, "Couldn't fetch event with id: $eventId")
+            throw Error("Couldn't fetch event with id: $eventId")
+        }
+    }
     private suspend fun getEventsForCurrentUser(){
         var accessToken = userService.getAccessToken()
         var formattedAccessToken = "Bearer ${accessToken?.token!!}"

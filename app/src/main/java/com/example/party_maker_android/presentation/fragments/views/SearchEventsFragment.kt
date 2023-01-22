@@ -1,5 +1,6 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentSearchEventsBinding
+import com.example.party_maker_android.presentation.activities.views.EventDetailsActivity
 import com.example.party_maker_android.presentation.adapters.EventsAdapter
 import com.example.party_maker_android.presentation.fragments.viewModels.SearchEventsViewModel
 
@@ -60,6 +62,11 @@ class SearchEventsFragment : Fragment() {
             if(it.toString().isNotEmpty()){
                 viewModel.search(it.toString())
             }
+        }
+        binding.searchedEventsList.setOnItemClickListener { adapterView, view, index, id ->
+            var eventDetailsIntent = Intent(activity, EventDetailsActivity::class.java)
+            eventDetailsIntent.putExtra("EventId", id.toInt())
+            context?.startActivity(eventDetailsIntent)
         }
     }
 }

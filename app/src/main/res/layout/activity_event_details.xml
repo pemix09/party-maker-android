@@ -1,9 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.activities.views.EventDetailsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_margin="15dp"
+        android:id="@+id/event_details_header"
+        android:text="Details of event:"
+        android:textSize="40sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        />
+
+    <RelativeLayout
+        android:id="@+id/event_details_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_details_header">
+        <ImageView
+            android:layout_marginHorizontal="30dp"
+            android:id="@+id/event_details_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+        <TextView
+            android:id="@+id/event_details_name"
+            android:text="Event Name"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/event_details_image"/>
+        <TextView
+            android:layout_margin="15dp"
+            android:id="@+id/event_details_description_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_below="@id/event_details_image"
+            android:text="Description:"/>
+        <TextView
+            android:id="@+id/event_details_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/event_details_description_title"/>
+
+        <LinearLayout
+            android:id="@+id/place_text_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@id/event_details_description">
+            <TextView
+                android:text="Place: "
+                android:textSize="20sp"
+                android:layout_margin="15dp"
+                android:id="@+id/event_details_place_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <Button
+                android:text="Show on map"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/show_map">
+
+            </Button>
+        </LinearLayout>
+        <TextView
+            android:layout_margin="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/place_text_placeholder"
+            android:text="SOme nice place"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/participants_text"
+        android:text="Participants: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_details_placeholder"/>
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/participants_text"/>
+
+
+</RelativeLayout>
