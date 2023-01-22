@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.party_maker_android.R
@@ -49,12 +50,16 @@ class ProfileFragment : Fragment() {
         binding.eventsToReviewCard.setOnClickListener {
             var eventsToReviewFragment = EventListFragment.newInstance()
             var args = Bundle()
-            args.putString("Title", binding.toReviewEventsText.text.toString())
             args.putInt("Type", R.id.events_to_review_card)
             eventsToReviewFragment.arguments = args
             setEventsContainerContent(eventsToReviewFragment)
+            binding.eventTitleLayout.visibility = LinearLayout.VISIBLE
+            binding.eventsListTitle.text = "Events to review:"
         }
-
+        binding.goBackButton.setOnClickListener {
+            setEventsContainerContent(null)
+            showAllCards()
+        }
     }
     private fun setViewModelObservers(){
         viewModel.errorMessage.observe(viewLifecycleOwner){
@@ -93,6 +98,7 @@ class ProfileFragment : Fragment() {
         binding.yourEventsCard.visibility = MaterialCardView.INVISIBLE
         binding.participatedEventsCard.visibility = MaterialCardView.INVISIBLE
         binding.followedEventsCard.visibility = MaterialCardView.INVISIBLE
+        binding.eventTitleLayout.visibility = LinearLayout.VISIBLE
     }
 
     private fun showAllCards(){
@@ -100,6 +106,7 @@ class ProfileFragment : Fragment() {
         binding.yourEventsCard.visibility = MaterialCardView.VISIBLE
         binding.participatedEventsCard.visibility = MaterialCardView.VISIBLE
         binding.followedEventsCard.visibility = MaterialCardView.VISIBLE
+        binding.eventTitleLayout.visibility = LinearLayout.INVISIBLE
     }
 
 }

@@ -53,8 +53,8 @@ class AppActivity : AppCompatActivity() {
     private fun setInitialMenuState(){
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
-        val mapFragment = MapFragment.newInstance()
-        setFragmentContainerContent(mapFragment)
+        var selectedItemId = mapBinding.bottomNavView.selectedItemId
+        setFragmentContainerContent(getFragment(selectedItemId))
     }
 
     private fun setMenuItemClickListener() {
@@ -68,28 +68,30 @@ class AppActivity : AppCompatActivity() {
         //Here we should add more fragments to launch
         myBottomNavigationView.setOnItemSelectedListener {
             Log.i("MenuClicked", "Menu item clicked: ${it.itemId}")
-            when(it.itemId){
-                R.id.homeIcon -> {
-                    val mapFragment = MapFragment.newInstance()
-                    setFragmentContainerContent(mapFragment)
-                }
-                R.id.searchIcon -> {
-                    var searchFragment = SearchEventsFragment.newInstance()
-                    setFragmentContainerContent(searchFragment)
-                }
-                R.id.messagesIcon -> {
-                    val messagesFragment = MessagesFragment.newInstance()
-                    setFragmentContainerContent(messagesFragment)
-                }
-                R.id.profileIcon -> {
-                    val profileFragment = ProfileFragment.newInstance()
-                    setFragmentContainerContent(profileFragment)
-                }
-            }
+            setFragmentContainerContent(getFragment(it.itemId))
             true
         }
     }
 
+    private fun getFragment(iconId: Int): Fragment{
+        return when(iconId){
+            R.id.homeIcon -> {
+                return MapFragment.newInstance()
+            }
+            R.id.searchIcon -> {
+                return SearchEventsFragment.newInstance()
+            }
+            R.id.messagesIcon -> {
+                return MessagesFragment.newInstance()
+            }
+            R.id.profileIcon -> {
+                return ProfileFragment.newInstance()
+            }
+            else -> {
+                return MapFragment.newInstance()
+            }
+        }
+    }
     private fun setFragmentContainerContent(fragmentToAdd: Fragment){
         var transaction = supportFragmentManager.beginTransaction()
         transaction.replace(mapBinding.fragmentContainer.id, fragmentToAdd)

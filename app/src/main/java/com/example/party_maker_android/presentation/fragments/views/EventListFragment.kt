@@ -42,13 +42,14 @@ class EventListFragment : Fragment() {
         viewModel.eventsToShow.observe(viewLifecycleOwner){
             binding.fetchingEventsProgressBar.visibility = ProgressBar.INVISIBLE
             if(it.isNotEmpty()){
+                binding.eventListMessage.visibility = TextView.INVISIBLE
                 var adapter = EventsAdapter(requireContext(), it)
                 binding.eventListItems.adapter = adapter
             }
-//            else{
-//                binding.eventListTitle.visibility = TextView.VISIBLE
-//                binding.eventListTitle.text = "You don't have any events to review!"
-//            }
+            else{
+                binding.eventListMessage.visibility = TextView.VISIBLE
+                binding.eventListMessage.text = "You don't have any events to review!"
+            }
         }
     }
 
