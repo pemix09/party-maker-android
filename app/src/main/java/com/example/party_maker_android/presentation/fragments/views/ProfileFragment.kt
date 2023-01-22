@@ -1,5 +1,6 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import android.widget.Toast
 import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.databinding.FragmentProfileBinding
+import com.example.party_maker_android.presentation.activities.views.WelcomeActivity
 import com.example.party_maker_android.presentation.adapters.EventsAdapter
 import com.example.party_maker_android.presentation.fragments.viewModels.ProfileViewModel
 import com.google.android.material.card.MaterialCardView
@@ -62,6 +64,8 @@ class ProfileFragment : Fragment() {
         }
         binding.logoutPlaceholder.setOnClickListener {
             viewModel.logout()
+            var welcomeIntent = Intent(context, WelcomeActivity::class.java)
+            activity?.startActivity(welcomeIntent)
         }
     }
     private fun setViewModelObservers(){
