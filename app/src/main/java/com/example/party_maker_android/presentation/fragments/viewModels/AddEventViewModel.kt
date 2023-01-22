@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.party_maker_android.EventRepository
 import com.example.party_maker_android.domain.services.LocationService
 import com.example.party_maker_android.domain.models.EventEntity
+import com.example.party_maker_android.presentation.fragments.models.AddEventModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -42,18 +43,19 @@ class AddEventViewModel : ViewModel() {
         }
     var isFormValid = MutableLiveData<Boolean>()
     private lateinit var eventRepo: EventRepository
-    private lateinit var locationService: LocationService
+    private lateinit var addEventModel: AddEventModel
 
+    override fun onCleared() {
+        super.onCleared()
+        //addEventModel.location.removeObserver {  }
+    }
 
     fun setContext(context: Context){
         eventRepo = EventRepository(context)
-        locationService = LocationService(context)
-        try{
-            location.value = locationService.getCurrentLocation()
-        }
-        catch(error: Error){
-            Log.e(TAG, "${error.message}")
-            location.value = null
+        addEventModel = AddEventModel(context)
+
+        addEventModel.location.observeForever {
+            location.value = it
         }
     }
 
