@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.party_maker_android.R
@@ -13,6 +15,7 @@ import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.databinding.FragmentProfileBinding
 import com.example.party_maker_android.presentation.adapters.EventsAdapter
 import com.example.party_maker_android.presentation.fragments.viewModels.ProfileViewModel
+import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 
 class ProfileFragment : Fragment() {
@@ -43,12 +46,15 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setViewObservers(){
-        binding.organizedEventsList.setOnItemClickListener { adapterView, view, index, id ->
-            //TODO - start new fragment or activity with event details
+        binding.eventsToReviewCard.setOnClickListener {
+            var eventsToReviewFragment = EventListFragment.newInstance()
+            var args = Bundle()
+            args.putString("Title", binding.toReviewEventsText.text.toString())
+            args.putInt("Type", R.id.events_to_review_card)
+            eventsToReviewFragment.arguments = args
+            setEventsContainerContent(eventsToReviewFragment)
         }
-        binding.followedEventsList.setOnItemClickListener { adapterView, view, index, id ->
-            //TODO - start new fragment or activity with event details
-        }
+
     }
     private fun setViewModelObservers(){
         viewModel.errorMessage.observe(viewLifecycleOwner){
@@ -68,26 +74,32 @@ class ProfileFragment : Fragment() {
             var date = dateFormat.format(it?.registrationDate)
             binding.sinceText.text = context?.getString(R.string.registration_date_text, date)
         }
-        viewModel.organizedEvents.observe(viewLifecycleOwner){ organizedEvents ->
-            if(organizedEvents != null && organizedEvents.isNotEmpty()){
-                var adapter = context?.let { ctx -> EventsAdapter(ctx, organizedEvents) }
-                binding.organizedEventsList.adapter = adapter
 
-            }
-            else{
-                binding.emptyOrganizedEventsText.visibility = TextView.VISIBLE
-            }
-        }
-        viewModel.followedEvents.observe(viewLifecycleOwner){ followedEvents ->
-            if(followedEvents != null && followedEvents.isNotEmpty()){
-                var adapter = context?.let { ctx -> EventsAdapter(ctx, followedEvents) }
-                binding.followedEventsList.adapter = adapter
+    }
 
-            }
-            else{
-                binding.emptyFollowedEventsText.visibility = TextView.VISIBLE
-            }
+    private fun setEventsContainerContent(fragmentToAdd: Fragment?){
+        if(fragmentToAdd == null){
+            binding.profileEventsContainer.visibility = FrameLayout.INVISIBLE
         }
+        else{
+            var transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(binding.profileEventsContainer.id, fragmentToAdd)
+            transaction.commit()
+            hideAllCards()
+        }
+    }
+    private fun hideAllCards(){
+        binding.eventsToReviewCard.visibility = MaterialCardView.INVISIBLE
+        binding.yourEventsCard.visibility = MaterialCardView.INVISIBLE
+        binding.participatedEventsCard.visibility = MaterialCardView.INVISIBLE
+        binding.followedEventsCard.visibility = MaterialCardView.INVISIBLE
+    }
+
+    private fun showAllCards(){
+        binding.eventsToReviewCard.visibility = MaterialCardView.VISIBLE
+        binding.yourEventsCard.visibility = MaterialCardView.VISIBLE
+        binding.participatedEventsCard.visibility = MaterialCardView.VISIBLE
+        binding.followedEventsCard.visibility = MaterialCardView.VISIBLE
     }
 
 }

@@ -10,6 +10,7 @@ import com.example.party_maker_android.data.clients.IEventClient
 import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
 import kotlinx.coroutines.*
 import retrofit2.Response
+import java.util.*
 
 class EventRepository(private val context: Context) {
 
@@ -23,6 +24,7 @@ class EventRepository(private val context: Context) {
         private var followed: List<EventEntity>? = null
         private var organized: List<EventEntity>? = null
         private var participates: List<EventEntity>? = null
+        private var toReview: List<EventEntity>? = null
     }
 
     suspend fun createEvent(eventToAdd: EventEntity) {
@@ -74,6 +76,14 @@ class EventRepository(private val context: Context) {
             this.getEventsForCurrentUser()
         }
         return participates!!
+    }
+
+    suspend fun getEventToReview(): List<EventEntity>{
+        if(toReview != null) return toReview!!
+        else{
+            this.getEventsForCurrentUser()
+        }
+        return toReview!!
     }
 
     suspend fun getEventsByQuery(query: String): List<EventEntity>{
@@ -208,7 +218,14 @@ class EventRepository(private val context: Context) {
         else{
             organized = response.body()?.organized
             followed = response.body()?.followed
-            participates = response.body()?.participates
+            toReview = response.body()?.participates?.filter {
+                val currentTime = Calendar.getInstance().time
+                it.date?.before(currentTime)!!
+            }
+            participates = response.body()?.participates?.filter {
+                val currentTime = Calendar.getInstance().time
+                it.date?.after(currentTime)!!
+            }
         }
     }
 }
