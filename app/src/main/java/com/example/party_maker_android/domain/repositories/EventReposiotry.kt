@@ -76,6 +76,19 @@ class EventRepository(private val context: Context) {
         return participates!!
     }
 
+    suspend fun getEventsByQuery(query: String): List<EventEntity>{
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var response = eventHttpClient.getByQuery(formattedAccessToken, query)
+
+        if(response.isSuccessful){
+            return response.body()!!
+        }
+        else{
+            throw Error(response.errorBody().toString())
+        }
+    }
+
     //TODO - make right things, not use with context!
     suspend fun getEventsForArea(
         latNorth: Double,

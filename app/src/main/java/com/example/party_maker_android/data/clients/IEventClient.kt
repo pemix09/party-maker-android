@@ -27,6 +27,13 @@ interface IEventClient {
     ): Response<List<EventEntity>>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
+    @GET("Event/GetByQuery")
+    suspend fun getByQuery(
+        @Header("Authorization") token: String,
+        @Query("Name") query: String
+    ): Response<List<EventEntity>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("Event/GetForArea")
     suspend fun getForArea(
         @Header("Authorization") token: String,

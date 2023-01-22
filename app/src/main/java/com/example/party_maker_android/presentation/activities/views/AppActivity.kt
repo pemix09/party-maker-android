@@ -10,11 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityMapBinding
 import com.example.party_maker_android.presentation.activities.viewModels.AppViewModel
-import com.example.party_maker_android.presentation.fragments.views.AddEventFragment
-import com.example.party_maker_android.presentation.fragments.views.MapFragment
-import com.example.party_maker_android.presentation.fragments.views.MessagesFragment
-import com.example.party_maker_android.presentation.fragments.views.ProfileFragment
+import com.example.party_maker_android.presentation.fragments.views.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.osmdroid.util.BoundingBox
 
 
@@ -55,6 +53,8 @@ class AppActivity : AppCompatActivity() {
     private fun setInitialMenuState(){
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
+        val mapFragment = MapFragment.newInstance()
+        setFragmentContainerContent(mapFragment)
     }
 
     private fun setMenuItemClickListener() {
@@ -73,7 +73,8 @@ class AppActivity : AppCompatActivity() {
                     setFragmentContainerContent(mapFragment)
                 }
                 R.id.searchIcon -> {
-
+                    var searchFragment = SearchEventsFragment.newInstance()
+                    setFragmentContainerContent(searchFragment)
                 }
                 R.id.messagesIcon -> {
                     val messagesFragment = MessagesFragment.newInstance()
@@ -82,8 +83,6 @@ class AppActivity : AppCompatActivity() {
                 R.id.profileIcon -> {
                     val profileFragment = ProfileFragment.newInstance()
                     setFragmentContainerContent(profileFragment)
-                }
-                else -> {
                 }
             }
             true
