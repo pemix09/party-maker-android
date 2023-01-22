@@ -62,4 +62,10 @@ interface IEventClient {
         @Header("Authorization") token: String
     ): Response<GetAllEvensForUserResponse>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("Event/TakePartInEvent")
+    suspend fun participateInEvent(
+        @Body eventToParticipate: Int
+    ): Response<Void>
+
 }

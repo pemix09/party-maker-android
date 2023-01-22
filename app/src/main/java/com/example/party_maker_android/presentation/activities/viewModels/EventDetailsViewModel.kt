@@ -12,12 +12,25 @@ import kotlinx.coroutines.launch
 class EventDetailsViewModel(application: Application): AndroidViewModel(application) {
     private var eventDetailsModel = EventDetailsModel(application.applicationContext)
     var event = MutableLiveData<EventEntity>()
-    var eventParticipants = MutableLiveData<List<UserEntity>>()
+    var eventParticipants = MutableLiveData<List<UserEntity>?>()
+    var currentUser = MutableLiveData<UserEntity?>()
 
     fun saveEventIdAndFetch(eventId: Int){
         viewModelScope.launch {
+            currentUser.value = eventDetailsModel.getCurrentUser()
             event.value = eventDetailsModel.getEventDetails(eventId)
+            if(event?.value?.participatorsIds != null && event?.value?.participatorsIds?.size != 0){
+                eventParticipants.value = eventDetailsModel.getEventParticipants(event?.value?.participatorsIds!!)
+            }
+            else{
+                eventParticipants.value = null
+            }
+        }
+    }
 
+    fun participateInEvent(){
+        viewModelScope.launch {
+            eventDetailsModel.participateInEvent(event?.value?.id!!)
         }
     }
 }

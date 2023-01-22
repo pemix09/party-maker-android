@@ -8,6 +8,7 @@ import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.domain.models.MusicGenre
 import com.example.party_maker_android.data.clients.IEventClient
 import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
+import com.example.party_maker_android.domain.models.UserEntity
 import kotlinx.coroutines.*
 import retrofit2.Response
 import java.util.*
@@ -58,6 +59,7 @@ class EventRepository(private val context: Context) {
         //after previous steps, followed is never going to be null
         return followed!!
     }
+
 
     suspend fun getOrganizedEvents(): List<EventEntity> {
         //if events are in memory
@@ -209,6 +211,12 @@ class EventRepository(private val context: Context) {
         else{
             Log.e(TAG, "Couldn't fetch event with id: $eventId")
             throw Error("Couldn't fetch event with id: $eventId")
+        }
+    }
+    suspend fun participateInEvent(eventId: Int){
+        var response: Response<Void> = eventHttpClient.participateInEvent(eventId)
+        if(response.isSuccessful == false){
+            throw Error("User cannot participate in event!")
         }
     }
     private suspend fun getEventsForCurrentUser(){

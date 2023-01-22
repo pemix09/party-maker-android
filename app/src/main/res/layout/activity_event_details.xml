@@ -35,6 +35,21 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/event_details_image"/>
         <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:layout_below="@+id/event_details_name"
+            android:layout_toEndOf="@id/event_details_image"/>
+        <Button
+            android:id="@+id/participate_button"
+            android:textColor="@color/black"
+            android:text="Participate!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_date"
+            android:layout_toEndOf="@id/event_details_image"/>
+        <TextView
             android:layout_margin="15dp"
             android:id="@+id/event_details_description_title"
             android:layout_width="wrap_content"
@@ -72,11 +87,15 @@
             </Button>
         </LinearLayout>
         <TextView
-            android:layout_margin="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/place_text_placeholder"
-            android:text="SOme nice place"/>
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="SOme nice place" />
+
 
     </RelativeLayout>
     <TextView
@@ -85,7 +104,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/event_details_placeholder"/>
+    <ProgressBar
+        android:id="@+id/user_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/participants_text"/>
 <ListView
+    android:id="@+id/participants_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/participants_text"/>
