@@ -1,5 +1,6 @@
 package com.example.party_maker_android.presentation.activities.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +43,8 @@ class RegisterActivity : AppCompatActivity() {
             var userName = viewBinding.registerUserNameInput.text.toString()
             var password = viewBinding.registerPasswordInput.text.toString()
             viewModel.register(email, userName, password)
+            var appIntent = Intent(this, AppActivity::class.java)
+            this.startActivity(appIntent)
         }
     }
 

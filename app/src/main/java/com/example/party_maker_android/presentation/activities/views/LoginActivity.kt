@@ -48,8 +48,8 @@ class LoginActivity : AppCompatActivity() {
     private fun setViewModelObservers(){
         loginViewModel.loginSuccess.observe(this){
             if(it == true){
-                var mapIntent = Intent(this, AppActivity::class.java)
-                this.startActivity(mapIntent)
+                var appIntent = Intent(this, AppActivity::class.java)
+                this.startActivity(appIntent)
             }
             else{
                 loginBinding.loginErrorMessage.visibility = TextView.VISIBLE
