@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/darkblue">
 
         <TextView
             android:id="@+id/LoginTextView"
@@ -33,6 +34,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name_input_container"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="@dimen/login_input_margin"
@@ -42,18 +44,22 @@
             app:helperTextTextColor="@color/error"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LoginTextView">
+            app:layout_constraintTop_toBottomOf="@+id/LoginTextView"
+            app:startIconDrawable="@drawable/baseline_drive_file_rename_outline_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/event_name_input_hint"
-                android:inputType="textShortMessage" />
+                android:inputType="textShortMessage"
+                style="@style/input_field"
+                android:background="@drawable/input_style"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description_input_container"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/login_input_margin"
@@ -64,7 +70,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name_input_container"
-            app:layout_constraintVertical_bias="0.026">
+            app:layout_constraintVertical_bias="0.026"
+            app:startIconDrawable="@drawable/baseline_description_24">
 
             <EditText
                 android:id="@+id/description_input"
@@ -78,7 +85,9 @@
                 android:lines="20"
                 android:minLines="5"
                 android:scrollbars="vertical"
-                android:scrollHorizontally="false" />
+                android:scrollHorizontally="false"
+                style="@style/input_field"
+                android:background="@drawable/input_style"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +103,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_input_container"
-            app:layout_constraintVertical_bias="0.026">
+            app:layout_constraintVertical_bias="0.026"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/baseline_place_24">
 
             <EditText
                 android:id="@+id/place_input"
@@ -104,7 +115,9 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/place_hint"
-                android:inputType="textShortMessage"/>
+                android:inputType="textShortMessage"
+                style="@style/input_field"
+                android:background="@drawable/input_style"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,7 +134,10 @@
             app:layout_constraintTop_toBottomOf="@+id/place_input_container"
             android:text="@string/pick_time"
             android:enabled="false"
-            android:onClick="showTimePickerDialog" />
+            android:onClick="showTimePickerDialog"
+            style="@style/login_button"
+            android:background="@drawable/button_style"
+            android:drawableLeft="@drawable/baseline_calendar_month_24"/>
 
         <Spinner
             android:id="@+id/spinner"

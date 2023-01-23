@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.activities.views.LoginActivity"
-    android:background="@color/darkblue">
+    android:background="@color/darkblue"
+    tools:context=".presentation.activities.views.LoginActivity">
 
 
     <ImageView
@@ -14,12 +14,11 @@
         android:layout_height="89dp"
         android:layout_marginTop="160dp"
         android:contentDescription="@string/party_maker_icon"
-        android:src="?attr/appIcon"
+        android:src="@drawable/whiskey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/LoginTextView"
@@ -37,6 +36,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_email_input_container"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/login_input_margin"
@@ -47,22 +47,22 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LoginTextView"
-        app:startIconDrawable="@drawable/baseline_alternate_email_24"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:startIconDrawable="@drawable/baseline_alternate_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_email_input"
+            style="@style/input_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/input_field"
-            android:background="@drawable/input_style"
             android:layout_marginTop="48dp"
+            android:background="@drawable/input_style"
             android:hint="@string/login_email_text"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_password_input_container"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/login_input_margin"
@@ -71,21 +71,18 @@
         app:helperTextTextColor="@color/error"
         app:layout_constraintTop_toBottomOf="@+id/login_email_input_container"
         app:passwordToggleEnabled="true"
-        tools:layout_editor_absoluteX="30dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:endIconMode="password_toggle"
         app:startIconDrawable="@drawable/baseline_key_24"
-        >
+        tools:layout_editor_absoluteX="30dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_password_input"
             style="@style/input_field"
-            android:background="@drawable/input_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/input_style"
             android:hint="@string/login_password_input"
             android:inputType="textPassword"
-            android:maxLength="16"/>
+            android:maxLength="16" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -93,25 +90,26 @@
         style="@style/login_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:layout_marginTop="10dp"
-        android:textColor="@color/error"
+        android:textColor="#FF7474"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password_input_container" />
 
     <Button
         android:id="@+id/login_button"
+        style="@style/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/baseline_login_24"
         android:text="@string/action_sign_in_short"
+        android:background="@drawable/button_style"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_error_message"
-        style="@style/login_button"
-        app:icon="@drawable/baseline_login_24"/>
+        app:layout_constraintTop_toBottomOf="@+id/login_error_message" />
 
     <TextView
         android:id="@+id/login_forgot_password"
