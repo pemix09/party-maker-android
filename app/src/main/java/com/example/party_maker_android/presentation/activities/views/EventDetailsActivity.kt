@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -49,9 +50,21 @@ class EventDetailsActivity : AppCompatActivity() {
                 var dateFormat = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
                 binding.eventDate.text = dateFormat.format(it?.date)
             }
+            if(eventDetailsViewModel.currentUser.value?.id == it.organizaerId){
+                binding.participateButton.text = "You organize this event!"
+                binding.participateButton.isEnabled = false
+            }
+            else if(it.participatorsIds?.contains(eventDetailsViewModel.currentUser.value?.id) == true){
+                binding.participateButton.text = "You participate!"
+                binding.participateButton.isEnabled = false
+            }
         }
         eventDetailsViewModel.eventParticipants.observe(this){
-            if(it == null || it.isEmpty()){
+            if(eventDetailsViewModel.currentUser.value?.id == eventDetailsViewModel.event.value?.organizaerId){
+                binding.participantsText.text = "It's your event, c'mon invite someone!"
+                binding.userLoading.visibility = ProgressBar.INVISIBLE
+            }
+            else if(it == null || it.isEmpty()){
                 binding.participantsText.text = "Event does not have participants, be first!"
                 binding.userLoading.visibility = ProgressBar.INVISIBLE
             }
@@ -60,17 +73,6 @@ class EventDetailsActivity : AppCompatActivity() {
                 var adapter = ParticipantsAdapter(this, it)
                 binding.participantsList.adapter = adapter
             }
-        }
-        eventDetailsViewModel.currentUser.observe(this){
-            //TODO - disable participate button depending on user
-            /*if(it != null){
-                if(it.id == eventDetailsViewModel.event.value?.organizaerId){
-                    binding.participateButton.isEnabled = false
-                }
-                else if(eventDetailsViewModel.event.value?.participatorsIds?.contains(it.id)!!){
-                    binding.participateButton.isEnabled = false
-                }
-            }*/
         }
     }
 
@@ -87,7 +89,7 @@ class EventDetailsActivity : AppCompatActivity() {
             try {
                 //TODO - make it work!
                 eventDetailsViewModel.participateInEvent()
-                binding.participateButton.isEnabled = false
+                binding.participateButton.text = "You participate!"
             }
             catch(error: Error){
                 Log.e(TAG, "Couldn't participate!")
