@@ -149,6 +149,7 @@ class ProfileFragment : Fragment() {
         }
         viewModel.eventsToShow.observe(viewLifecycleOwner){
             if(it != null && it.isNotEmpty()){
+                binding.noEventsText.visibility = TextView.VISIBLE
                 var adapter = context?.let { ctx -> EventsAdapter(ctx, it) }
                 binding.eventList.adapter = adapter
                 binding.eventsLoadingBar.visibility = ProgressBar.INVISIBLE
@@ -158,6 +159,7 @@ class ProfileFragment : Fragment() {
                 binding.eventList.adapter = null
                 binding.eventsLoadingBar.visibility = ProgressBar.INVISIBLE
                 binding.eventList.visibility = ListView.INVISIBLE
+                binding.noEventsText.visibility = TextView.VISIBLE
             }
         }
         /*viewModel.loading.observe(viewLifecycleOwner){

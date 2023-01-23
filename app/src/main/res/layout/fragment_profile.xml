@@ -296,6 +296,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/events_cards_container" />
 
+        <TextView
+            android:id="@+id/no_events_text"
+            android:text="Seems like you don't have any events here"
+            android:textSize="25sp"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/events_cards_container"/>
         <ListView
             android:id="@+id/event_list"
             android:layout_width="match_parent"
