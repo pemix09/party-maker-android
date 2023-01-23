@@ -41,17 +41,29 @@ class ProfileViewModel : ViewModel() {
 
     fun setActiveCard(cardId: Int){
         activeCard = cardId
-        when(cardId){
-            R.id.your_events_card -> {
-                viewModelScope.launch {
+
+        viewModelScope.launch {
+            when(cardId){
+                R.id.your_events_card -> {
                     eventsToShow.value = profileModel.getOrganizedEvents()
+                }
+                R.id.events_to_review_card -> {
+                    eventsToShow.value = profileModel.getEventsToReview()
+                }
+                R.id.participated_events_card -> {
+                    eventsToShow.value = profileModel.getEventUserParticipate()
+                }
+                R.id.followed_events_card -> {
+                    eventsToShow.value = profileModel.getFollowedEvents()
                 }
             }
         }
+
     }
 
     fun clearEventsToShow(){
         eventsToShow.value = null
+        activeCard = -200
     }
 
 }

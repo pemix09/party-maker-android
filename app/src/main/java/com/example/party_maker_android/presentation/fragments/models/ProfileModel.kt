@@ -28,6 +28,10 @@ class ProfileModel(context: Context) {
         return eventRepository.getEventsToReview()
     }
 
+    suspend fun getEventUserParticipate(): List<EventEntity>{
+        return eventRepository.getParticipatesEvents()
+    }
+
     fun logout(){
         userService.logOut()
     }

@@ -48,7 +48,6 @@ class ProfileFragment : Fragment() {
         binding.eventsToReviewCard.setOnClickListener {
             //active to inactive
             if(viewModel.activeCard == it.id) {
-                viewModel.clearEventsToShow()
                 var color = resources.getColor(R.color.white)
                 it.setBackgroundColor(color)
                 showAllCards()
@@ -67,7 +66,6 @@ class ProfileFragment : Fragment() {
         binding.yourEventsCard.setOnClickListener {
             //active to inactive
             if(viewModel.activeCard == it.id) {
-                viewModel.clearEventsToShow()
                 var color = resources.getColor(R.color.white)
                 it.setBackgroundColor(color)
                 showAllCards()
@@ -84,6 +82,47 @@ class ProfileFragment : Fragment() {
                 binding.yourEventsCard.visibility = MaterialCardView.VISIBLE
             }
         }
+
+        binding.participatedEventsCard.setOnClickListener {
+            //active to inactive
+            if(viewModel.activeCard == it.id) {
+                var color = resources.getColor(R.color.white)
+                it.setBackgroundColor(color)
+                showAllCards()
+            }
+            //inactive to active
+            else{
+                binding.eventsLoadingBar.visibility = ProgressBar.VISIBLE
+                viewModel.setActiveCard(it.id)
+                var color = resources.getColor(R.color.primary_color)
+                it.setBackgroundColor(color)
+                binding.participatedEventsCard.visibility = MaterialCardView.VISIBLE
+                binding.followedEventsCard.visibility = MaterialCardView.GONE
+                binding.eventsToReviewCard.visibility = MaterialCardView.GONE
+                binding.yourEventsCard.visibility = MaterialCardView.GONE
+            }
+        }
+
+        binding.followedEventsCard.setOnClickListener {
+            //active to inactive
+            if(viewModel.activeCard == it.id) {
+                var color = resources.getColor(R.color.white)
+                it.setBackgroundColor(color)
+                showAllCards()
+            }
+            //inactive to active
+            else{
+                binding.eventsLoadingBar.visibility = ProgressBar.VISIBLE
+                viewModel.setActiveCard(it.id)
+                var color = resources.getColor(R.color.primary_color)
+                it.setBackgroundColor(color)
+                binding.participatedEventsCard.visibility = MaterialCardView.GONE
+                binding.followedEventsCard.visibility = MaterialCardView.VISIBLE
+                binding.eventsToReviewCard.visibility = MaterialCardView.GONE
+                binding.yourEventsCard.visibility = MaterialCardView.GONE
+            }
+        }
+
         binding.logoutPlaceholder.setOnClickListener {
             viewModel.logout()
             var welcomeIntent = Intent(context, WelcomeActivity::class.java)
@@ -121,6 +160,14 @@ class ProfileFragment : Fragment() {
                 binding.eventList.visibility = ListView.INVISIBLE
             }
         }
+        /*viewModel.loading.observe(viewLifecycleOwner){
+            if(it == true){
+                binding.eventsLoadingBar.visibility = ProgressBar.VISIBLE
+            }
+            else{
+                binding.eventsLoadingBar.visibility = ProgressBar.GONE
+            }
+        }*/
     }
 
     private fun showAllCards(){
@@ -130,5 +177,6 @@ class ProfileFragment : Fragment() {
         binding.followedEventsCard.visibility = MaterialCardView.VISIBLE
         binding.eventsLoadingBar.visibility = ProgressBar.GONE
         binding.eventList.visibility = ListView.GONE
+        viewModel.clearEventsToShow()
     }
 }
