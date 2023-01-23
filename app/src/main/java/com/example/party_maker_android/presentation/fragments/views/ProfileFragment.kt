@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView
 import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.databinding.FragmentProfileBinding
+import com.example.party_maker_android.presentation.activities.views.EventDetailsActivity
 import com.example.party_maker_android.presentation.activities.views.WelcomeActivity
 import com.example.party_maker_android.presentation.adapters.EventsAdapter
 import com.example.party_maker_android.presentation.fragments.viewModels.ProfileViewModel
@@ -45,6 +46,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setViewObservers(){
+        binding.eventList.setOnItemClickListener { adapterView, view, index, id ->
+            var eventDetailsIntent = Intent(activity, EventDetailsActivity::class.java)
+            eventDetailsIntent.putExtra("EventId", id.toInt())
+            context?.startActivity(eventDetailsIntent)
+        }
         binding.eventsToReviewCard.setOnClickListener {
             //active to inactive
             if(viewModel.activeCard == it.id) {
