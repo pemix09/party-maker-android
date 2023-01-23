@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.databinding.ActivityEventDetailsBinding
 import com.example.party_maker_android.domain.models.EventEntity
@@ -94,7 +95,13 @@ class EventDetailsActivity : AppCompatActivity() {
             catch(error: Error){
                 Log.e(TAG, "Couldn't participate!")
             }
-
+        }
+        binding.shareButton.setOnClickListener {
+            ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setChooserTitle("Chooser title")
+                .setText("http://play.google.com/store/apps/details?id=" + this.packageName)
+                .startChooser();
         }
     }
 }

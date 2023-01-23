@@ -49,6 +49,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/event_date"
             android:layout_toEndOf="@id/event_details_image"/>
+        <Button
+            android:id="@+id/share_button"
+            android:textColor="@color/black"
+            android:text="Share!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/participate_button"
+            android:layout_toEndOf="@id/event_details_image"/>
         <TextView
             android:layout_margin="15dp"
             android:id="@+id/event_details_description_title"
