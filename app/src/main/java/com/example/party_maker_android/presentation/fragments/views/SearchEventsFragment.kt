@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentSearchEventsBinding
@@ -28,16 +29,33 @@ class SearchEventsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchEventsBinding.inflate(inflater)
+
         setViewListeners()
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        //set last search results!
+        if(viewModel.lastSearchResult != null){
+            var adapter = EventsAdapter(requireContext(), viewModel.lastSearchResult!!)
+            binding.searchedEventsList.adapter = adapter
+            binding.searchMessage.text = "last search results: "
+            binding.searchMessage.visibility = TextView.VISIBLE
+        }
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SearchEventsViewModel::class.java)
         viewModel.setContext(requireContext())
         setViewModelObservers()
     }
+/*    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+    }*/
 
     private fun setViewModelObservers(){
         viewModel.searchResult.observe(viewLifecycleOwner){

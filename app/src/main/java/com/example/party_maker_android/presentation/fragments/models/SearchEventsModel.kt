@@ -10,4 +10,8 @@ class SearchEventsModel(context: Context) {
     suspend fun searchEvents(searchQuery: String): List<EventEntity>?{
         return eventsRepository.getEventsByQuery(searchQuery)
     }
+
+    fun getLastSearchResults(): List<EventEntity>?{
+        return eventsRepository.getLastSearchResults()
+    }
 }

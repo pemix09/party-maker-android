@@ -24,20 +24,17 @@
             android:hint="Search events"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <!--<Button
-            android:id="@+id/search_events_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/message_text_input"
-            android:enabled="false"
-            android:text="Search" />-->
     </LinearLayout>
     <TextView
+        android:layout_margin="20dp"
         android:id="@+id/search_message"
+        android:textSize="30sp"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <ListView
+        android:layout_margin="20dp"
         android:id="@+id/searched_events_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

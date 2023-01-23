@@ -26,8 +26,12 @@ class EventRepository(private val context: Context) {
         private var organized: List<EventEntity>? = null
         private var participates: List<EventEntity>? = null
         private var toReview: List<EventEntity>? = null
+        private var lastSearchResult: List<EventEntity>? = null
     }
 
+    fun getLastSearchResults(): List<EventEntity>?{
+        return lastSearchResult
+    }
     suspend fun createEvent(eventToAdd: EventEntity) {
         withContext(Dispatchers.IO) {
             var accessToken = userService.getAccessToken()
@@ -94,6 +98,7 @@ class EventRepository(private val context: Context) {
         var response = eventHttpClient.getByQuery(formattedAccessToken, query)
 
         if(response.isSuccessful){
+            lastSearchResult = response.body()
             return response.body()!!
         }
         else{
