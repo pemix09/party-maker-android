@@ -58,6 +58,7 @@
             android:layout_below="@id/event_details_image"
             android:text="Description:"/>
         <TextView
+            android:layout_marginHorizontal="15dp"
             android:id="@+id/event_details_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,6 +102,7 @@
     </RelativeLayout>
     <TextView
         android:id="@+id/participants_text"
+        android:layout_marginHorizontal="15dp"
         android:text="Participants: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
