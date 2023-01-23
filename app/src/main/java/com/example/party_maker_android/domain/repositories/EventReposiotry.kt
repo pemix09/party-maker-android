@@ -8,7 +8,6 @@ import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.domain.models.MusicGenre
 import com.example.party_maker_android.data.clients.IEventClient
 import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
-import com.example.party_maker_android.domain.models.UserEntity
 import kotlinx.coroutines.*
 import retrofit2.Response
 import java.util.*
@@ -84,7 +83,7 @@ class EventRepository(private val context: Context) {
         return participates!!
     }
 
-    suspend fun getEventToReview(): List<EventEntity>{
+    suspend fun getEventsToReview(): List<EventEntity>{
         if(toReview != null) return toReview!!
         else{
             this.getEventsForCurrentUser()

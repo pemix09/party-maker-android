@@ -8,6 +8,6 @@ class EventListModel(context: Context) {
     private val eventsRepo = EventRepository(context)
 
     suspend fun getEventsToReview(): List<EventEntity>{
-        return eventsRepo.getEventToReview()
+        return eventsRepo.getEventsToReview()
     }
 }

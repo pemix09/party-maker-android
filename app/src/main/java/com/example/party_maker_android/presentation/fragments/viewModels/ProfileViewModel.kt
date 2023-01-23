@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.party_maker_android.EventRepository
+import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.models.EventEntity
 import com.example.party_maker_android.domain.models.UserEntity
 import com.example.party_maker_android.domain.repositories.UserRepository
@@ -17,25 +18,40 @@ class ProfileViewModel : ViewModel() {
 
     private val TAG = "ProfileViewModel"
     private lateinit var profileModel: ProfileModel
-
     var currentUser = MutableLiveData<UserEntity?>()
-    var followedEvents = MutableLiveData<List<EventEntity>?>()
-    var organizedEvents = MutableLiveData<List<EventEntity>?>()
+    var eventsToShow = MutableLiveData<List<EventEntity>?>()
     val errorMessage = MutableLiveData<String?>()
+    var activeCard: Int? = null
 
     fun setContext(context: Context){
         profileModel = ProfileModel(context)
-    }
-
-    fun fetchData(){
         viewModelScope.launch {
             currentUser.value = profileModel.getUser()
-            followedEvents.value = profileModel.getFollowedEvents()
-            organizedEvents.value = profileModel.getOrganizedEvents()
+        }
+    }
+
+    fun fetchEventsToReview(){
+        viewModelScope.launch {
+            eventsToShow.value = profileModel.getEventsToReview()
         }
     }
     fun logout(){
         profileModel.logout()
+    }
+
+    fun setActiveCard(cardId: Int){
+        activeCard = cardId
+        when(cardId){
+            R.id.your_events_card -> {
+                viewModelScope.launch {
+                    eventsToShow.value = profileModel.getOrganizedEvents()
+                }
+            }
+        }
+    }
+
+    fun clearEventsToShow(){
+        eventsToShow.value = null
     }
 
 }
