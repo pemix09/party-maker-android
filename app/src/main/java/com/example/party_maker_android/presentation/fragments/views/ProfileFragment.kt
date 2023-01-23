@@ -149,11 +149,11 @@ class ProfileFragment : Fragment() {
         }
         viewModel.eventsToShow.observe(viewLifecycleOwner){
             if(it != null && it.isNotEmpty()){
-                binding.noEventsText.visibility = TextView.VISIBLE
                 var adapter = context?.let { ctx -> EventsAdapter(ctx, it) }
                 binding.eventList.adapter = adapter
                 binding.eventsLoadingBar.visibility = ProgressBar.INVISIBLE
                 binding.eventList.visibility = ListView.VISIBLE
+                binding.noEventsText.visibility = TextView.GONE
             }
             else{
                 binding.eventList.adapter = null
@@ -161,15 +161,10 @@ class ProfileFragment : Fragment() {
                 binding.eventList.visibility = ListView.INVISIBLE
                 binding.noEventsText.visibility = TextView.VISIBLE
             }
+            if(it == null){
+                binding.noEventsText.visibility = TextView.INVISIBLE
+            }
         }
-        /*viewModel.loading.observe(viewLifecycleOwner){
-            if(it == true){
-                binding.eventsLoadingBar.visibility = ProgressBar.VISIBLE
-            }
-            else{
-                binding.eventsLoadingBar.visibility = ProgressBar.GONE
-            }
-        }*/
     }
 
     private fun showAllCards(){
