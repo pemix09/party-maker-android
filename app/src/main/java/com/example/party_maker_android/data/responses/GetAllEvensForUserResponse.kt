@@ -6,4 +6,5 @@ class GetAllEvensForUserResponse {
 
     var followed: List<EventEntity>? = null
     var organized: List<EventEntity>? = null
+    var participates: List<EventEntity>? = null
 }

@@ -30,6 +30,18 @@ class UserRepository(private val context: Context) {
         return currentUser
     }
 
+    suspend fun getEventParticipants(userIds: List<String>): List<UserEntity>{
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var response: Response<List<UserEntity>> = userHttpClient.getManyByIds(formattedAccessToken, userIds)
+
+        if(response.isSuccessful){
+            return response.body()!!
+        }
+        else{
+            throw Error(response.errorBody().toString())
+        }
+    }
     private suspend fun fetchCurrentUser(){
         var accessToken = userService.getAccessToken()
         var formattedAccessToken = "Bearer ${accessToken?.token!!}"
@@ -42,4 +54,6 @@ class UserRepository(private val context: Context) {
             throw Error("User not fetched successfully, reason: ${response.errorBody().toString()}")
         }
     }
+
+
 }

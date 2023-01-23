@@ -10,6 +10,7 @@ import com.example.party_maker_android.data.clients.IEventClient
 import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
 import kotlinx.coroutines.*
 import retrofit2.Response
+import java.util.*
 
 class EventRepository(private val context: Context) {
 
@@ -22,8 +23,14 @@ class EventRepository(private val context: Context) {
     companion object {
         private var followed: List<EventEntity>? = null
         private var organized: List<EventEntity>? = null
+        private var participates: List<EventEntity>? = null
+        private var toReview: List<EventEntity>? = null
+        private var lastSearchResult: List<EventEntity>? = null
     }
 
+    fun getLastSearchResults(): List<EventEntity>?{
+        return lastSearchResult
+    }
     suspend fun createEvent(eventToAdd: EventEntity) {
         withContext(Dispatchers.IO) {
             var accessToken = userService.getAccessToken()
@@ -48,10 +55,6 @@ class EventRepository(private val context: Context) {
     suspend fun getFollowedEvents(): List<EventEntity> {
         //if events are in memory
         if (followed != null) return followed!!
-        //if events are in local storage
-        else if (false) {
-            //TODO get events from local memory!
-        }
         //if we have to fetch events
         else {
             getEventsForCurrentUser()
@@ -60,19 +63,46 @@ class EventRepository(private val context: Context) {
         return followed!!
     }
 
+
     suspend fun getOrganizedEvents(): List<EventEntity> {
         //if events are in memory
         if (organized != null) return organized!!
-        //if events are in local storage
-        else if (false) {
-            //TODO get events from local memory!
-        }
         //if we have to fetch events
         else {
             this.getEventsForCurrentUser()
         }
         //after previous steps, organized is never going to be null
         return organized!!
+    }
+
+    suspend fun getParticipatesEvents(): List<EventEntity>{
+        if(participates != null) return participates!!
+        else{
+            this.getEventsForCurrentUser()
+        }
+        return participates!!
+    }
+
+    suspend fun getEventsToReview(): List<EventEntity>{
+        if(toReview != null) return toReview!!
+        else{
+            this.getEventsForCurrentUser()
+        }
+        return toReview!!
+    }
+
+    suspend fun getEventsByQuery(query: String): List<EventEntity>{
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var response = eventHttpClient.getByQuery(formattedAccessToken, query)
+
+        if(response.isSuccessful){
+            lastSearchResult = response.body()
+            return response.body()!!
+        }
+        else{
+            throw Error(response.errorBody().toString())
+        }
     }
 
     //TODO - make right things, not use with context!
@@ -174,6 +204,25 @@ class EventRepository(private val context: Context) {
         return genres
     }
 
+    suspend fun getEventById(eventId: Int): EventEntity{
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var response: Response<EventEntity> = eventHttpClient.getById(formattedAccessToken, eventId)
+
+        if(response.isSuccessful){
+            return response?.body()!!
+        }
+        else{
+            Log.e(TAG, "Couldn't fetch event with id: $eventId")
+            throw Error("Couldn't fetch event with id: $eventId")
+        }
+    }
+    suspend fun participateInEvent(eventId: Int){
+        var response: Response<Void> = eventHttpClient.participateInEvent(eventId)
+        if(response.isSuccessful == false){
+            throw Error("User cannot participate in event!")
+        }
+    }
     private suspend fun getEventsForCurrentUser(){
         var accessToken = userService.getAccessToken()
         var formattedAccessToken = "Bearer ${accessToken?.token!!}"
@@ -194,6 +243,14 @@ class EventRepository(private val context: Context) {
         else{
             organized = response.body()?.organized
             followed = response.body()?.followed
+            toReview = response.body()?.participates?.filter {
+                val currentTime = Calendar.getInstance().time
+                it.date?.before(currentTime)!!
+            }
+            participates = response.body()?.participates?.filter {
+                val currentTime = Calendar.getInstance().time
+                it.date?.after(currentTime)!!
+            }
         }
     }
 }

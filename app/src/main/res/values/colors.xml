@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#deb887</color>
     <color name="error">#A50202</color>
+    <color name="user_message_color">#207C24</color>
+    <color name="someone_message">#2E362F</color>
 </resources>

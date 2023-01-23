@@ -1,18 +1,22 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.cardview.widget.CardView
 import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.databinding.FragmentProfileBinding
+import com.example.party_maker_android.presentation.activities.views.EventDetailsActivity
+import com.example.party_maker_android.presentation.activities.views.WelcomeActivity
 import com.example.party_maker_android.presentation.adapters.EventsAdapter
 import com.example.party_maker_android.presentation.fragments.viewModels.ProfileViewModel
+import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 
 class ProfileFragment : Fragment() {
@@ -39,15 +43,96 @@ class ProfileFragment : Fragment() {
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         viewModel.setContext(requireContext())
         setViewModelObservers()
-        viewModel.fetchData()
     }
 
     private fun setViewObservers(){
-        binding.organizedEventsList.setOnItemClickListener { adapterView, view, index, id ->
-            //TODO - start new fragment or activity with event details
+        binding.eventList.setOnItemClickListener { adapterView, view, index, id ->
+            var eventDetailsIntent = Intent(activity, EventDetailsActivity::class.java)
+            eventDetailsIntent.putExtra("EventId", id.toInt())
+            context?.startActivity(eventDetailsIntent)
         }
-        binding.followedEventsList.setOnItemClickListener { adapterView, view, index, id ->
-            //TODO - start new fragment or activity with event details
+        binding.eventsToReviewCard.setOnClickListener {
+            //active to inactive
+            if(viewModel.activeCard == it.id) {
+                var color = resources.getColor(R.color.white)
+                it.setBackgroundColor(color)
+                showAllCards()
+            }
+            //inactive to active
+            else{
+                binding.eventsLoadingBar.visibility = ProgressBar.VISIBLE
+                viewModel.setActiveCard(it.id)
+                var color = resources.getColor(R.color.primary_color)
+                it.setBackgroundColor(color)
+                binding.yourEventsCard.visibility = MaterialCardView.GONE
+                binding.participatedEventsCard.visibility = MaterialCardView.GONE
+                binding.followedEventsCard.visibility = MaterialCardView.GONE
+            }
+        }
+        binding.yourEventsCard.setOnClickListener {
+            //active to inactive
+            if(viewModel.activeCard == it.id) {
+                var color = resources.getColor(R.color.white)
+                it.setBackgroundColor(color)
+                showAllCards()
+            }
+            //inactive to active
+            else{
+                binding.eventsLoadingBar.visibility = ProgressBar.VISIBLE
+                viewModel.setActiveCard(it.id)
+                var color = resources.getColor(R.color.primary_color)
+                it.setBackgroundColor(color)
+                binding.participatedEventsCard.visibility = MaterialCardView.GONE
+                binding.followedEventsCard.visibility = MaterialCardView.GONE
+                binding.eventsToReviewCard.visibility = MaterialCardView.GONE
+                binding.yourEventsCard.visibility = MaterialCardView.VISIBLE
+            }
+        }
+
+        binding.participatedEventsCard.setOnClickListener {
+            //active to inactive
+            if(viewModel.activeCard == it.id) {
+                var color = resources.getColor(R.color.white)
+                it.setBackgroundColor(color)
+                showAllCards()
+            }
+            //inactive to active
+            else{
+                binding.eventsLoadingBar.visibility = ProgressBar.VISIBLE
+                viewModel.setActiveCard(it.id)
+                var color = resources.getColor(R.color.primary_color)
+                it.setBackgroundColor(color)
+                binding.participatedEventsCard.visibility = MaterialCardView.VISIBLE
+                binding.followedEventsCard.visibility = MaterialCardView.GONE
+                binding.eventsToReviewCard.visibility = MaterialCardView.GONE
+                binding.yourEventsCard.visibility = MaterialCardView.GONE
+            }
+        }
+
+        binding.followedEventsCard.setOnClickListener {
+            //active to inactive
+            if(viewModel.activeCard == it.id) {
+                var color = resources.getColor(R.color.white)
+                it.setBackgroundColor(color)
+                showAllCards()
+            }
+            //inactive to active
+            else{
+                binding.eventsLoadingBar.visibility = ProgressBar.VISIBLE
+                viewModel.setActiveCard(it.id)
+                var color = resources.getColor(R.color.primary_color)
+                it.setBackgroundColor(color)
+                binding.participatedEventsCard.visibility = MaterialCardView.GONE
+                binding.followedEventsCard.visibility = MaterialCardView.VISIBLE
+                binding.eventsToReviewCard.visibility = MaterialCardView.GONE
+                binding.yourEventsCard.visibility = MaterialCardView.GONE
+            }
+        }
+
+        binding.logoutPlaceholder.setOnClickListener {
+            viewModel.logout()
+            var welcomeIntent = Intent(context, WelcomeActivity::class.java)
+            activity?.startActivity(welcomeIntent)
         }
     }
     private fun setViewModelObservers(){
@@ -68,26 +153,33 @@ class ProfileFragment : Fragment() {
             var date = dateFormat.format(it?.registrationDate)
             binding.sinceText.text = context?.getString(R.string.registration_date_text, date)
         }
-        viewModel.organizedEvents.observe(viewLifecycleOwner){ organizedEvents ->
-            if(organizedEvents != null && organizedEvents.isNotEmpty()){
-                var adapter = context?.let { ctx -> EventsAdapter(ctx, organizedEvents) }
-                binding.organizedEventsList.adapter = adapter
-
+        viewModel.eventsToShow.observe(viewLifecycleOwner){
+            if(it != null && it.isNotEmpty()){
+                var adapter = context?.let { ctx -> EventsAdapter(ctx, it) }
+                binding.eventList.adapter = adapter
+                binding.eventsLoadingBar.visibility = ProgressBar.INVISIBLE
+                binding.eventList.visibility = ListView.VISIBLE
+                binding.noEventsText.visibility = TextView.GONE
             }
             else{
-                binding.emptyOrganizedEventsText.visibility = TextView.VISIBLE
+                binding.eventList.adapter = null
+                binding.eventsLoadingBar.visibility = ProgressBar.INVISIBLE
+                binding.eventList.visibility = ListView.INVISIBLE
+                binding.noEventsText.visibility = TextView.VISIBLE
             }
-        }
-        viewModel.followedEvents.observe(viewLifecycleOwner){ followedEvents ->
-            if(followedEvents != null && followedEvents.isNotEmpty()){
-                var adapter = context?.let { ctx -> EventsAdapter(ctx, followedEvents) }
-                binding.followedEventsList.adapter = adapter
-
-            }
-            else{
-                binding.emptyFollowedEventsText.visibility = TextView.VISIBLE
+            if(it == null){
+                binding.noEventsText.visibility = TextView.INVISIBLE
             }
         }
     }
 
+    private fun showAllCards(){
+        binding.eventsToReviewCard.visibility = MaterialCardView.VISIBLE
+        binding.yourEventsCard.visibility = MaterialCardView.VISIBLE
+        binding.participatedEventsCard.visibility = MaterialCardView.VISIBLE
+        binding.followedEventsCard.visibility = MaterialCardView.VISIBLE
+        binding.eventsLoadingBar.visibility = ProgressBar.GONE
+        binding.eventList.visibility = ListView.GONE
+        viewModel.clearEventsToShow()
+    }
 }

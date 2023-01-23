@@ -27,6 +27,13 @@ interface IEventClient {
     ): Response<List<EventEntity>>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
+    @GET("Event/GetByQuery")
+    suspend fun getByQuery(
+        @Header("Authorization") token: String,
+        @Query("Name") query: String
+    ): Response<List<EventEntity>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("Event/GetForArea")
     suspend fun getForArea(
         @Header("Authorization") token: String,
@@ -54,5 +61,11 @@ interface IEventClient {
     suspend fun getAllOfCurrentUser(
         @Header("Authorization") token: String
     ): Response<GetAllEvensForUserResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("Event/TakePartInEvent")
+    suspend fun participateInEvent(
+        @Body eventToParticipate: Int
+    ): Response<Void>
 
 }

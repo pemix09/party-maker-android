@@ -4,20 +4,23 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 
 class LocationService(private val context: Context) {
     private val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    private val hasGps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-    private val hasNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    private val hasGps
+        get() = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    private val hasNetwork
+        get() = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-    fun getCurrentLocation(): Location {
-        return requestLocation() ?: throw Error("Cannot get location!")
+    fun setLocationListener(listener: LocationListener) {
+        return requestLocation(listener)
     }
 
-    private fun requestLocation(): Location?{
+    private fun requestLocation(locationListener: LocationListener){
         if (hasGps) {
             if (ActivityCompat.checkSelfPermission(
                     context,
@@ -31,11 +34,12 @@ class LocationService(private val context: Context) {
                 Log.e("Permision error:",message)
                 throw Error(message)
             }
-            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 5000, 10f, locationListener);
         }
         else if (hasNetwork) {
-            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, 5000, 10f, locationListener);
         }
-        return null
     }
 }

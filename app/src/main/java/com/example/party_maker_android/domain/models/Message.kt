@@ -10,4 +10,5 @@ class Message {
     var eventId: Int? = null
     var content: String? = null
     var read: Boolean? = null
+    var senderName: String? = null
 }

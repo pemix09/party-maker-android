@@ -6,7 +6,10 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.party_maker_android.R
 import com.example.party_maker_android.data.HttpClientsFactory
+import com.example.party_maker_android.data.requests.LoginRequest
 import com.example.party_maker_android.data.requests.RegisterRequest
+import com.example.party_maker_android.data.responses.LoginResponse
+import com.example.party_maker_android.domain.services.UserService
 import com.example.party_maker_android.presentation.activities.views.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +20,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     private var isNickNameValid: Boolean = false
     private var isPasswordValid: Boolean = false
     private var isPasswordConfirmValid: Boolean = false
+    private val userService = UserService(application.applicationContext)
 
     val emailValidationMessage = MutableLiveData<String>()
     val userNameValidationMessage = MutableLiveData<String>()
@@ -113,14 +117,18 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
             val result: Response<Void> = userHttpService.Register(registerRequest)
             Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}")
 
-            if(result.code() == 200){
+            if(result.isSuccessful){
                 Log.i("SuccessfulRegister", "User registered successfully")
-                val loginIntent = Intent(context, LoginActivity::class.java)
-                context.startActivity(loginIntent)
+
+                var loginRequest = LoginRequest(email, password)
+                var loginResponse: Response<LoginResponse> = userHttpService.Login(loginRequest)
+                if(loginResponse.isSuccessful){
+                    userService.saveUserTokens(loginResponse.body()?.accessToken!!, loginResponse.body()?.refreshToken!!)
+                }
             }
             else{
                 //posting value to view Model, as it's invoked on coroutine
-                registerActionFeedback.postValue(result.errorBody().toString())
+                registerActionFeedback.value = result.errorBody().toString()
             }
         }
 

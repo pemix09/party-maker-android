@@ -35,4 +35,11 @@ interface IUserClient {
         @Header("Authorization") token: String
     ): Response<UserEntity>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @GET("User/GetByList")
+    suspend fun getManyByIds(
+        @Header("Authorization") token: String,
+        @Query("UserIds") userIds: List<String>
+    ): Response<List<UserEntity>>
+
 }
