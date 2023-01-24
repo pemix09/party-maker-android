@@ -3,8 +3,8 @@ package com.example.party_maker_android.presentation.activities.views
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
-import android.widget.Button
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
@@ -102,6 +102,17 @@ class EventDetailsActivity : AppCompatActivity() {
                 .setChooserTitle("Chooser title")
                 .setText("http://play.google.com/store/apps/details?id=" + this.packageName)
                 .startChooser();
+        }
+        binding.addToCalendar.setOnClickListener {
+            val intent = Intent(Intent.ACTION_EDIT)
+            val event = eventDetailsViewModel.event.value
+            intent.type = "vnd.android.cursor.item/event"
+            intent.putExtra("beginTime", event?.date)
+            intent.putExtra("allDay", true)
+            intent.putExtra(CalendarContract.Events.TITLE, event?.name)
+            intent.putExtra(CalendarContract.Events.DESCRIPTION, event?.description)
+            intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event?.place)
+            startActivity(intent)
         }
     }
 }
