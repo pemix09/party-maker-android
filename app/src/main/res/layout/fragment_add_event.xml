@@ -14,8 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/darkblue">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/LoginTextView"

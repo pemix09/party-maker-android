@@ -5,23 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.activities.views.EventDetailsActivity">
+    tools:context=".presentation.activities.views.EventDetailsActivity"
+    android:background="@color/darkblue">
 
     <TextView
         android:layout_margin="15dp"
         android:id="@+id/event_details_header"
-        android:text="Details of event:"
+        android:text="Details"
         android:textSize="40sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        />
+        android:textColor="@color/skyblue"
+        android:gravity="center"/>
 
     <RelativeLayout
         android:id="@+id/event_details_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/event_details_header">
+        android:layout_below="@+id/event_details_header"
+        android:background="@drawable/details_item_style"
+        android:backgroundTint="@color/skyblue"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
         <ImageView
             android:layout_marginHorizontal="30dp"
             android:id="@+id/event_details_image"
@@ -33,30 +39,34 @@
             android:textSize="25sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/event_details_image"/>
+            android:layout_toEndOf="@id/event_details_image"
+            android:textColor="@color/darkblue"/>
         <TextView
             android:id="@+id/event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
             android:layout_below="@+id/event_details_name"
-            android:layout_toEndOf="@id/event_details_image"/>
+            android:layout_toEndOf="@id/event_details_image"
+            android:textColor="@color/darkblue"/>
         <Button
             android:id="@+id/participate_button"
-            android:textColor="@color/black"
             android:text="Participate!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/event_date"
-            android:layout_toEndOf="@id/event_details_image"/>
+            android:layout_toEndOf="@id/event_details_image"
+            android:textColor="@color/skyblue"
+            android:backgroundTint="@color/darkblue"/>
         <Button
             android:id="@+id/share_button"
-            android:textColor="@color/black"
             android:text="Share!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/participate_button"
-            android:layout_toEndOf="@id/event_details_image"/>
+            android:layout_toEndOf="@id/event_details_image"
+            android:textColor="@color/skyblue"
+            android:backgroundTint="@color/darkblue"/>
         <TextView
             android:layout_margin="15dp"
             android:id="@+id/event_details_description_title"
@@ -64,7 +74,8 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:layout_below="@id/event_details_image"
-            android:text="Description:"/>
+            android:text="Description:"
+            android:textColor="@color/darkblue"/>
         <TextView
             android:layout_marginHorizontal="15dp"
             android:id="@+id/event_details_description"
@@ -85,14 +96,15 @@
                 android:id="@+id/event_details_place_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:textColor="@color/darkblue"/>
             <Button
                 android:id="@+id/show_on_map_button"
                 android:text="Show on map"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/show_map">
+                android:drawableRight="@drawable/show_map"
+                android:textColor="@color/skyblue"
+                android:backgroundTint="@color/darkblue">
 
             </Button>
         </LinearLayout>
@@ -104,7 +116,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
-            android:text="SOme nice place" />
+            android:text="SOme nice place"
+            android:textColor="@color/darkblue"/>
 
 
     </RelativeLayout>
@@ -114,7 +127,8 @@
         android:text="Participants: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/event_details_placeholder"/>
+        android:layout_below="@+id/event_details_placeholder"
+        android:textColor="@color/skyblue"/>
     <ProgressBar
         android:id="@+id/user_loading"
         android:layout_width="wrap_content"
@@ -124,7 +138,9 @@
     android:id="@+id/participants_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/participants_text"/>
+    android:layout_below="@+id/participants_text"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"/>
 
 
 </RelativeLayout>

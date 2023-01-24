@@ -11,4 +11,6 @@
     <color name="error">#A50202</color>
     <color name="user_message_color">#207C24</color>
     <color name="someone_message">#2E362F</color>
+    <color name="darkblue">#1B262C</color>
+    <color name="skyblue">#BBE1FA</color>
 </resources>

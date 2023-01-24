@@ -23,7 +23,9 @@
             android:layout_weight="1"
             android:hint="Search events"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/darkblue"
+            android:drawableStart="@drawable/baseline_search_24"/>
     </LinearLayout>
     <TextView
         android:layout_margin="20dp"

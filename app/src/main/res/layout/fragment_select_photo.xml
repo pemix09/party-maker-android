@@ -15,7 +15,8 @@
         android:text="@string/select_photo_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/skyblue"/>
 
     <Button
         android:id="@+id/select_from_gallery_button"
@@ -25,6 +26,8 @@
         android:text="@string/select_from_gallery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        android:backgroundTint="@color/skyblue"
+        android:textColor="@color/darkblue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_photo_text" />
 
@@ -37,6 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/skyblue"
+        android:textColor="@color/darkblue"
         app:layout_constraintTop_toBottomOf="@+id/select_from_gallery_button" />
 
     <TextView
@@ -55,10 +60,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/errorMessage"
-        />
-
-
-
-
+        app:layout_constraintTop_toBottomOf="@+id/errorMessage"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

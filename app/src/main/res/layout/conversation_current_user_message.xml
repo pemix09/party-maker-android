@@ -11,12 +11,11 @@
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="15dp"
         app:cardElevation="11dp"
-        app:contentPaddingLeft="10dp"
-        app:contentPaddingRight="10dp"
+        app:contentPadding="15dp"
         android:layout_alignParentEnd="true"
-        app:cardBackgroundColor="@color/user_message_color">
+        app:cardBackgroundColor="@color/skyblue">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,7 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SenderName"
-                android:textColor="@color/white"
+                android:textColor="@color/darkblue"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Message content"
-                android:textColor="@color/white"
+                android:textColor="@color/darkblue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/current_user_name" />
 
