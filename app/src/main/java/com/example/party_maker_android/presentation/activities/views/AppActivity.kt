@@ -59,7 +59,7 @@ class AppActivity : AppCompatActivity() {
     private fun getFragment(iconId: Int): Fragment{
         return when(iconId){
             R.id.homeIcon -> {
-                return MapFragment.newInstance()
+                return MapsFragment()
             }
             R.id.searchIcon -> {
                 return SearchEventsFragment.newInstance()
