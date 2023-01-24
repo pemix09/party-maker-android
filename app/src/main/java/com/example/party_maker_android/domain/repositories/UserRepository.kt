@@ -30,6 +30,15 @@ class UserRepository(private val context: Context) {
         return currentUser
     }
 
+    suspend fun updateUser(user:UserEntity){
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var response: Response<Void> = userHttpClient.updateUser(formattedAccessToken, user)
+
+        if(!response.isSuccessful){
+            throw Error(response.errorBody()?.string())
+        }
+    }
     suspend fun getEventParticipants(userIds: List<String>): List<UserEntity>{
         var accessToken = userService.getAccessToken()
         var formattedAccessToken = "Bearer ${accessToken?.token!!}"

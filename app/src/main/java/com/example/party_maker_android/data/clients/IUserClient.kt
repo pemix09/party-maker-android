@@ -42,4 +42,10 @@ interface IUserClient {
         @Query("UserIds") userIds: List<String>
     ): Response<List<UserEntity>>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("User/UpdateUser")
+    suspend fun updateUser(
+        @Header("Authorization") token: String,
+        @Body user: UserEntity
+    ): Response<Void>
 }

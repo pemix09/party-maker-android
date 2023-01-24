@@ -1,6 +1,7 @@
 package com.example.party_maker_android.presentation.fragments.viewModels
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.models.EventEntity
 import com.example.party_maker_android.domain.models.UserEntity
 import com.example.party_maker_android.domain.repositories.UserRepository
+import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.presentation.fragments.models.ProfileModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -64,6 +66,13 @@ class ProfileViewModel : ViewModel() {
     fun clearEventsToShow(){
         eventsToShow.value = null
         activeCard = -200
+    }
+
+    fun changeProfilePicture(newPhoto: Bitmap){
+        currentUser.value?.photo = Base64Helper.getBase64StringFromBitmap(newPhoto)
+        viewModelScope.launch {
+            profileModel.updateUser(currentUser.value!!)
+        }
     }
 
 }

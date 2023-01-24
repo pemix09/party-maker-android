@@ -1,9 +1,14 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,6 +21,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.databinding.FragmentProfileBinding
@@ -35,6 +41,12 @@ class ProfileFragment : Fragment() {
     private val TAG = "ProfileFragment"
     private lateinit var viewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
+    private val photoGalleryRequestCode: Int = 1
+    private val pickPhotoRequestCode: Int = 2
+    private val requestCameraAccessRequestCode: Int = 3
+    private val makePhotoRequestCode: Int = 4
+    var selectedPhoto: Uri? = null
+    var selectedBitMap: Bitmap? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,15 +78,22 @@ class ProfileFragment : Fragment() {
                 if(options[index] == "gallery"){
                     if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED){
-                        requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 3000)
+                        requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), photoGalleryRequestCode)
                     }
                     else{
                         val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        startActivityForResult(pickPhoto, 4000)
+                        startActivityForResult(pickPhoto, pickPhotoRequestCode)
                     }
                 }
                 else if(options[index] == "camera"){
-
+                    if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED){
+                        requestPermissions(arrayOf(android.Manifest.permission.CAMERA), requestCameraAccessRequestCode)
+                    }
+                    else{
+                        val openCamera: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        startActivityForResult(openCamera, makePhotoRequestCode)
+                    }
                 }
             })
             dialog.show()
@@ -219,5 +238,54 @@ class ProfileFragment : Fragment() {
 
             }
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == photoGalleryRequestCode){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(intent, pickPhotoRequestCode)
+            }
+        }
+        else if(requestCode == requestCameraAccessRequestCode){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                val openCamera: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(openCamera, makePhotoRequestCode)
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //hide the buttons when photo was selected
+        if(data != null){
+
+            //photo from gal;ery
+            if(requestCode == pickPhotoRequestCode && resultCode == Activity.RESULT_OK){
+                selectedPhoto = data.data
+                if(Build.VERSION.SDK_INT >= 28){
+                    val source = ImageDecoder.createSource(context?.contentResolver!!, selectedPhoto!!)
+                    selectedBitMap = ImageDecoder.decodeBitmap(source)
+                    binding.profileImage.setImageBitmap(selectedBitMap)
+                }
+                else{
+                    selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
+                    binding.profileImage.setImageBitmap(selectedBitMap)
+                }
+            }
+            //photo from camera
+            else if(requestCode == makePhotoRequestCode && resultCode == Activity.RESULT_OK){
+                selectedBitMap = data.extras?.get("data") as Bitmap
+                binding.profileImage.setImageBitmap(selectedBitMap)
+            }
+
+            var parent = parentFragment as AddEventFragment
+            parent.addSelectedPhoto(Base64Helper.getBase64StringFromBitmap(selectedBitMap!!))
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

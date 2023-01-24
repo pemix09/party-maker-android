@@ -8,6 +8,7 @@ import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.domain.models.MusicGenre
 import com.example.party_maker_android.data.clients.IEventClient
 import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
+import com.example.party_maker_android.domain.models.UserEntity
 import kotlinx.coroutines.*
 import retrofit2.Response
 import java.util.*
@@ -203,6 +204,7 @@ class EventRepository(private val context: Context) {
         }
         return genres
     }
+
 
     suspend fun getEventById(eventId: Int): EventEntity{
         var accessToken = userService.getAccessToken()

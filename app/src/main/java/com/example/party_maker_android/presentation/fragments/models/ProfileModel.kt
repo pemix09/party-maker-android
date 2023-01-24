@@ -35,4 +35,8 @@ class ProfileModel(context: Context) {
     fun logout(){
         userService.logOut()
     }
+    suspend fun updateUser(user: UserEntity){
+        userRepository.updateUser(user)
+    }
+
 }
