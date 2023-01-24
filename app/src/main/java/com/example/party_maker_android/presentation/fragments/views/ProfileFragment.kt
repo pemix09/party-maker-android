@@ -1,14 +1,21 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.databinding.FragmentProfileBinding
@@ -50,6 +57,27 @@ class ProfileFragment : Fragment() {
             var eventDetailsIntent = Intent(activity, EventDetailsActivity::class.java)
             eventDetailsIntent.putExtra("EventId", id.toInt())
             context?.startActivity(eventDetailsIntent)
+        }
+        binding.profileImage.setOnClickListener {
+            var options = arrayOf("gallery", "camera")
+            var dialog = AlertDialog.Builder(context)
+            dialog.setTitle("Choose image source:")
+            dialog.setItems(options, DialogInterface.OnClickListener { dialogInterface, index ->
+                if(options[index] == "gallery"){
+                    if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED){
+                        requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 3000)
+                    }
+                    else{
+                        val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        startActivityForResult(pickPhoto, 4000)
+                    }
+                }
+                else if(options[index] == "camera"){
+
+                }
+            })
+            dialog.show()
         }
         binding.eventsToReviewCard.setOnClickListener {
             //active to inactive
@@ -181,5 +209,15 @@ class ProfileFragment : Fragment() {
         binding.eventsLoadingBar.visibility = ProgressBar.GONE
         binding.eventList.visibility = ListView.GONE
         viewModel.clearEventsToShow()
+    }
+
+    private fun requestCameraPermissions(){
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+
+            } else {
+
+            }
+        }
     }
 }
