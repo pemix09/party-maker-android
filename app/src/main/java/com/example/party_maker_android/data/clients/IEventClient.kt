@@ -1,5 +1,6 @@
 package com.example.party_maker_android.data.clients
 
+import com.example.party_maker_android.data.requests.ParticipateInEventRequest
 import com.example.party_maker_android.domain.models.EventEntity
 import com.example.party_maker_android.domain.models.MusicGenre
 import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
@@ -65,7 +66,8 @@ interface IEventClient {
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("Event/TakePartInEvent")
     suspend fun participateInEvent(
-        @Body eventToParticipate: Int
+        @Header("Authorization") token: String,
+        @Body requestBody: ParticipateInEventRequest
     ): Response<Void>
 
 }

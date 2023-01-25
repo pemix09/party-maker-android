@@ -7,6 +7,7 @@ import com.example.party_maker_android.domain.models.EventEntity
 import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.domain.models.MusicGenre
 import com.example.party_maker_android.data.clients.IEventClient
+import com.example.party_maker_android.data.requests.ParticipateInEventRequest
 import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
 import com.example.party_maker_android.domain.models.UserEntity
 import kotlinx.coroutines.*
@@ -220,7 +221,10 @@ class EventRepository(private val context: Context) {
         }
     }
     suspend fun participateInEvent(eventId: Int){
-        var response: Response<Void> = eventHttpClient.participateInEvent(eventId)
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var request = ParticipateInEventRequest(eventId)
+        var response: Response<Void> = eventHttpClient.participateInEvent(formattedAccessToken, request)
         if(response.isSuccessful == false){
             throw Error("User cannot participate in event!")
         }
