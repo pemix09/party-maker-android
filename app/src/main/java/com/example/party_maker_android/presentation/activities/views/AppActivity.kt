@@ -75,6 +75,11 @@ class AppActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     private fun setFragmentContainerContent(fragmentToAdd: Fragment){
         var transaction = supportFragmentManager.beginTransaction()
         transaction.replace(mapBinding.fragmentContainer.id, fragmentToAdd)
