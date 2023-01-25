@@ -38,10 +38,10 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: FragmentAddEventBinding
     private val requestLocationCode = 10000
     private val requestCoarseLocation = 20000
-    private val photoGalleryRequestCode: Int = 1
-    private val pickPhotoRequestCode: Int = 2
-    private val requestCameraAccessRequestCode: Int = 3
-    private val makePhotoRequestCode: Int = 4
+    private val photoGalleryRequestCode: Int = 1312
+    private val pickPhotoRequestCode: Int = 233
+    private val requestCameraAccessRequestCode: Int = 3435
+    private val makePhotoRequestCode: Int = 4534
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,6 +80,11 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setModelObservers()
         setViewChangeListeners()
         setAddEventAction()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i(TAG, "chuj")
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
