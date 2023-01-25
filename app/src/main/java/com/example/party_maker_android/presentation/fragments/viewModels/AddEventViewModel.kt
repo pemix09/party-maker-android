@@ -1,6 +1,7 @@
 package com.example.party_maker_android.presentation.fragments.viewModels
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.party_maker_android.EventRepository
 import com.example.party_maker_android.domain.services.LocationService
 import com.example.party_maker_android.domain.models.EventEntity
+import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.presentation.fragments.models.AddEventModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -105,9 +107,13 @@ class AddEventViewModel : ViewModel() {
             }
         }
 
+    fun addEventPhoto(photo: Bitmap){
+        this.photo = Base64Helper.getBase64StringFromBitmap(photo)
+    }
     private fun checkFormState(){
         isFormValid.value = isDescriptionValid && isNameValid && photo != null && location.value != null && place != null
     }
+
 
     fun addEvent(){
         var eventToAdd: EventEntity = EventEntity().also{

@@ -2,8 +2,13 @@ package com.example.party_maker_android.presentation.fragments.views
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
@@ -33,6 +38,10 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: FragmentAddEventBinding
     private val requestLocationCode = 10000
     private val requestCoarseLocation = 20000
+    private val photoGalleryRequestCode: Int = 1
+    private val pickPhotoRequestCode: Int = 2
+    private val requestCameraAccessRequestCode: Int = 3
+    private val makePhotoRequestCode: Int = 4
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,6 +137,34 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 binding.placeInputContainer.helperText = null
             }
         }
+        binding.addEventPhotoButton.setOnClickListener {
+            var options = arrayOf("gallery", "camera")
+            var dialog = AlertDialog.Builder(context)
+            dialog.setTitle("Choose image source:")
+            dialog.setItems(options, DialogInterface.OnClickListener { dialogInterface, index ->
+                if(options[index] == "gallery"){
+                    if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED){
+                        requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), photoGalleryRequestCode)
+                    }
+                    else{
+                        val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        startActivityForResult(pickPhoto, pickPhotoRequestCode)
+                    }
+                }
+                else if(options[index] == "camera"){
+                    if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED){
+                        requestPermissions(arrayOf(android.Manifest.permission.CAMERA), requestCameraAccessRequestCode)
+                    }
+                    else{
+                        val openCamera: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        startActivityForResult(openCamera, makePhotoRequestCode)
+                    }
+                }
+            })
+            dialog.show()
+        }
     }
 
 
@@ -136,5 +173,64 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
             viewModel.addEvent()
         }
     }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == photoGalleryRequestCode){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(intent, pickPhotoRequestCode)
+            }
+        }
+        else if(requestCode == requestCameraAccessRequestCode){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                val openCamera: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(openCamera, makePhotoRequestCode)
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(data != null){
+            if(requestCode == pickPhotoRequestCode && resultCode == Activity.RESULT_OK){
+                var selectedPhoto = data.data
+                if(Build.VERSION.SDK_INT >= 28){
+                    val source = ImageDecoder.createSource(context?.contentResolver!!, selectedPhoto!!)
+                    var selectedBitMap = ImageDecoder.decodeBitmap(source)
+                    try{
+                        viewModel.addEventPhoto(selectedBitMap)
+                    }
+                    catch (error: Error){
+                        Log.e(TAG, "cannot update photo!")
+                    }
+                    binding.eventPhoto.setImageBitmap(selectedBitMap)
+                }
+                else{
+                    var selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
+                    try{
+                        viewModel.addEventPhoto(selectedBitMap)
+                    }
+                    catch (error: Error){
+                        Log.e(TAG, "cannot update photo!")
+                    }
+                    binding.eventPhoto.setImageBitmap(selectedBitMap)
+                }
+            }
+            //photo from camera
+            else if(requestCode == makePhotoRequestCode && resultCode == Activity.RESULT_OK){
+                var selectedBitMap = data.extras?.get("data") as Bitmap
+                try{
+                    viewModel.addEventPhoto(selectedBitMap)
+                    binding.eventPhoto.setImageBitmap(selectedBitMap)
+                }
+                catch (error: Error){
+                    Log.e(TAG, "cannot update photo!")
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 }

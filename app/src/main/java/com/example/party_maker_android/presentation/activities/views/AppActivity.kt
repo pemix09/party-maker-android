@@ -71,7 +71,7 @@ class AppActivity : AppCompatActivity() {
                 return ProfileFragment.newInstance()
             }
             else -> {
-                return MapFragment.newInstance()
+                return AddEventFragment.newInstance()
             }
         }
     }
