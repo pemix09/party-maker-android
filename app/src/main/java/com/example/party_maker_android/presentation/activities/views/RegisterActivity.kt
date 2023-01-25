@@ -42,9 +42,15 @@ class RegisterActivity : AppCompatActivity() {
             var email = viewBinding.registerEmailInput.text.toString()
             var userName = viewBinding.registerUserNameInput.text.toString()
             var password = viewBinding.registerPasswordInput.text.toString()
-            viewModel.register(email, userName, password)
-            var appIntent = Intent(this, AppActivity::class.java)
-            this.startActivity(appIntent)
+            try{
+                viewModel.register(email, userName, password)
+                var appIntent = Intent(this, AppActivity::class.java)
+                this.startActivity(appIntent)
+            }
+            catch(error: Error){
+
+            }
+
         }
     }
 
