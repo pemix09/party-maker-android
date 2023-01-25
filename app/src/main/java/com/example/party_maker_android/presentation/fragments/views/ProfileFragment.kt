@@ -281,6 +281,7 @@ class ProfileFragment : Fragment() {
                 try{
                     viewModel.changeProfilePicture(selectedBitMap!!)
                     binding.profileImage.setImageBitmap(selectedBitMap)
+
                 }
                 catch (error: Error){
                     Log.e(TAG, "cannot update photo!")

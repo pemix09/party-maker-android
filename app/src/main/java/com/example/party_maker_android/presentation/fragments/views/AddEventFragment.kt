@@ -54,11 +54,6 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onAttach(activity: Activity) {
         fragmentActivityContext = activity as AppActivity
-        super.onAttach(activity)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED){
             requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), requestLocationCode)
@@ -68,9 +63,15 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
             requestPermissions(arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION), requestCoarseLocation)
         }
 
-        viewModel = ViewModelProvider(this).get(AddEventViewModel::class.java).also {
-            it.setContext(fragmentActivityContext)
-        }
+        viewModel = ViewModelProvider(this).get(AddEventViewModel::class.java)
+        super.onAttach(activity)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.photo = savedInstanceState?.getString("photo")
+        viewModel.name = savedInstanceState?.getString("name")
+        Log.i(TAG, "values got back! ${viewModel.photo}")
 
         ArrayAdapter.createFromResource(fragmentActivityContext, R.array.music_genre_array, android.R.layout.simple_spinner_item)
             .also {
@@ -85,7 +86,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onResume() {
         super.onResume()
-        Log.i(TAG, "chuj")
+        Log.i(TAG, "photo : ${viewModel?.photo} name: ${viewModel?.name}")
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
@@ -96,7 +97,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     }
     fun addSelectedPhoto(base64Photo: String){
-        viewModel.photo = base64Photo
+        viewModel?.photo = base64Photo
     }
 
     fun showTimePickerDialog(view: View){
@@ -104,7 +105,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setModelObservers(){
-        viewModel.location.observe(viewLifecycleOwner){
+        viewModel?.location?.observe(viewLifecycleOwner){
             if(it != null){
                 binding.currentLocationText.text = "longitude: ${it.longitude}, latitude: ${it.longitude}"
             }
@@ -112,16 +113,16 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 binding.currentLocationText.text = "Couldn't determine location"
             }
         }
-        viewModel.errorMessage.observe(viewLifecycleOwner){
+        viewModel?.errorMessage?.observe(viewLifecycleOwner){
             binding.addEventMessage.text = it.toString()
         }
-        viewModel.descriptionValidationMessage.observe(viewLifecycleOwner){
+        viewModel?.descriptionValidationMessage?.observe(viewLifecycleOwner){
             binding.descriptionInputContainer.helperText = it
         }
-        viewModel.nameValidationMessage.observe(viewLifecycleOwner){
+        viewModel?.nameValidationMessage?.observe(viewLifecycleOwner){
             binding.nameInputContainer.helperText = it
         }
-        viewModel.isFormValid.observe(viewLifecycleOwner){
+        viewModel?.isFormValid?.observe(viewLifecycleOwner){
             binding.addEventButton.isEnabled = it
         }
 
@@ -129,13 +130,13 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setViewChangeListeners(){
         binding.descriptionInput.addTextChangedListener {
-            viewModel.description = it.toString()
+            viewModel?.description = it.toString()
         }
         binding.nameInput.addTextChangedListener {
-            viewModel.name = it.toString()
+            viewModel?.name = it.toString()
         }
         binding.placeInput.addTextChangedListener {
-            viewModel.place = it.toString()
+            viewModel?.place = it.toString()
             if(it.toString().isEmpty()){
                 binding.placeInputContainer.helperText = "Place cannot be empty!"
             }
@@ -176,7 +177,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setAddEventAction(){
         binding.addEventButton.setOnClickListener {
-            viewModel.addEvent()
+            viewModel?.addEvent()
         }
     }
     override fun onRequestPermissionsResult(
@@ -207,33 +208,30 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     val source = ImageDecoder.createSource(context?.contentResolver!!, selectedPhoto!!)
                     var selectedBitMap = ImageDecoder.decodeBitmap(source)
                     try{
-                        viewModel.addEventPhoto(selectedBitMap)
+                        viewModel?.addEventPhoto(selectedBitMap)
                     }
                     catch (error: Error){
                         Log.e(TAG, "cannot update photo!")
                     }
                     binding.eventPhoto.setImageBitmap(selectedBitMap)
-                    binding.eventPhoto.visibility = ImageView.VISIBLE
                 }
                 else{
                     var selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
                     try{
-                        viewModel.addEventPhoto(selectedBitMap)
+                        viewModel?.addEventPhoto(selectedBitMap)
                     }
                     catch (error: Error){
                         Log.e(TAG, "cannot update photo!")
                     }
                     binding.eventPhoto.setImageBitmap(selectedBitMap)
-                    binding.eventPhoto.visibility = ImageView.VISIBLE
                 }
             }
             //photo from camera
             else if(requestCode == makePhotoRequestCode && resultCode == Activity.RESULT_OK){
                 var selectedBitMap = data.extras?.get("data") as Bitmap
                 try{
-                    viewModel.addEventPhoto(selectedBitMap)
+                    viewModel?.addEventPhoto(selectedBitMap)
                     binding.eventPhoto.setImageBitmap(selectedBitMap)
-                    binding.eventPhoto.visibility = ImageView.VISIBLE
                 }
                 catch (error: Error){
                     Log.e(TAG, "cannot update photo!")
@@ -241,5 +239,18 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.i(TAG, "Saving fragment!")
+        outState.putString("photo", viewModel?.photo)
+        outState.putString("name", viewModel?.name)
+        super.onSaveInstanceState(outState)
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if(viewModel != null){
+
+        }
     }
 }
