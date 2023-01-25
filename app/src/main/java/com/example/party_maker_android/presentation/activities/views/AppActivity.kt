@@ -21,7 +21,6 @@ class AppActivity : AppCompatActivity() {
     lateinit var mapModel: AppViewModel
     private val TAG = "mapActivity"
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,7 +44,7 @@ class AppActivity : AppCompatActivity() {
         mapBinding.fab.setOnClickListener {
             var fragmentToAdd = AddEventFragment()
             setFragmentContainerContent(fragmentToAdd)
-            mapBinding.bottomNavView.selectedItemId = R.id.placeholder
+            myBottomNavigationView.selectedItemId = R.id.placeholder
         }
 
         //Here we should add more fragments to launch
@@ -70,8 +69,11 @@ class AppActivity : AppCompatActivity() {
             R.id.profileIcon -> {
                 return ProfileFragment.newInstance()
             }
-            else -> {
+            R.id.placeholder -> {
                 return AddEventFragment.newInstance()
+            }
+            else -> {
+                return MapFragment.newInstance()
             }
         }
     }

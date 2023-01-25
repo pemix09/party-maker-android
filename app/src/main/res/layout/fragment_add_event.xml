@@ -150,9 +150,8 @@
 
         <ImageView
             android:id="@+id/event_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:visibility="invisible"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -161,7 +160,7 @@
             android:id="@+id/add_event_photo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add photo"
+            android:text="Select photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +177,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_photo"/>
+            app:layout_constraintTop_toBottomOf="@id/add_event_photo_button"/>
 
         <TextView
             android:id="@+id/add_event_message"

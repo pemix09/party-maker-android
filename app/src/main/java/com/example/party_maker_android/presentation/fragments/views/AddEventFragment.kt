@@ -19,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -212,6 +213,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         Log.e(TAG, "cannot update photo!")
                     }
                     binding.eventPhoto.setImageBitmap(selectedBitMap)
+                    binding.eventPhoto.visibility = ImageView.VISIBLE
                 }
                 else{
                     var selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
@@ -222,6 +224,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         Log.e(TAG, "cannot update photo!")
                     }
                     binding.eventPhoto.setImageBitmap(selectedBitMap)
+                    binding.eventPhoto.visibility = ImageView.VISIBLE
                 }
             }
             //photo from camera
@@ -230,6 +233,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 try{
                     viewModel.addEventPhoto(selectedBitMap)
                     binding.eventPhoto.setImageBitmap(selectedBitMap)
+                    binding.eventPhoto.visibility = ImageView.VISIBLE
                 }
                 catch (error: Error){
                     Log.e(TAG, "cannot update photo!")
