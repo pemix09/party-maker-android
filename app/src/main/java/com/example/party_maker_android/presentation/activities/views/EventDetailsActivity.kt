@@ -106,5 +106,29 @@ class EventDetailsActivity : AppCompatActivity() {
                 .setText("http://play.google.com/store/apps/details?id=" + this.packageName)
                 .startChooser();
         }
+        binding.addToCalendar.setOnClickListener {
+            var event = eventDetailsViewModel.event.value
+            if (Build.VERSION.SDK_INT >= 14) {
+                val intent: Intent = Intent(Intent.ACTION_INSERT)
+                    .setData(Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event?.date)
+/*                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.timeInMillis)*/
+                    .putExtra(Events.TITLE, event?.name)
+                    .putExtra(Events.DESCRIPTION, event?.description)
+                    .putExtra(Events.EVENT_LOCATION, event?.place)
+                    .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+                startActivity(intent)
+            } else {
+                val cal = Calendar.getInstance()
+                val intent = Intent(Intent.ACTION_EDIT)
+                intent.type = "vnd.android.cursor.item/event"
+                intent.putExtra("beginTime", event?.date)
+                intent.putExtra("allDay", true)
+                intent.putExtra("title", event?.name)
+                intent.putExtra("description", event?.description)
+                startActivity(intent)
+            }
+        }
     }
 }

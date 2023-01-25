@@ -33,9 +33,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             try{
                 viewModelScope.launch{
                     loginModel.login()
+                    loginSuccess.value = true
+                    loginFeedBackMessage.value = "Login successful!"
                 }
-                loginSuccess.value = true
-                loginFeedBackMessage.value = "Login successful!"
             }
             catch(error: Error){
                 loginSuccess.value = false
