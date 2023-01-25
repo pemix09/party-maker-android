@@ -6,6 +6,7 @@ import com.example.party_maker_android.R
 import com.example.party_maker_android.domain.services.UserService
 import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.data.clients.IUserClient
+import com.example.party_maker_android.data.requests.UpdateUserRequest
 import com.example.party_maker_android.domain.models.UserEntity
 import retrofit2.Response
 
@@ -30,10 +31,11 @@ class UserRepository(private val context: Context) {
         return currentUser
     }
 
-    suspend fun updateUser(user:UserEntity){
+    suspend fun updateUser(user: UserEntity){
         var accessToken = userService.getAccessToken()
         var formattedAccessToken = "Bearer ${accessToken?.token!!}"
-        var response: Response<Void> = userHttpClient.updateUser(formattedAccessToken, user)
+        var request = UpdateUserRequest(user.userName!!, user.photo!!)
+        var response: Response<Void> = userHttpClient.updateUser(formattedAccessToken, request)
 
         if(!response.isSuccessful){
             throw Error(response.errorBody()?.string())

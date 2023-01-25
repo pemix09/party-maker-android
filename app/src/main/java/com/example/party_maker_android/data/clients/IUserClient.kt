@@ -4,6 +4,7 @@ import com.example.party_maker_android.domain.models.UserEntity
 import com.example.party_maker_android.data.requests.LoginRequest
 import com.example.party_maker_android.data.requests.RefreshTokenRequest
 import com.example.party_maker_android.data.requests.RegisterRequest
+import com.example.party_maker_android.data.requests.UpdateUserRequest
 import com.example.party_maker_android.data.responses.LoginResponse
 import com.example.party_maker_android.data.responses.RefreshTokenResponse
 import retrofit2.Response
@@ -46,6 +47,6 @@ interface IUserClient {
     @POST("User/UpdateUser")
     suspend fun updateUser(
         @Header("Authorization") token: String,
-        @Body user: UserEntity
+        @Body requestBody: UpdateUserRequest
     ): Response<Void>
 }

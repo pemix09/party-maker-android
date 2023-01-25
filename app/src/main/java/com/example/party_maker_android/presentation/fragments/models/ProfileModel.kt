@@ -35,8 +35,10 @@ class ProfileModel(context: Context) {
     fun logout(){
         userService.logOut()
     }
-    suspend fun updateUser(user: UserEntity){
-        userRepository.updateUser(user)
+    suspend fun updateUser(userPhoto: String){
+        var currentUser = userRepository.getCurrentUser()
+        currentUser?.photo = userPhoto
+        userRepository.updateUser(currentUser!!)
     }
 
 }

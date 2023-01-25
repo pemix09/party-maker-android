@@ -45,8 +45,7 @@ class ProfileFragment : Fragment() {
     private val pickPhotoRequestCode: Int = 2
     private val requestCameraAccessRequestCode: Int = 3
     private val makePhotoRequestCode: Int = 4
-    var selectedPhoto: Uri? = null
-    var selectedBitMap: Bitmap? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -230,16 +229,6 @@ class ProfileFragment : Fragment() {
         viewModel.clearEventsToShow()
     }
 
-    private fun requestCameraPermissions(){
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-
-            } else {
-
-            }
-        }
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -261,30 +250,42 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //hide the buttons when photo was selected
         if(data != null){
-
-            //photo from gal;ery
             if(requestCode == pickPhotoRequestCode && resultCode == Activity.RESULT_OK){
-                selectedPhoto = data.data
+                var selectedPhoto = data.data
                 if(Build.VERSION.SDK_INT >= 28){
                     val source = ImageDecoder.createSource(context?.contentResolver!!, selectedPhoto!!)
-                    selectedBitMap = ImageDecoder.decodeBitmap(source)
+                    var selectedBitMap = ImageDecoder.decodeBitmap(source)
+                    try{
+                        viewModel.changeProfilePicture(selectedBitMap!!)
+                    }
+                    catch (error: Error){
+                        Log.e(TAG, "cannot update photo!")
+                    }
                     binding.profileImage.setImageBitmap(selectedBitMap)
                 }
                 else{
-                    selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
+                    var selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
+                    try{
+                        viewModel.changeProfilePicture(selectedBitMap!!)
+                    }
+                    catch (error: Error){
+                        Log.e(TAG, "cannot update photo!")
+                    }
                     binding.profileImage.setImageBitmap(selectedBitMap)
                 }
             }
             //photo from camera
             else if(requestCode == makePhotoRequestCode && resultCode == Activity.RESULT_OK){
-                selectedBitMap = data.extras?.get("data") as Bitmap
-                binding.profileImage.setImageBitmap(selectedBitMap)
+                var selectedBitMap = data.extras?.get("data") as Bitmap
+                try{
+                    viewModel.changeProfilePicture(selectedBitMap!!)
+                    binding.profileImage.setImageBitmap(selectedBitMap)
+                }
+                catch (error: Error){
+                    Log.e(TAG, "cannot update photo!")
+                }
             }
-
-            var parent = parentFragment as AddEventFragment
-            parent.addSelectedPhoto(Base64Helper.getBase64StringFromBitmap(selectedBitMap!!))
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
