@@ -9,6 +9,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
+
 class Base64Helper {
     companion object{
         fun getBase64StringFromBitmap(bitmapImage: Bitmap): String{
@@ -34,11 +35,12 @@ class Base64Helper {
                 return false
             }
 
-            val pattern =
-                "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
+            return base64.length > 40
+            /*val pattern =
+                "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw]==|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=)?\$\n"
             val r: Pattern = Pattern.compile(pattern)
             val m: Matcher = r.matcher(base64)
-            return m.find()
+            return m.find()*/
         }
     }
 }
