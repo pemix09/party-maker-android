@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import com.example.party_maker_android.R
@@ -52,13 +53,10 @@ class SearchEventsFragment : Fragment() {
         viewModel.setContext(requireContext())
         setViewModelObservers()
     }
-/*    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }*/
 
     private fun setViewModelObservers(){
         viewModel.searchResult.observe(viewLifecycleOwner){
+            binding.progressBar.visibility = ProgressBar.INVISIBLE
             if(it.isNotEmpty()){
                 var adapter = EventsAdapter(requireContext(), it)
                 binding.searchedEventsList.adapter = adapter
@@ -78,6 +76,7 @@ class SearchEventsFragment : Fragment() {
         binding.searchEventsTextInput.addTextChangedListener {
             binding.searchMessage.text = null
             if(it.toString().isNotEmpty()){
+                binding.progressBar.visibility = ProgressBar.VISIBLE
                 viewModel.search(it.toString())
             }
         }

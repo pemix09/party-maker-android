@@ -145,7 +145,6 @@ class MapFragment : Fragment(), Marker.OnMarkerClickListener, IMyLocationConsume
         map.setMultiTouchControls(true);
         map.overlays.add(locationOverlay)
         map.controller.setZoom(15)
-
     }
 
     companion object {
