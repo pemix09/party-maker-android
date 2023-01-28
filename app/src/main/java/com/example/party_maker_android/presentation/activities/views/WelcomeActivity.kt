@@ -30,4 +30,8 @@ class WelcomeActivity : AppCompatActivity() {
             this.startActivity(loginIntent)
         }
     }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
