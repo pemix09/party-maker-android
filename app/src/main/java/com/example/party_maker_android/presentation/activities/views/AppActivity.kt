@@ -20,6 +20,7 @@ class AppActivity : AppCompatActivity() {
     lateinit var mapBinding: ActivityMapBinding
     lateinit var mapModel: AppViewModel
     private val TAG = "mapActivity"
+    private var activeFragmentId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +36,16 @@ class AppActivity : AppCompatActivity() {
         super.onResume()
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
-        var selected = mapBinding.bottomNavView.selectedItemId
 
-        //for place holder selected different logic applies!
-        if(selected != R.id.placeholder){
-            var fragment = getFragment(selected)
+        if(mapBinding.bottomNavView.selectedItemId == R.id.homeIcon || mapBinding.bottomNavView.selectedItemId == R.id.profileIcon){
+            return
+        }
+        if(activeFragmentId != null){
+            var fragment = getFragment(activeFragmentId!!)
             setFragmentContainerContent(fragment)
+        }
+        else{
+            var fragment = getFragment(mapBinding.bottomNavView.selectedItemId)
         }
     }
 
@@ -48,19 +53,28 @@ class AppActivity : AppCompatActivity() {
         val myBottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         mapBinding.fab.setOnClickListener {
             var fragmentToAdd = AddEventFragment()
-            setFragmentContainerContent(fragmentToAdd)
             myBottomNavigationView.selectedItemId = R.id.placeholder
+            activeFragmentId = fragmentToAdd.id
+            setFragmentContainerContent(fragmentToAdd)
         }
 
         //Here we should add more fragments to launch
         myBottomNavigationView.setOnItemSelectedListener {
             Log.i("MenuClicked", "Menu item clicked: ${it.itemId}")
-            setFragmentContainerContent(getFragment(it.itemId))
+            activeFragmentId = it.itemId
+            setFragmentContainerContent(getFragment(activeFragmentId!!))
             true
         }
     }
 
     private fun getFragment(iconId: Int): Fragment{
+        var fragmentManager = supportFragmentManager
+        var fragment = fragmentManager.findFragmentById(iconId)
+
+        if(fragment != null){
+            return fragment
+        }
+
         return when(iconId){
             R.id.homeIcon -> {
                 return MapFragment.newInstance()
