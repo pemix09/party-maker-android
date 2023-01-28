@@ -35,6 +35,13 @@ class AppActivity : AppCompatActivity() {
         super.onResume()
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
+        var selected = mapBinding.bottomNavView.selectedItemId
+
+        //for place holder selected different logic applies!
+        if(selected != R.id.placeholder){
+            var fragment = getFragment(selected)
+            setFragmentContainerContent(fragment)
+        }
     }
 
     private fun setMenuItemClickListener() {
