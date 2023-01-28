@@ -35,7 +35,12 @@ class EventsAdapter(private val ctx: Context, private val events: List<EventEnti
         var eventPlace = view.findViewById<TextView>(R.id.eventPlace)
 
         eventName.text = events[position].name
-        eventImage.setImageBitmap(events[position].photo?.let { Base64Helper.getBitmapFromBase64(it) })
+        if(events[position].photo?.isNotEmpty()!!){
+            eventImage.setImageBitmap(events[position].photo?.let { Base64Helper.getBitmapFromBase64(it) })
+        }
+        else{
+            eventImage.setImageResource(R.drawable.whiskey1)
+        }
         eventDescription.text = events[position].description
         eventPlace.text = events[position].place
 

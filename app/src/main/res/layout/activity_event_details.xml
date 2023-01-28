@@ -41,30 +41,7 @@
             android:text="Date"
             android:layout_below="@+id/event_details_name"
             android:layout_toEndOf="@id/event_details_image"/>
-        <Button
-            android:id="@+id/participate_button"
-            android:textColor="@color/black"
-            android:text="Participate!"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/event_date"
-            android:layout_toEndOf="@id/event_details_image"/>
-        <Button
-            android:id="@+id/share_button"
-            android:textColor="@color/black"
-            android:text="Share!"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/participate_button"
-            android:layout_toEndOf="@id/event_details_image"/>
-        <Button
-            android:id="@+id/add_to_calendar"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:text="Add to calendar"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/share_button"
-            android:layout_toEndOf="@id/event_details_image"/>
+
         <TextView
             android:layout_margin="15dp"
             android:id="@+id/event_details_description_title"
@@ -84,7 +61,8 @@
             android:id="@+id/place_text_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
+            android:orientation="vertical"
             android:layout_below="@id/event_details_description">
             <TextView
                 android:text="Place: "
@@ -113,6 +91,30 @@
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
             android:text="SOme nice place" />
+        <Button
+            android:id="@+id/participate_button"
+            android:textColor="@color/black"
+            android:text="Participate!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/place_text_placeholder"
+            android:layout_alignParentStart="true"/>
+        <Button
+            android:id="@+id/share_button"
+            android:textColor="@color/black"
+            android:text="Share!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/participate_button"
+            android:layout_alignParentStart="true"/>
+        <Button
+            android:id="@+id/add_to_calendar"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:text="Add to calendar"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/share_button"
+            android:layout_alignParentStart="true"/>
 
 
     </RelativeLayout>

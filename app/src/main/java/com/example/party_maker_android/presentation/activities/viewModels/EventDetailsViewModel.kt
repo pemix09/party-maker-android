@@ -31,6 +31,9 @@ class EventDetailsViewModel(application: Application): AndroidViewModel(applicat
     fun participateInEvent(){
         viewModelScope.launch {
             eventDetailsModel.participateInEvent(event?.value?.id!!)
+            var newParticipators = event?.value?.participatorsIds?.toMutableList()
+            newParticipators?.add(currentUser?.value?.id!!)
+            eventParticipants.value = eventDetailsModel.getEventParticipants(newParticipators!!)
         }
     }
 }

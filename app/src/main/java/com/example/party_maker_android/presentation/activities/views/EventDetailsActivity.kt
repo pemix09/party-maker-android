@@ -8,9 +8,11 @@ import android.provider.CalendarContract
 import android.provider.CalendarContract.Events
 import android.util.Log
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.ActivityEventDetailsBinding
 import com.example.party_maker_android.domain.models.EventEntity
 import com.example.party_maker_android.domain.services.Base64Helper
@@ -48,11 +50,15 @@ class EventDetailsActivity : AppCompatActivity() {
             if(it != null){
                 binding.eventDetailsName.text = it.name
                 binding.eventDetailsDescription.text = it.description
-                if(it.photo != null){
+                if(it.photo?.isNotEmpty()!!){
                     binding.eventDetailsImage.setImageBitmap(Base64Helper.getBitmapFromBase64(it.photo!!))
+                }
+                else{
+                    binding.eventDetailsImage.setImageResource(R.drawable.whiskey1)
                 }
                 var dateFormat = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
                 binding.eventDate.text = dateFormat.format(it?.date)
+                binding.eventDetailsPlaceTitle.text = it.place
             }
             if(eventDetailsViewModel.currentUser.value?.id == it.organizaerId){
                 binding.participateButton.text = "You organize this event!"
@@ -91,9 +97,10 @@ class EventDetailsActivity : AppCompatActivity() {
         }
         binding.participateButton.setOnClickListener {
             try {
-                //TODO - make it work!
                 eventDetailsViewModel.participateInEvent()
                 binding.participateButton.text = "You participate!"
+                binding.participantsText.visibility = TextView.GONE
+                binding.userLoading.visibility = ProgressBar.VISIBLE
             }
             catch(error: Error){
                 Log.e(TAG, "Couldn't participate!")
