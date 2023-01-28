@@ -27,7 +27,7 @@ class ParticipantsAdapter(private val context: Context, private val participants
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var view = inflater.inflate(R.layout.event_list_item, null)
+        var view = inflater.inflate(R.layout.participator_item_list, null)
         var participant = participants[position]
         if(participant.photo != null){
             view.findViewById<ImageView>(R.id.participant_photo!!)
