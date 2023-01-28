@@ -33,6 +33,7 @@ class EventsAdapter(private val ctx: Context, private val events: List<EventEnti
         var eventImage = view.findViewById<ImageView>(R.id.eventPhoto)
         var eventDescription = view.findViewById<TextView>(R.id.eventDescription)
         var eventPlace = view.findViewById<TextView>(R.id.eventPlace)
+        var eventMusicGenre = view.findViewById<TextView>(R.id.musicGenre)
 
         eventName.text = events[position].name
         if(events[position].photo?.isNotEmpty()!!){
@@ -41,6 +42,7 @@ class EventsAdapter(private val ctx: Context, private val events: List<EventEnti
         else{
             eventImage.setImageResource(R.drawable.whiskey1)
         }
+        //TODO - to fetch music genres eventMusicGenre.text = events[position].m
         eventDescription.text = events[position].description
         eventPlace.text = events[position].place
 

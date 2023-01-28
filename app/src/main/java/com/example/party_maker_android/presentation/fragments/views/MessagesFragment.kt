@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentMessagesBinding
@@ -42,6 +43,7 @@ class MessagesFragment : Fragment() {
 
     private fun setViewModelObservers(){
         viewModel.eventToShow.observe(viewLifecycleOwner){
+            binding.eventMessagesLoadingBar.visibility = ProgressBar.INVISIBLE
             if(it != null && it.isNotEmpty()){
                 var adapter = context?.let { ctx -> EventsAdapter(ctx, it) }
                 binding.eventsToShowForMessagesList.adapter = adapter

@@ -198,8 +198,16 @@ class ProfileFragment : Fragment() {
         }
         viewModel.currentUser.observe(viewLifecycleOwner){
             binding.profileUserName.text = it?.userName
-            if(it?.photo != null){
-                binding.profileImage.setImageBitmap(Base64Helper.getBitmapFromBase64(it.photo!!))
+            if(it?.photo?.isNotEmpty()!!){
+                try {
+                    binding.profileImage.setImageBitmap(Base64Helper.getBitmapFromBase64(it.photo!!))
+                }
+                catch(error: Error){
+                    binding.profileImage.setImageResource(R.drawable.profile_icon)
+                }
+            }
+            else{
+                binding.profileImage.setImageResource(R.drawable.profile_icon)
             }
             binding.profileEmail.text = it?.email
             binding.profileRole.text = it?.role
