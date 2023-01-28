@@ -30,9 +30,10 @@ class EventDetailsViewModel(application: Application): AndroidViewModel(applicat
 
     fun participateInEvent(){
         viewModelScope.launch {
+            var user = eventDetailsModel.getCurrentUser()
             eventDetailsModel.participateInEvent(event?.value?.id!!)
             var newParticipators = event?.value?.participatorsIds?.toMutableList()
-            newParticipators?.add(currentUser?.value?.id!!)
+            newParticipators?.add(user?.id!!)
             eventParticipants.value = eventDetailsModel.getEventParticipants(newParticipators!!)
         }
     }
