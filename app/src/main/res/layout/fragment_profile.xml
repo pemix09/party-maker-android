@@ -45,6 +45,15 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:src="@drawable/profile_icon" />
+            <Button
+                android:id="@+id/save_changes_button"
+                android:visibility="gone"
+                android:enabled="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save changes"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/logoutPlaceholder"/>
 
             <TextView
                 android:id="@+id/profile_userName"

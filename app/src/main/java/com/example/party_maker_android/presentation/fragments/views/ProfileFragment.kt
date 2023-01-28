@@ -69,7 +69,17 @@ class ProfileFragment : Fragment() {
             eventDetailsIntent.putExtra("EventId", id.toInt())
             context?.startActivity(eventDetailsIntent)
         }
+        binding.saveChangesButton.setOnClickListener {
+            try{
+                viewModel.updateUser()
+                binding.saveChangesButton.visibility = Button.GONE
+            }
+            catch(error: Error){
+
+            }
+        }
         binding.profileImage.setOnClickListener {
+            binding.saveChangesButton.visibility = Button.VISIBLE
             var options = arrayOf("gallery", "camera")
             var dialog = AlertDialog.Builder(context)
             dialog.setTitle("Choose image source:")
@@ -256,36 +266,20 @@ class ProfileFragment : Fragment() {
                 if(Build.VERSION.SDK_INT >= 28){
                     val source = ImageDecoder.createSource(context?.contentResolver!!, selectedPhoto!!)
                     var selectedBitMap = ImageDecoder.decodeBitmap(source)
-                    try{
-                        viewModel.changeProfilePicture(selectedBitMap!!)
-                    }
-                    catch (error: Error){
-                        Log.e(TAG, "cannot update photo!")
-                    }
-                    binding.profileImage.setImageBitmap(selectedBitMap)
+                    viewModel.changeProfilePicture(selectedBitMap)
+                    //binding.profileImage.setImageBitmap(selectedBitMap)
                 }
                 else{
                     var selectedBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver!!, selectedPhoto)
-                    try{
-                        viewModel.changeProfilePicture(selectedBitMap!!)
-                    }
-                    catch (error: Error){
-                        Log.e(TAG, "cannot update photo!")
-                    }
-                    binding.profileImage.setImageBitmap(selectedBitMap)
+                    viewModel.changeProfilePicture(selectedBitMap)
+                    //binding.profileImage.setImageBitmap(selectedBitMap)
                 }
             }
             //photo from camera
             else if(requestCode == makePhotoRequestCode && resultCode == Activity.RESULT_OK){
                 var selectedBitMap = data.extras?.get("data") as Bitmap
-                try{
-                    viewModel.changeProfilePicture(selectedBitMap!!)
-                    binding.profileImage.setImageBitmap(selectedBitMap)
-
-                }
-                catch (error: Error){
-                    Log.e(TAG, "cannot update photo!")
-                }
+                viewModel.changeProfilePicture(selectedBitMap)
+                //binding.profileImage.setImageBitmap(selectedBitMap)
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

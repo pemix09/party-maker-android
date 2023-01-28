@@ -70,9 +70,18 @@ class ProfileViewModel : ViewModel() {
 
     fun changeProfilePicture(newPhoto: Bitmap){
         var photo = Base64Helper.getBase64StringFromBitmap(newPhoto)
-        viewModelScope.launch {
-            profileModel.updateUser(photo)
+        var updatedUser = currentUser.value.also {
+            it?.photo = photo
         }
+        currentUser.value = updatedUser
     }
 
+    fun updateUser(){
+        var user = currentUser.value
+        if(user?.photo != null){
+            viewModelScope.launch {
+                profileModel.updateUser(user.photo!!)
+            }
+        }
+    }
 }
