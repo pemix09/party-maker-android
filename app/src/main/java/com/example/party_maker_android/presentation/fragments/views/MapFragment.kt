@@ -1,24 +1,28 @@
 package com.example.party_maker_android.presentation.fragments.views
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.databinding.FragmentMapBinding
 import com.example.party_maker_android.presentation.fragments.viewModels.MapViewModel
+import org.osmdroid.config.Configuration.*
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.views.MapController
 import org.osmdroid.views.MapView
-import org.osmdroid.config.Configuration.*
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 class MapFragment : Fragment() {
     private lateinit var viewModel: MapViewModel
     private lateinit var binding: FragmentMapBinding
     private lateinit var map: MapView
+    private lateinit var locationOverlay: MyLocationNewOverlay
     val REQUEST_MAP_PERMISSIONS_REQUEST_CODE = 100
+
     private var mapController: MapController? = null
         get() = map?.controller as MapController
 
@@ -54,6 +58,7 @@ class MapFragment : Fragment() {
         map.onPause()
     }
 
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         val permissionsToRequest = ArrayList<String>()
         var i = 0
@@ -68,14 +73,23 @@ class MapFragment : Fragment() {
         }
     }
 
+    private fun setViewListeners(){
+        binding.navigateToCurrentLocation.setOnClickListener {
+            map.controller.animateTo(locationOverlay.myLocation)
+        }
+    }
     private fun setUpMap(){
+        setViewListeners()
         map = binding.map
         map.setTileSource(TileSourceFactory.MAPNIK)
-        /*val dm: DisplayMetrics = context?.resources?.displayMetrics!!
-        val scaleBarOverlay = ScaleBarOverlay(map)
-        scaleBarOverlay.setCentred(true)
-        scaleBarOverlay.setScaleBarOffset(dm.widthPixels / 2, dm.heightPixels - 200)
-        map.overlays.add(scaleBarOverlay)*/
+        locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), map)
+        locationOverlay.enableMyLocation()
+        locationOverlay.enableFollowLocation()
+        locationOverlay.isOptionsMenuEnabled = true;
+        map.setBuiltInZoomControls(true);
+        map.setMultiTouchControls(true);
+        map.overlays.add(locationOverlay)
+        map.controller.setZoom(17)
     }
     companion object {
         fun newInstance() = MapFragment()
