@@ -21,6 +21,6 @@ class TimePickerFragment: DialogFragment(), OnTimeSetListener {
     }
 
     override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
-        // Do something with the time chosen by the user
+
     }
 }

@@ -134,6 +134,12 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.nameInput.addTextChangedListener {
             viewModel?.name = it.toString()
         }
+        binding.timePicker.setOnClickListener {
+            TimePickerFragment().show(parentFragmentManager, "timePicker")
+        }
+        binding.datePicker.setOnClickListener {
+            DatePickerFragment().show(parentFragmentManager, "datePicker")
+        }
         binding.placeInput.addTextChangedListener {
             viewModel?.place = it.toString()
             if(it.toString().isEmpty()){

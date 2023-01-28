@@ -120,8 +120,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/place_input_container"
             android:text="@string/pick_time"
-            android:enabled="false"
-            android:onClick="showTimePickerDialog" />
+            android:enabled="true" />
+
+        <Button
+            android:id="@+id/date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/login_input_margin"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/login_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time_picker"
+            android:text="Pick date"
+            android:enabled="true" />
 
         <Spinner
             android:id="@+id/spinner"
@@ -133,7 +146,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_picker"
+            app:layout_constraintTop_toBottomOf="@+id/date_picker"
             tools:layout_editor_absoluteX="0dp" />
 
         <TextView

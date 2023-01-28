@@ -36,4 +36,5 @@
     <string name="select_photo_text">Wybierz zdjęcie eventu:</string>
     <string name="registration_date_text">od: %s</string>
     <string name="profile_rating_text">ocena: %s</string>
+    <string name="hello_blank_fragment">Hello pusty fragment</string>
 </resources>
