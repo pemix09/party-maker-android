@@ -5,25 +5,18 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.databinding.FragmentMapBinding
 import com.example.party_maker_android.presentation.fragments.viewModels.MapViewModel
-import org.osmdroid.api.IGeoPoint
-import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration.*
-import org.osmdroid.events.MapListener
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapController
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.ItemizedIconOverlay
-import org.osmdroid.views.overlay.ItemizedOverlayWithFocus
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.OverlayItem
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.IMyLocationConsumer
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
@@ -92,6 +85,14 @@ class MapFragment : Fragment(), Marker.OnMarkerClickListener, IMyLocationConsume
 
     private fun setViewModelObservers(){
         viewModel.eventsToShow.observe(viewLifecycleOwner){
+            for(event in it){
+                val startPoint = GeoPoint(event.latitude!!, event.longitude!!)
+                val startMarker = Marker(map)
+                startMarker.position = startPoint
+                startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                map.overlays.add(startMarker)
+            }
+
             Log.i(TAG, "Success of fetching events!")
         }
     }
