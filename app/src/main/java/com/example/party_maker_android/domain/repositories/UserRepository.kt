@@ -65,6 +65,4 @@ class UserRepository(private val context: Context) {
             throw Error("User not fetched successfully, reason: ${response.errorBody().toString()}")
         }
     }
-
-
 }
