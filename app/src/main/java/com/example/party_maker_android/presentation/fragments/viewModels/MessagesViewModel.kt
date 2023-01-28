@@ -18,9 +18,6 @@ class MessagesViewModel: ViewModel() {
         messagesModel = MessagesModel(context)
     }
     fun refreshData(){
-        if(messagesModel == null){
-            throw Error("messages model is null!")
-        }
         viewModelScope.launch {
             eventToShow.value = messagesModel.getEventsForCurrentUser()
         }

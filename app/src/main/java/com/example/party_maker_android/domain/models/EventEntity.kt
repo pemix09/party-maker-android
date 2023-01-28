@@ -48,5 +48,5 @@ class EventEntity {
     var lastMessage: String? = null
 
     @SerializedName("lastMessageTime")
-    var lastMessageDate: String? = null
+    var lastMessageDate: Date? = null
 }

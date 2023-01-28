@@ -16,10 +16,16 @@ class MessagesModel(context: Context) {
 
     suspend fun getEventsForCurrentUser(): List<EventEntity>?{
         var user = userRepository.getCurrentUser()!!
-        return if(user != null){
-            eventRepository.getOrganizedEvents()
-        } else{
-            null
+        val organized = eventRepository.getOrganizedEvents().toMutableList()
+        var activeParticipates = eventRepository.getParticipatesEvents()
+        var pastParticipates = eventRepository.getEventsToReview()
+
+        organized.addAll(activeParticipates)
+        organized.addAll(pastParticipates)
+        organized.sortBy {
+            it.lastMessageDate
         }
+
+        return organized
     }
 }
