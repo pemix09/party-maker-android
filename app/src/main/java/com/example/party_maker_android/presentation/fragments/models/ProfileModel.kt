@@ -38,7 +38,7 @@ class ProfileModel(context: Context) {
     suspend fun updateUser(userPhoto: String){
         var currentUser = userRepository.getCurrentUser()
         currentUser?.photo = userPhoto
-        userRepository.updateUser(currentUser!!)
+        userRepository.updatePhoto(currentUser!!)
     }
 
 }

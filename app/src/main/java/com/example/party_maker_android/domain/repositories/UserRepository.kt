@@ -31,10 +31,20 @@ class UserRepository(private val context: Context) {
         return currentUser
     }
 
-    suspend fun updateUser(user: UserEntity){
+    suspend fun updatePhoto(user: UserEntity){
         var accessToken = userService.getAccessToken()
         var formattedAccessToken = "Bearer ${accessToken?.token!!}"
-        var request = UpdateUserRequest(user.userName!!, user.photo!!)
+        var request = UpdateUserRequest(null, user.photo!!)
+        var response: Response<Void> = userHttpClient.updateUser(formattedAccessToken, request)
+
+        if(!response.isSuccessful){
+            throw Error(response.errorBody()?.string())
+        }
+    }
+    suspend fun updateUserName(user: UserEntity){
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
+        var request = UpdateUserRequest(user.userName, null)
         var response: Response<Void> = userHttpClient.updateUser(formattedAccessToken, request)
 
         if(!response.isSuccessful){
