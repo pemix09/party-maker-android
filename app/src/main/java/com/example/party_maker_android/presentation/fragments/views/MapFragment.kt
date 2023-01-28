@@ -1,5 +1,7 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -10,6 +12,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.databinding.FragmentMapBinding
+import com.example.party_maker_android.domain.services.Base64Helper
 import com.example.party_maker_android.presentation.fragments.viewModels.MapViewModel
 import org.osmdroid.config.Configuration.*
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -86,11 +89,23 @@ class MapFragment : Fragment(), Marker.OnMarkerClickListener, IMyLocationConsume
     private fun setViewModelObservers(){
         viewModel.eventsToShow.observe(viewLifecycleOwner){
             for(event in it){
-                val startPoint = GeoPoint(event.latitude!!, event.longitude!!)
-                val startMarker = Marker(map)
-                startMarker.position = startPoint
-                startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                map.overlays.add(startMarker)
+                val location = GeoPoint(event.latitude!!, event.longitude!!)
+                val eventMarker = Marker(map)
+                eventMarker.position = location
+                eventMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                eventMarker.title = event.name
+                eventMarker.subDescription = event.description
+
+                if(event.photo != null && event?.photo?.isNotEmpty()!!){
+                    try{
+                        var originalBitmap = Base64Helper.getBitmapFromBase64(event.photo!!)
+                        eventMarker.image = BitmapDrawable(originalBitmap)
+                    }
+                    catch(error: Error){
+                        Log.e(TAG, "Cannot set icon for marker, default is set")
+                    }
+                }
+                map.overlays.add(eventMarker)
             }
 
             Log.i(TAG, "Success of fetching events!")
