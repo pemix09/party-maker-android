@@ -1,26 +1,42 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.location.Location
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.databinding.FragmentMapBinding
 import com.example.party_maker_android.presentation.fragments.viewModels.MapViewModel
+import org.osmdroid.api.IGeoPoint
+import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration.*
+import org.osmdroid.events.MapListener
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapController
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.ItemizedIconOverlay
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus
+import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.OverlayItem
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
+import org.osmdroid.views.overlay.mylocation.IMyLocationConsumer
+import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
-class MapFragment : Fragment() {
+
+class MapFragment : Fragment(), Marker.OnMarkerClickListener, IMyLocationConsumer {
+    private val TAG = "MapFragment"
     private lateinit var viewModel: MapViewModel
     private lateinit var binding: FragmentMapBinding
     private lateinit var map: MapView
     private lateinit var locationOverlay: MyLocationNewOverlay
+
     val REQUEST_MAP_PERMISSIONS_REQUEST_CODE = 100
 
     private var mapController: MapController? = null
@@ -45,7 +61,8 @@ class MapFragment : Fragment() {
         setUpMap()
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MapViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.setContext(requireContext())
+        setViewModelObservers()
     }
 
     override fun onResume() {
@@ -73,9 +90,17 @@ class MapFragment : Fragment() {
         }
     }
 
+    private fun setViewModelObservers(){
+        viewModel.eventsToShow.observe(viewLifecycleOwner){
+            Log.i(TAG, "Success of fetching events!")
+        }
+    }
     private fun setViewListeners(){
         binding.navigateToCurrentLocation.setOnClickListener {
             map.controller.animateTo(locationOverlay.myLocation)
+        }
+        binding.fetchForCurrentLocationButton.setOnClickListener {
+            viewModel.getEventsForBoundingBox(map.boundingBox)
         }
     }
     private fun setUpMap(){
@@ -86,13 +111,22 @@ class MapFragment : Fragment() {
         locationOverlay.enableMyLocation()
         locationOverlay.enableFollowLocation()
         locationOverlay.isOptionsMenuEnabled = true;
-        map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
         map.overlays.add(locationOverlay)
-        map.controller.setZoom(17)
+        map.controller.setZoom(15)
+
     }
+
     companion object {
         fun newInstance() = MapFragment()
+    }
+
+    override fun onMarkerClick(marker: Marker?, mapView: MapView?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLocationChanged(location: Location?, source: IMyLocationProvider?) {
+        Log.i(TAG, "Success: ${location.toString()}")
     }
 
 }

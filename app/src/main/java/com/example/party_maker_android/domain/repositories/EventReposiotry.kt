@@ -114,12 +114,10 @@ class EventRepository(private val context: Context) {
         lonEast: Double,
         lonWest: Double
     ): List<EventEntity>? {
-        var events: List<EventEntity>?
-
-        withContext(Dispatchers.IO) {
-            var accessToken = userService.getAccessToken()
+        var accessToken = userService.getAccessToken()
+        var formattedAccessToken = "Bearer ${accessToken?.token!!}"
             var response: Response<List<EventEntity>> = eventHttpClient.getForArea(
-                accessToken?.token!!,
+                formattedAccessToken,
                 latNorth,
                 latSouth,
                 lonEast,
@@ -138,11 +136,10 @@ class EventRepository(private val context: Context) {
                     )
                 }
             }
-
-            events = response.body()
+        return response.body()
         }
-        return events;
-    }
+
+
 
     //TODO - make right things, not use with context!
     suspend fun getEventsForAreaWithQuery(
