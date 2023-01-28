@@ -106,7 +106,7 @@ class MapFragment : Fragment(), Marker.OnMarkerClickListener, IMyLocationConsume
                     true
                 }
 
-                if(event.photo != null && event?.photo?.isNotEmpty()!!){
+                if(event.photo != null && event?.photo?.isNotEmpty()!! && Base64Helper.isBase64StringValid(event.photo!!)){
                     try{
                         var originalBitmap = Base64Helper.getBitmapFromBase64(event.photo!!)
                         eventMarker.image = BitmapDrawable(originalBitmap)

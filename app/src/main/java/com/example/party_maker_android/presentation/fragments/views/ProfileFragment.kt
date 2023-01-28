@@ -31,6 +31,7 @@ import com.example.party_maker_android.presentation.adapters.EventsAdapter
 import com.example.party_maker_android.presentation.fragments.viewModels.ProfileViewModel
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
+import java.util.Base64
 
 class ProfileFragment : Fragment() {
 
@@ -198,7 +199,7 @@ class ProfileFragment : Fragment() {
         }
         viewModel.currentUser.observe(viewLifecycleOwner){
             binding.profileUserName.text = it?.userName
-            if(it?.photo?.isNotEmpty()!!){
+            if(it?.photo?.isNotEmpty()!! && Base64Helper.isBase64StringValid(it.photo!!)){
                 try {
                     binding.profileImage.setImageBitmap(Base64Helper.getBitmapFromBase64(it.photo!!))
                 }

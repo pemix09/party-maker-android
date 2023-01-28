@@ -1,9 +1,12 @@
 package com.example.party_maker_android.domain.services
 
+import android.R.string
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import java.io.ByteArrayOutputStream
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class Base64Helper {
@@ -21,6 +24,21 @@ class Base64Helper {
             )
 
             return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        }
+
+        fun isBase64StringValid(base64: String?): Boolean{
+            if(base64 == null) {
+                return false
+            }
+            if(base64.isEmpty()){
+                return false
+            }
+
+            val pattern =
+                "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
+            val r: Pattern = Pattern.compile(pattern)
+            val m: Matcher = r.matcher(base64)
+            return m.find()
         }
     }
 }
