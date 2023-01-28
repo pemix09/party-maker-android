@@ -1,5 +1,6 @@
 package com.example.party_maker_android.presentation.fragments.views
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
@@ -9,10 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.databinding.FragmentMapBinding
 import com.example.party_maker_android.domain.services.Base64Helper
+import com.example.party_maker_android.presentation.activities.views.EventDetailsActivity
 import com.example.party_maker_android.presentation.fragments.viewModels.MapViewModel
 import org.osmdroid.config.Configuration.*
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -32,6 +35,7 @@ class MapFragment : Fragment(), Marker.OnMarkerClickListener, IMyLocationConsume
     private lateinit var binding: FragmentMapBinding
     private lateinit var map: MapView
     private lateinit var locationOverlay: MyLocationNewOverlay
+    private var selectedEventId = -1
 
     val REQUEST_MAP_PERMISSIONS_REQUEST_CODE = 100
 
@@ -95,6 +99,12 @@ class MapFragment : Fragment(), Marker.OnMarkerClickListener, IMyLocationConsume
                 eventMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                 eventMarker.title = event.name
                 eventMarker.subDescription = event.description
+                eventMarker.setOnMarkerClickListener { marker, mapView ->
+                    eventMarker.showInfoWindow()
+                    binding.eventDetailsButton.visibility = Button.VISIBLE
+                    selectedEventId = event.id!!
+                    true
+                }
 
                 if(event.photo != null && event?.photo?.isNotEmpty()!!){
                     try{
@@ -117,6 +127,11 @@ class MapFragment : Fragment(), Marker.OnMarkerClickListener, IMyLocationConsume
         }
         binding.fetchForCurrentLocationButton.setOnClickListener {
             viewModel.getEventsForBoundingBox(map.boundingBox)
+        }
+        binding.eventDetailsButton.setOnClickListener {
+            var eventDetailsIntent = Intent(activity, EventDetailsActivity::class.java)
+            eventDetailsIntent.putExtra("EventId", selectedEventId)
+            context?.startActivity(eventDetailsIntent)
         }
     }
     private fun setUpMap(){
