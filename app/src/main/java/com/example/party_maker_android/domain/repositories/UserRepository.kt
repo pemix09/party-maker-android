@@ -17,18 +17,8 @@ class UserRepository(private val context: Context) {
     private val userService = UserService(context)
     private val TAG = "UserRepository"
 
-    companion object{
-        private var currentUser: UserEntity? = null
-    }
     suspend fun getCurrentUser(): UserEntity?{
-        if(currentUser != null) return currentUser
-        else if(false){
-            //TODO - user in local memory
-        }
-        else{
-            fetchCurrentUser()
-        }
-        return currentUser
+        return fetchCurrentUser()
     }
 
     suspend fun updatePhoto(user: UserEntity){
@@ -63,13 +53,13 @@ class UserRepository(private val context: Context) {
             throw Error(response.errorBody().toString())
         }
     }
-    private suspend fun fetchCurrentUser(){
+    private suspend fun fetchCurrentUser(): UserEntity{
         var accessToken = userService.getAccessToken()
         var formattedAccessToken = "Bearer ${accessToken?.token!!}"
         var response: Response<UserEntity> = userHttpClient.getCurrentUser(formattedAccessToken)
         if(response.isSuccessful){
             Log.i(TAG ,"User data fetched successfully!")
-            currentUser = response.body()
+            return response.body()!!
         }
         else{
             throw Error("User not fetched successfully, reason: ${response.errorBody().toString()}")
