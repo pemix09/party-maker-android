@@ -285,7 +285,7 @@ class ProfileFragment : Fragment() {
                 }
             }
             //photo from camera
-            else if(requestCode == makePhotoRequestCode && resultCode == Activity.RESULT_OK){
+            else if(requestCode == makePhotoRequestCode){
                 var selectedBitMap = data.extras?.get("data") as Bitmap
                 viewModel.changeProfilePicture(selectedBitMap)
                 //binding.profileImage.setImageBitmap(selectedBitMap)
