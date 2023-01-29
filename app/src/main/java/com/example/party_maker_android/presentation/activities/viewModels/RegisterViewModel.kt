@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class RegisterViewModel(application: Application) : AndroidViewModel(application){
+    private val TAG = "RegisterViewModel"
     private var isEmailValid: Boolean = false
     private var isNickNameValid: Boolean = false
     private var isPasswordValid: Boolean = false
@@ -27,6 +28,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     val passwordValidationMessage = MutableLiveData<String>()
     val passwordConfirmationValidationMessage = MutableLiveData<String>()
     val isFormValid = MutableLiveData<Boolean>(false)
+    val didRegisterSuccessful = MutableLiveData<Boolean>()
     val registerActionFeedback = MutableLiveData<String>()
 
     fun validateForm(){
@@ -110,24 +112,25 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         val backEndAddress = context.getString(R.string.BackEndAddress)
         var userHttpService = HttpClientsFactory(backEndAddress).getUserClient()
 
-        viewModelScope.launch(Dispatchers.IO) {
-
+        viewModelScope.launch{
             var registerRequest = RegisterRequest(email, userName, password)
-
             val result: Response<Void> = userHttpService.Register(registerRequest)
             Log.i("HttpRequestInvoked", "response: ${result.message()}, code: ${result.code()}")
 
             if(result.isSuccessful){
                 Log.i("SuccessfulRegister", "User registered successfully")
-
                 var loginRequest = LoginRequest(email, password)
                 var loginResponse: Response<LoginResponse> = userHttpService.Login(loginRequest)
+
                 if(loginResponse.isSuccessful){
                     userService.saveUserTokens(loginResponse.body()?.accessToken!!, loginResponse.body()?.refreshToken!!)
+                    didRegisterSuccessful.value = true
+                    Log.i(TAG,"Successful login")
                 }
             }
             else{
-                //posting value to view Model, as it's invoked on coroutine
+                Log.e(TAG, "Register unsuccessful! ${result.message()}")
+                didRegisterSuccessful.value = false
                 registerActionFeedback.value = result.errorBody().toString()
             }
         }
