@@ -63,6 +63,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
 
         viewModel = ViewModelProvider(this).get(AddEventViewModel::class.java)
+        viewModel.setContext(requireContext())
         super.onAttach(activity)
     }
 
@@ -251,11 +252,5 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         outState.putString("photo", viewModel?.photo)
         outState.putString("name", viewModel?.name)
         super.onSaveInstanceState(outState)
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if(viewModel != null){
-
-        }
     }
 }

@@ -111,6 +111,10 @@ class AddEventViewModel : ViewModel() {
         this.photo = Base64Helper.getBase64StringFromBitmap(photo)
     }
     private fun checkFormState(){
+        //check for location on form validation
+        if(addEventModel.location.value != null && addEventModel.location.value != location.value){
+            location.value = addEventModel.location.value
+        }
         isFormValid.value = isDescriptionValid && isNameValid && photo != null && location.value != null && place != null
     }
 
