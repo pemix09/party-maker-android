@@ -8,15 +8,15 @@
     <item
         android:id="@+id/searchIcon"
         android:title="Search"
-        android:icon="@drawable/appicon"/>
+        android:icon="@drawable/search_icon"/>
     <item android:id="@+id/placeholder"
         android:title=""/>
     <item
         android:id="@+id/messagesIcon"
         android:title="Messages"
-        android:icon="@drawable/whiskey"/>
+        android:icon="@drawable/message_icon"/>
     <item
-        android:id="@+id/settingsIcon"
-        android:title="Settings"
-        android:icon="@drawable/whiskey"/>
+        android:id="@+id/profileIcon"
+        android:title="Profile"
+        android:icon="@drawable/profile_icon"/>
 </menu>

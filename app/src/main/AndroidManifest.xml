@@ -3,6 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <queries>
+
+        <!-- Camera -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -14,22 +28,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Partymakerandroid"
         tools:targetApi="31">
+
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="MAPS_API_KEY" />
+
         <activity
-            android:name=".ui.register.RegisterActivity"
+            android:name=".presentation.activities.views.EventDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.activities.views.EventConversationActivity"
+            android:exported="false"
+            android:label="EventConversationActivity" />
+        <activity
+            android:name=".presentation.activities.views.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.map.MapActivity"
+            android:name=".presentation.activities.views.AppActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".StartActivity"
             android:exported="true"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
@@ -43,11 +80,11 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.welcome.WelcomeActivity"
+            android:name=".presentation.activities.views.WelcomeActivity"
             android:exported="false"
             android:label="@string/welcome_activity_name" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".presentation.activities.views.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login" />
     </application>

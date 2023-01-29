@@ -2,4 +2,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="BackEndAddress" tools:ignore="MissingTranslation" translatable="false">https://party-maker-be.herokuapp.com</string>
     <string name="KeyAlias" tools:ignore="MissingTranslation" translatable="false">Party-maker-alias</string>
+    <string name="GoogleAPIKey" translatable="false">AIzaSyBwlgjeV-R0hwoKzXylnTxZS54bkdiftjo</string>
+
+    <string-array name="music_genre_array">
+        <item>Rock</item>
+        <item>House</item>
+        <item>Blues</item>
+        <item>Rap</item>
+        <item>Trap</item>
+        <item>Techno</item>
+        <item>Tech-House</item>
+        <item>Pop</item>
+    </string-array>
 </resources>

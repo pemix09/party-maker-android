@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.activities.views.EventDetailsActivity">
+
+    <TextView
+        android:layout_margin="15dp"
+        android:id="@+id/event_details_header"
+        android:text="@string/details_of_event"
+        android:textSize="40sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        />
+
+    <RelativeLayout
+        android:id="@+id/event_details_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_details_header">
+        <ImageView
+            android:layout_marginHorizontal="30dp"
+            android:id="@+id/event_details_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+        <TextView
+            android:id="@+id/event_details_name"
+            android:text="@string/event_name"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/event_details_image"/>
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:layout_below="@+id/event_details_name"
+            android:layout_toEndOf="@id/event_details_image"/>
+
+        <TextView
+            android:layout_margin="15dp"
+            android:id="@+id/event_details_description_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_below="@id/event_details_image"
+            android:text="@string/description"/>
+        <TextView
+            android:layout_marginHorizontal="15dp"
+            android:id="@+id/event_details_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/event_details_description_title"/>
+
+        <LinearLayout
+            android:id="@+id/place_text_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="vertical"
+            android:layout_below="@id/event_details_description">
+            <TextView
+                android:text="@string/place"
+                android:textSize="20sp"
+                android:layout_margin="15dp"
+                android:id="@+id/event_details_place_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <Button
+                android:id="@+id/show_on_map_button"
+                android:text="@string/get_directions_on_google_maps"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/show_map">
+
+            </Button>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/place_text_placeholder"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/participate_button"
+            android:textColor="@color/black"
+            android:text="@string/participate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/place_text_placeholder"
+            android:layout_alignParentStart="true"/>
+        <Button
+            android:id="@+id/share_button"
+            android:textColor="@color/black"
+            android:text="@string/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/participate_button"
+            android:layout_alignParentStart="true"/>
+        <Button
+            android:id="@+id/add_to_calendar"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:text="@string/add_to_calendar"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/share_button"
+            android:layout_alignParentStart="true"/>
+
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/participants_text"
+        android:layout_marginHorizontal="15dp"
+        android:text="@string/participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_details_placeholder"/>
+    <ProgressBar
+        android:id="@+id/user_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/participants_text"/>
+<ListView
+    android:id="@+id/participants_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/participants_text"/>
+
+
+</RelativeLayout>

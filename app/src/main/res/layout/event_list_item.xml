@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/eventPhoto"/>
+        <TextView
+            android:id="@+id/eventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/eventPhoto"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:gravity="top"
+            android:text="@string/event_name_string"/>
+        <TextView
+            android:id="@+id/eventDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="140dp"
+            android:layout_toEndOf="@id/eventPhoto"
+            android:layout_margin="10dp"
+            android:layout_below="@id/eventName"
+            android:text="@string/event_description_string"/>
+        <TextView
+            android:id="@+id/musicGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@id/eventPhoto"
+            android:text="@string/music_genre"
+            android:layout_below="@+id/eventDescription" />
+        <TextView
+            android:id="@+id/eventPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/eventPhoto"
+            android:layout_margin="10dp"
+            android:layout_below="@id/musicGenre"
+            android:text="@string/place" />
+
+    </RelativeLayout>
+
+</LinearLayout>
