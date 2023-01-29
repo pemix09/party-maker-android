@@ -2,6 +2,7 @@ package com.example.party_maker_android.presentation.activities.views
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -28,7 +29,9 @@ class AppActivity : AppCompatActivity() {
         mapBinding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(mapBinding.root)
         mapModel = ViewModelProvider(this)[AppViewModel::class.java]
-
+        var selectedItem = mapBinding.bottomNavView.selectedItemId
+        var fragment = getFragment(selectedItem)
+        setFragmentContainerContent(fragment)
         setMenuItemClickListener()
     }
 
@@ -36,18 +39,8 @@ class AppActivity : AppCompatActivity() {
         super.onResume()
         mapBinding.bottomNavView.background = null
         mapBinding.bottomNavView.menu.getItem(2).isEnabled = false
-
-        if(mapBinding.bottomNavView.selectedItemId == R.id.homeIcon || mapBinding.bottomNavView.selectedItemId == R.id.profileIcon){
-            return
-        }
-        if(activeFragmentId != null){
-            var fragment = getFragment(activeFragmentId!!)
-            setFragmentContainerContent(fragment)
-        }
-        else{
-            var fragment = getFragment(mapBinding.bottomNavView.selectedItemId)
-        }
     }
+
 
     private fun setMenuItemClickListener() {
         val myBottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
