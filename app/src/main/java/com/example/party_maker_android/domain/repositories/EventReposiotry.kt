@@ -7,11 +7,13 @@ import com.example.party_maker_android.domain.models.EventEntity
 import com.example.party_maker_android.data.HttpClientsFactory
 import com.example.party_maker_android.domain.models.MusicGenre
 import com.example.party_maker_android.data.clients.IEventClient
+import com.example.party_maker_android.data.requests.CreateEventRequest
 import com.example.party_maker_android.data.requests.ParticipateInEventRequest
 import com.example.party_maker_android.data.responses.GetAllEvensForUserResponse
 import com.example.party_maker_android.domain.models.UserEntity
 import kotlinx.coroutines.*
 import retrofit2.Response
+import java.time.ZoneOffset
 import java.util.*
 
 class EventRepository(private val context: Context) {
@@ -37,7 +39,19 @@ class EventRepository(private val context: Context) {
         withContext(Dispatchers.IO) {
             var accessToken = userService.getAccessToken()
             var formattedAccessToken = "Bearer ${accessToken?.token!!}"
-            var response: Response<Void> = eventHttpClient.create(formattedAccessToken, eventToAdd)
+            var request = CreateEventRequest().also {
+                it.date = eventToAdd.date?.toInstant()?.atOffset(ZoneOffset.UTC).toString()
+                it.name = eventToAdd.name
+                it.description = eventToAdd.description
+                it.longitude = eventToAdd.longitude
+                it.latitude = eventToAdd.latitude
+                it.musicGenreId = eventToAdd.musicGenreId
+                it.passId = eventToAdd.passId
+                it.photo = eventToAdd.photo
+                it.place = eventToAdd.place
+                it.type = eventToAdd.type
+            }
+            var response: Response<Void> = eventHttpClient.create(formattedAccessToken, request)
 
             if (!response.isSuccessful) {
 
@@ -46,7 +60,7 @@ class EventRepository(private val context: Context) {
                 } else {
                     throw Exception(
                         "Adding event unsuccessful, cause: ${
-                            response.errorBody()?.toString()
+                            response.errorBody()
                         }"
                     )
                 }

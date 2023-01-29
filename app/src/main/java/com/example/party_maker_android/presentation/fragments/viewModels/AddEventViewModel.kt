@@ -18,7 +18,7 @@ import java.util.*
 
 class AddEventViewModel : ViewModel() {
     val TAG = "AddEventViewModel"
-    var errorMessage = MutableLiveData<String>()
+    var message = MutableLiveData<String>()
     var eventAddedSuccessfully = MutableLiveData<Boolean>()
     var location = MutableLiveData<Location?>()
     var photo: String? = null
@@ -136,9 +136,10 @@ class AddEventViewModel : ViewModel() {
             try{
                 eventRepo.createEvent(eventToAdd)
                 eventAddedSuccessfully.value = true
+                message.value = "Event added successfully!"
             }
             catch(error: Exception){
-                errorMessage.value = error.message
+                message.value = error.message
             }
         }
     }

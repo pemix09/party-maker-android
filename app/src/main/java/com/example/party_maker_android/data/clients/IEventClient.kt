@@ -1,5 +1,6 @@
 package com.example.party_maker_android.data.clients
 
+import com.example.party_maker_android.data.requests.CreateEventRequest
 import com.example.party_maker_android.data.requests.ParticipateInEventRequest
 import com.example.party_maker_android.domain.models.EventEntity
 import com.example.party_maker_android.domain.models.MusicGenre
@@ -48,7 +49,7 @@ interface IEventClient {
     @POST("Event/Create")
     suspend fun create(
         @Header("Authorization") token: String,
-        @Body event: EventEntity
+        @Body request: CreateEventRequest
     ): Response<Void>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
