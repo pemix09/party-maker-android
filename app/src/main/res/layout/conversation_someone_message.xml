@@ -24,7 +24,7 @@
                 android:id="@+id/other_user_sender_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SenderName"
+                android:text="@string/sendername"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:text="Message content"
+                android:text="@string/message_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/other_user_sender_name" />
 

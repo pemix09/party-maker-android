@@ -10,7 +10,7 @@
     <TextView
         android:layout_margin="15dp"
         android:id="@+id/event_details_header"
-        android:text="Details of event:"
+        android:text="@string/details_of_event"
         android:textSize="40sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:layout_height="150dp"/>
         <TextView
             android:id="@+id/event_details_name"
-            android:text="Event Name"
+            android:text="@string/event_name"
             android:textSize="25sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:id="@+id/event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
+            android:text="@string/date"
             android:layout_below="@+id/event_details_name"
             android:layout_toEndOf="@id/event_details_image"/>
 
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:layout_below="@id/event_details_image"
-            android:text="Description:"/>
+            android:text="@string/description"/>
         <TextView
             android:layout_marginHorizontal="15dp"
             android:id="@+id/event_details_description"
@@ -61,11 +61,11 @@
             android:id="@+id/place_text_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="start"
             android:orientation="vertical"
             android:layout_below="@id/event_details_description">
             <TextView
-                android:text="Place: "
+                android:text="@string/place"
                 android:textSize="20sp"
                 android:layout_margin="15dp"
                 android:id="@+id/event_details_place_title"
@@ -74,7 +74,7 @@
                 />
             <Button
                 android:id="@+id/show_on_map_button"
-                android:text="Show on map"
+                android:text="@string/get_directions_on_google_maps"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
         <Button
             android:id="@+id/participate_button"
             android:textColor="@color/black"
-            android:text="Participate!"
+            android:text="@string/participate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/place_text_placeholder"
@@ -103,7 +103,7 @@
         <Button
             android:id="@+id/share_button"
             android:textColor="@color/black"
-            android:text="Share!"
+            android:text="@string/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/participate_button"
@@ -112,7 +112,7 @@
             android:id="@+id/add_to_calendar"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
-            android:text="Add to calendar"
+            android:text="@string/add_to_calendar"
             android:layout_height="wrap_content"
             android:layout_below="@+id/share_button"
             android:layout_alignParentStart="true"/>
@@ -122,7 +122,7 @@
     <TextView
         android:id="@+id/participants_text"
         android:layout_marginHorizontal="15dp"
-        android:text="Participants: "
+        android:text="@string/participants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/event_details_placeholder"/>

@@ -25,6 +25,9 @@ import com.example.party_maker_android.R
 import com.example.party_maker_android.databinding.FragmentAddEventBinding
 import com.example.party_maker_android.presentation.activities.views.AppActivity
 import com.example.party_maker_android.presentation.fragments.viewModels.AddEventViewModel
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 
 
 class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -42,6 +45,8 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private val pickPhotoRequestCode: Int = 233
     private val requestCameraAccessRequestCode: Int = 3435
     private val makePhotoRequestCode: Int = 4534
+    private var timePicker = TimePickerFragment()
+    private var datePicker = DatePickerFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +84,7 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 binding.spinner.adapter = it
                 binding.spinner.onItemSelectedListener = this
             }
+        updateDate()
         setModelObservers()
         setViewChangeListeners()
         setAddEventAction()
@@ -128,6 +134,25 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     }
 
+    private fun observeTime(){
+        timePicker.selectedHour.observe(viewLifecycleOwner){
+            updateDate()
+        }
+        timePicker.selectedMinute.observe(viewLifecycleOwner){
+            updateDate()
+        }
+    }
+    private fun observeDate(){
+        datePicker.selectedYear.observe(viewLifecycleOwner){
+            updateDate()
+        }
+        datePicker.selectedMonth.observe(viewLifecycleOwner){
+            updateDate()
+        }
+        datePicker.selectedDay.observe(viewLifecycleOwner){
+            updateDate()
+        }
+    }
     private fun setViewChangeListeners(){
         binding.descriptionInput.addTextChangedListener {
             viewModel?.description = it.toString()
@@ -136,10 +161,12 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
             viewModel?.name = it.toString()
         }
         binding.timePicker.setOnClickListener {
-            TimePickerFragment().show(parentFragmentManager, "timePicker")
+            observeTime()
+            timePicker.show(parentFragmentManager, "timePicker")
         }
         binding.datePicker.setOnClickListener {
-            DatePickerFragment().show(parentFragmentManager, "datePicker")
+            observeDate()
+            datePicker.show(parentFragmentManager, "datePicker")
         }
         binding.placeInput.addTextChangedListener {
             viewModel?.place = it.toString()
@@ -252,5 +279,16 @@ class AddEventFragment : Fragment(), AdapterView.OnItemSelectedListener {
         outState.putString("photo", viewModel?.photo)
         outState.putString("name", viewModel?.name)
         super.onSaveInstanceState(outState)
+    }
+    private fun updateDate(){
+        var date = LocalDateTime.of(datePicker.selectedYear.value!!,
+            datePicker.selectedMonth.value!!,
+            datePicker.selectedDay.value!!,
+            timePicker.selectedHour.value!!,
+            timePicker.selectedMinute.value!!)
+        binding.selectedDate.text = date.toString()
+        viewModel.date = java.util.Date
+                                .from(date.atZone(ZoneId.systemDefault())
+                                .toInstant());
     }
 }

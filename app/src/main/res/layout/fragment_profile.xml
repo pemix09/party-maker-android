@@ -35,7 +35,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="logout" />
+                    android:text="@string/logout" />
             </LinearLayout>
 
             <ImageView
@@ -51,7 +51,7 @@
                 android:enabled="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save changes"
+                android:text="@string/save_changes"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/logoutPlaceholder"/>
 
@@ -63,7 +63,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toRightOf="@id/profile_image"
                 android:includeFontPadding="false"
-                android:text="Profile picture"
+                android:text="@string/profile_picture"
                 android:textSize="20sp" />
 
             <TextView
@@ -74,7 +74,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/profile_image"
-                android:text="email" />
+                android:text="@string/email" />
 
             <TextView
                 android:id="@+id/profile_role"
@@ -84,7 +84,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/profile_image"
-                android:text="role" />
+                android:text="@string/role" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -186,7 +186,7 @@
                         android:id="@+id/toReview_events_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Events to review"
+                        android:text="@string/events_to_review"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -218,7 +218,7 @@
                         android:id="@+id/user_events_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Your events"
+                        android:text="@string/your_events"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -250,7 +250,7 @@
                         android:id="@+id/participated_events_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Events you participate in"
+                        android:text="@string/events_you_participate_in"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -282,7 +282,7 @@
                         android:id="@+id/followed_events_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Events you follow"
+                        android:text="@string/events_you_follow"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -307,7 +307,7 @@
 
         <TextView
             android:id="@+id/no_events_text"
-            android:text="Seems like you don't have any events here"
+            android:text="@string/seems_like_you_don_t_have_any_events_here"
             android:textSize="25sp"
             android:visibility="gone"
             android:layout_width="wrap_content"

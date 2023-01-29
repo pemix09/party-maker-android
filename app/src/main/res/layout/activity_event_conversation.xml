@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Type message"
+            android:hint="@string/type_message"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/message_text_input"
             android:enabled="false"
-            android:text="Send" />
+            android:text="@string/send" />
 
     </LinearLayout>
 

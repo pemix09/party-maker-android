@@ -19,7 +19,7 @@
             android:layout_margin="10dp"
             android:textSize="20sp"
             android:gravity="top"
-            android:text="Hello"/>
+            android:text="@string/event_name_string"/>
         <TextView
             android:id="@+id/eventDescription"
             android:layout_width="wrap_content"
@@ -28,14 +28,14 @@
             android:layout_toEndOf="@id/eventPhoto"
             android:layout_margin="10dp"
             android:layout_below="@id/eventName"
-            android:text="Hello description"/>
+            android:text="@string/event_description_string"/>
         <TextView
             android:id="@+id/musicGenre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_toEndOf="@id/eventPhoto"
-            android:text="Music genre"
+            android:text="@string/music_genre"
             android:layout_below="@+id/eventDescription" />
         <TextView
             android:id="@+id/eventPlace"
@@ -44,7 +44,7 @@
             android:layout_toEndOf="@id/eventPhoto"
             android:layout_margin="10dp"
             android:layout_below="@id/musicGenre"
-            android:text="Place" />
+            android:text="@string/place" />
 
     </RelativeLayout>
 

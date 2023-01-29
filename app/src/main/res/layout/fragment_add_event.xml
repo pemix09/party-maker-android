@@ -121,6 +121,17 @@
             app:layout_constraintTop_toBottomOf="@+id/place_input_container"
             android:text="@string/pick_time"
             android:enabled="true" />
+        <TextView
+            android:id="@+id/selectedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/login_input_margin"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/login_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time_picker"/>
 
         <Button
             android:id="@+id/date_picker"
@@ -133,8 +144,20 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/time_picker"
-            android:text="Pick date"
+            android:text="@string/pick_date"
             android:enabled="true" />
+
+        <TextView
+            android:id="@+id/selectedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/login_input_margin"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/login_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_picker"/>
 
         <Spinner
             android:id="@+id/spinner"
@@ -173,7 +196,7 @@
             android:id="@+id/add_event_photo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select photo"
+            android:text="@string/select_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

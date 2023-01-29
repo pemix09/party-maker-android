@@ -15,7 +15,7 @@
         <TextView
             android:layout_margin="10dp"
             android:textSize="20sp"
-            android:text="User name"
+            android:text="@string/user_name"
             android:id="@+id/participant_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

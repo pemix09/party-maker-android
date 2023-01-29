@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:text="Show event details"
+        android:text="@string/show_event_details"
         android:textColor="@color/black"
         android:visibility="gone"/>
     <ImageView
