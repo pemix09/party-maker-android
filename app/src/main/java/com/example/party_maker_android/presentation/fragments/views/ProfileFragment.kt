@@ -80,7 +80,6 @@ class ProfileFragment : Fragment() {
             }
         }
         binding.profileImage.setOnClickListener {
-            binding.saveChangesButton.visibility = Button.VISIBLE
             var options = arrayOf("gallery", "camera")
             var dialog = AlertDialog.Builder(context)
             dialog.setTitle("Choose image source:")
@@ -269,8 +268,9 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(data != null){
-            if(requestCode == pickPhotoRequestCode && resultCode == Activity.RESULT_OK){
+        if(data != null && resultCode == Activity.RESULT_OK){
+            binding.saveChangesButton.visibility = Button.VISIBLE
+            if(requestCode == pickPhotoRequestCode ){
                 var selectedPhoto = data.data
                 if(Build.VERSION.SDK_INT >= 28){
                     val source = ImageDecoder.createSource(context?.contentResolver!!, selectedPhoto!!)
