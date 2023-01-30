@@ -137,6 +137,7 @@ class AddEventViewModel : ViewModel() {
                 eventRepo.createEvent(eventToAdd)
                 eventAddedSuccessfully.value = true
                 message.value = "Event added successfully!"
+                eventRepo.refresh()
             }
             catch(error: Exception){
                 message.value = error.message
