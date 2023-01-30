@@ -35,6 +35,7 @@ class EventDetailsViewModel(application: Application): AndroidViewModel(applicat
             var newParticipators = event?.value?.participatorsIds?.toMutableList()
             newParticipators?.add(user?.id!!)
             eventParticipants.value = eventDetailsModel.getEventParticipants(newParticipators!!)
+            eventDetailsModel.refresh()
         }
     }
 }

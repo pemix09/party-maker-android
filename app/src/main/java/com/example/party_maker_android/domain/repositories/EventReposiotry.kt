@@ -32,6 +32,12 @@ class EventRepository(private val context: Context) {
         private var lastSearchResult: List<EventEntity>? = null
     }
 
+    fun refresh(){
+        followed = null
+        organized = null
+        participates = null
+        toReview = null
+    }
     fun getLastSearchResults(): List<EventEntity>?{
         return lastSearchResult
     }
