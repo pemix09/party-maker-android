@@ -36,7 +36,7 @@ class EventsAdapter(private val ctx: Context, private val events: List<EventEnti
         var eventMusicGenre = view.findViewById<TextView>(R.id.musicGenre)
 
         eventName.text = events[position].name
-        if(events[position].photo?.isNotEmpty()!! && Base64Helper.isBase64StringValid(events[position].photo!!)){
+        if(events[position].photo != null && events[position].photo?.isNotEmpty()!! && Base64Helper.isBase64StringValid(events[position].photo!!)){
             eventImage.setImageBitmap(events[position].photo?.let { Base64Helper.getBitmapFromBase64(it) })
         }
         else{

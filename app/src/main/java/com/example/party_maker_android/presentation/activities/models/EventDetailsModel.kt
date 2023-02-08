@@ -26,4 +26,7 @@ class EventDetailsModel(context: Context) {
     suspend fun participateInEvent(eventId: Int){
         eventsRepo.participateInEvent(eventId)
     }
+    fun refresh(){
+        eventsRepo.refresh()
+    }
 }

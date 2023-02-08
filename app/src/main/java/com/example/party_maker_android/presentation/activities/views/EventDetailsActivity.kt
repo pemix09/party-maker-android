@@ -99,6 +99,7 @@ class EventDetailsActivity : AppCompatActivity() {
             try {
                 eventDetailsViewModel.participateInEvent()
                 binding.participateButton.text = "You participate!"
+                binding.participateButton.isEnabled = false
                 binding.participantsText.visibility = TextView.GONE
                 binding.userLoading.visibility = ProgressBar.VISIBLE
             }

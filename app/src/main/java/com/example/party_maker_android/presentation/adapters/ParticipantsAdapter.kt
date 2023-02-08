@@ -29,7 +29,7 @@ class ParticipantsAdapter(private val context: Context, private val participants
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = inflater.inflate(R.layout.participator_item_list, null)
         var participant = participants[position]
-        if(participant.photo?.isNotEmpty()!! && Base64Helper.isBase64StringValid(participant.photo!!)){
+        if(participant.photo != null && participant.photo?.isNotEmpty()!! && Base64Helper.isBase64StringValid(participant.photo!!)){
             view.findViewById<ImageView>(R.id.participant_photo!!)
                 .setImageBitmap(Base64Helper.getBitmapFromBase64(participant.photo!!))
         }

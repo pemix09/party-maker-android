@@ -17,4 +17,5 @@ class AddEventModel(context: Context) : LocationListener {
         location.value = loc
     }
 
+    fun refresh(){}
 }

@@ -198,24 +198,29 @@ class ProfileFragment : Fragment() {
         }
         viewModel.currentUser.observe(viewLifecycleOwner){
             binding.profileUserName.text = it?.userName
-            if(it?.photo?.isNotEmpty()!! && Base64Helper.isBase64StringValid(it.photo!!)){
-                try {
-                    binding.profileImage.setImageBitmap(Base64Helper.getBitmapFromBase64(it.photo!!))
+            if(it != null){
+                binding.profileEmail.text = it?.email
+                binding.profileRole.text = it?.role
+                binding.ratingText.text = context?.getString(R.string.profile_rating_text, it?.avarageRating.toString())
+
+                var dateFormat = SimpleDateFormat("MM.yyyy")
+                var date = dateFormat.format(it?.registrationDate)
+                binding.sinceText.text = context?.getString(R.string.registration_date_text, date)
+
+                if(it?.photo != null && it?.photo?.isNotEmpty()!! && Base64Helper.isBase64StringValid(it.photo!!))
+                {
+                    try {
+                        binding.profileImage.setImageBitmap(Base64Helper.getBitmapFromBase64(it.photo!!))
+                    }
+                    catch(error: Error){
+                        binding.profileImage.setImageResource(R.drawable.profile_icon)
+                    }
                 }
-                catch(error: Error){
+                else{
                     binding.profileImage.setImageResource(R.drawable.profile_icon)
                 }
-            }
-            else{
-                binding.profileImage.setImageResource(R.drawable.profile_icon)
-            }
-            binding.profileEmail.text = it?.email
-            binding.profileRole.text = it?.role
-            binding.ratingText.text = context?.getString(R.string.profile_rating_text, it?.avarageRating.toString())
 
-            var dateFormat = SimpleDateFormat("MM.yyyy")
-            var date = dateFormat.format(it?.registrationDate)
-            binding.sinceText.text = context?.getString(R.string.registration_date_text, date)
+            }
         }
         viewModel.eventsToShow.observe(viewLifecycleOwner){
             if(it != null && it.isNotEmpty()){

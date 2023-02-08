@@ -3,6 +3,7 @@ package com.example.party_maker_android.presentation.activities.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.party_maker_android.databinding.ActivityRegisterBinding
 import androidx.core.widget.addTextChangedListener
@@ -10,6 +11,7 @@ import com.example.party_maker_android.presentation.activities.viewModels.Regist
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityRegisterBinding
+    private val TAG = "RegisterActivity"
     lateinit var viewModel: RegisterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,11 +46,9 @@ class RegisterActivity : AppCompatActivity() {
             var password = viewBinding.registerPasswordInput.text.toString()
             try{
                 viewModel.register(email, userName, password)
-                var appIntent = Intent(this, AppActivity::class.java)
-                this.startActivity(appIntent)
             }
             catch(error: Error){
-
+                Log.e(TAG, "Some error while registration: ${error.message}")
             }
 
         }
@@ -70,6 +70,15 @@ class RegisterActivity : AppCompatActivity() {
         }
         viewModel.isFormValid.observe(this){
             viewBinding.registerButton.isEnabled = it
+        }
+        viewModel.didRegisterSuccessful.observe(this){
+            if(it == true){
+                var appIntent = Intent(this, AppActivity::class.java)
+                this.startActivity(appIntent)
+            }
+            else{
+                viewModel.registerActionFeedback.value?.let { it1 -> Log.e(TAG, it1) }
+            }
         }
     }
 }
