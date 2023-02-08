@@ -29,7 +29,7 @@ class LoginModel(private val context: Context) {
             userService.saveUserTokens(result.body()?.accessToken!!, result.body()?.refreshToken!!)
         }
         else{
-            throw Error(result.errorBody().toString())
+            throw Error("Wrong email or password!")
         }
     }
 }

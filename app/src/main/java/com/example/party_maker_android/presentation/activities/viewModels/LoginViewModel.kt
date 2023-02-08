@@ -30,18 +30,17 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     //only available, when the input fields are valid
     fun login(){
         if(areInputsValid){
-            try{
-                viewModelScope.launch{
+            viewModelScope.launch{
+                try{
                     loginModel.login()
                     loginSuccess.value = true
                     loginFeedBackMessage.value = "Login successful!"
                 }
+                catch(error: Error){
+                    loginSuccess.value = false
+                    loginFeedBackMessage.value = "Login failed, details: ${error.message}"
+                }
             }
-            catch(error: Error){
-                loginSuccess.value = false
-                loginFeedBackMessage.value = "Login failed, details: ${error.message}"
-            }
-
         }
     }
 
