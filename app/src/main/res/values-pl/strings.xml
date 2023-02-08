@@ -31,7 +31,7 @@
     <string name="select_from_gallery">Wybierz z galerii</string>
     <string name="make_photo">Zrób zdjęcie</string>
     <string name="add_event_button">Dodaj wydarzenie</string>
-    <string name="pick_time">Wybierz datę</string>
+    <string name="pick_time">Wybierz godzinę</string>
     <string name="place_hint">Miejsce wydarzenia</string>
     <string name="select_photo_text">Wybierz zdjęcie eventu:</string>
     <string name="registration_date_text">od: %s</string>
